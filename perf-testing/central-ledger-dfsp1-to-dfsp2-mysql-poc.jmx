@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.2 r1790748">
+<jmeterTestPlan version="1.2" properties="4.0" jmeter="4.0 r1823414">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -15,9 +15,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">150</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
         <longProp name="ThreadGroup.start_time">1474143365000</longProp>
         <longProp name="ThreadGroup.end_time">1474143365000</longProp>
@@ -54,18 +54,18 @@
             <stringProp name="329088525">central-ledger-port</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-2086604727">
-              <stringProp name="-2048632509">ec2-54-241-147-147.us-west-1.compute.amazonaws.com</stringProp>
-              <stringProp name="1716216">8088</stringProp>
+            <collectionProp name="-1057181601">
+              <stringProp name="-1341398235">ae7c894ce327411e8ada0027eebfb29a-457179259.eu-west-2.elb.amazonaws.com</stringProp>
+              <stringProp name="1784">80</stringProp>
               <stringProp name="187832203">${__UUID}</stringProp>
-              <stringProp name="327485280">ec2-54-183-226-134.us-west-1.compute.amazonaws.com</stringProp>
+              <stringProp name="-1341398235">ae7c894ce327411e8ada0027eebfb29a-457179259.eu-west-2.elb.amazonaws.com</stringProp>
               <stringProp name="50">2</stringProp>
               <stringProp name="50">2</stringProp>
               <stringProp name="-2029956087">Basic VGhlIGZpcnN0IERGU1A6VGhlIGZpcnN0IERGU1A=</stringProp>
               <stringProp name="-340426260">Basic VGhlIHNlY29uZCBERlNQOlRoZSBzZWNvbmQgREZTUA==</stringProp>
               <stringProp name="52">4</stringProp>
               <stringProp name="-1204607085">localhost</stringProp>
-              <stringProp name="-1507740662">a02bcb8d21d2d11e8ada0027eebfb29a-160662342.eu-west-2.elb.amazonaws.com</stringProp>
+              <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
               <stringProp name="1784">80</stringProp>
             </collectionProp>
           </collectionProp>
@@ -162,6 +162,7 @@
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
@@ -244,6 +245,7 @@
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
@@ -300,6 +302,7 @@
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
@@ -377,9 +380,5 @@
         <hashTree/>
       </hashTree>
     </hashTree>
-    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
-      <boolProp name="WorkBench.save">true</boolProp>
-    </WorkBench>
-    <hashTree/>
   </hashTree>
 </jmeterTestPlan>
