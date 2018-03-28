@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="4.0" jmeter="4.0 r1823414">
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.2 r1790748">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -15,9 +15,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">5</stringProp>
+        <stringProp name="ThreadGroup.num_threads">150</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
         <longProp name="ThreadGroup.start_time">1474143365000</longProp>
         <longProp name="ThreadGroup.end_time">1474143365000</longProp>
@@ -29,12 +29,12 @@
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="ledgerTestDataSet" enabled="false">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="filename">data/dfsp1-to-dfsp2-new.csv</stringProp>
+          <stringProp name="filename">v4_uuids.txt</stringProp>
           <boolProp name="quotedData">true</boolProp>
           <boolProp name="recycle">false</boolProp>
           <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">true</boolProp>
-          <stringProp name="variableNames"></stringProp>
+          <stringProp name="variableNames">transferId</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
         </CSVDataSet>
         <hashTree/>
@@ -52,23 +52,21 @@
             <stringProp name="103145323">local</stringProp>
             <stringProp name="328850228">central-ledger-host</stringProp>
             <stringProp name="329088525">central-ledger-port</stringProp>
-            <stringProp name="95504819">dfsp2</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="624182900">
-              <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
-              <stringProp name="1569894">3306</stringProp>
+            <collectionProp name="-2086604727">
+              <stringProp name="-2048632509">ec2-54-241-147-147.us-west-1.compute.amazonaws.com</stringProp>
+              <stringProp name="1716216">8088</stringProp>
               <stringProp name="187832203">${__UUID}</stringProp>
-              <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
+              <stringProp name="327485280">ec2-54-183-226-134.us-west-1.compute.amazonaws.com</stringProp>
               <stringProp name="50">2</stringProp>
               <stringProp name="50">2</stringProp>
-              <stringProp name="77065244">Basic ZGZzcDE6MTIzNDU2</stringProp>
-              <stringProp name="-708988776">Basic ZGZzcDI6MTIzNDU2</stringProp>
+              <stringProp name="-2029956087">Basic VGhlIGZpcnN0IERGU1A6VGhlIGZpcnN0IERGU1A=</stringProp>
+              <stringProp name="-340426260">Basic VGhlIHNlY29uZCBERlNQOlRoZSBzZWNvbmQgREZTUA==</stringProp>
               <stringProp name="52">4</stringProp>
-              <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
-              <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
-              <stringProp name="1567005">3000</stringProp>
+              <stringProp name="-1204607085">localhost</stringProp>
               <stringProp name="-1507740662">a02bcb8d21d2d11e8ada0027eebfb29a-160662342.eu-west-2.elb.amazonaws.com</stringProp>
+              <stringProp name="1784">80</stringProp>
             </collectionProp>
           </collectionProp>
           <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -92,10 +90,10 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;id&quot;: &quot;http://${central-ledger-host}:${central-ledger-port}/transfers/${uniqueId}&quot;,&#xd;
-    &quot;ledger&quot;: &quot;http://${central-ledger-host}:${central-ledger-port}&quot;,&#xd;
+    &quot;id&quot;: &quot;http://${central-ledger-host}/pocdb/transfers/${uniqueId}&quot;,&#xd;
+    &quot;ledger&quot;: &quot;http://${central-ledger-host}/pocdb&quot;,&#xd;
     &quot;debits&quot;: [{&#xd;
-      &quot;account&quot;: &quot;http://${central-ledger-host}:${central-ledger-port}/accounts/dfsp1&quot;,&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-host}/pocdb/accounts/dfsp1&quot;,&#xd;
       &quot;amount&quot;: &quot;50&quot;,&#xd;
       &quot;memo&quot;: {&#xd;
         &quot;interledger&quot;: &quot;blah&quot;,&#xd;
@@ -103,14 +101,14 @@
       }&#xd;
     }],&#xd;
     &quot;credits&quot;: [{&#xd;
-      &quot;account&quot;: &quot;http://${central-ledger-host}:${central-ledger-port}/accounts/dfsp2&quot;,&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-host}/pocdb/accounts/dfsp2&quot;,&#xd;
       &quot;amount&quot;: &quot;50&quot;,&#xd;
       &quot;memo&quot;: {&#xd;
         &quot;interledger&quot;: &quot;blah&quot;,&#xd;
         &quot;path&quot;: &quot;blah&quot;&#xd;
       }&#xd;
     }],&#xd;
-    &quot;execution_condition&quot;: &quot;ni:///sha-256;47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU?fpt=preimage-sha-256&amp;cost=0&quot;,&#xd;
+    &quot;execution_condition&quot;: &quot;ni:///sha-256;dJ1CsmXWJpyxGhs7a034aEIeQ80XT4wK2QqnSe9pwyw?fpt=preimage-sha-256&amp;cost=32&quot;,&#xd;
     &quot;expires_at&quot;: &quot;2018-03-30T00:00:01.000Z&quot;&#xd;
   }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -121,7 +119,7 @@
           <stringProp name="HTTPSampler.port">${central-ledger-port}</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/transfers/${uniqueId}</stringProp>
+          <stringProp name="HTTPSampler.path">/pocdb/transfers/${uniqueId}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -156,63 +154,54 @@
             <boolProp name="ISREGEX">true</boolProp>
           </com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion>
           <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="true">
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="false">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="49588">202</stringProp>
+              <stringProp name="1537238">202
+</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="dfsp payment prepare" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="prepare-payment-from-file" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;id&quot;: &quot;http://${dfsp1}:${central-ledger-port}/ilp/ledger/v1/transfers/${uniqueId}&quot;,&#xd;
-	&quot;ledger&quot;: &quot;http://ec2-35-166-180-190.us-west-2.compute.amazonaws.com:${central-ledger-port}/ilp/ledger/v1&quot;,&#xd;
-	&quot;debits&quot;: [&#xd;
-		{&#xd;
-			&quot;account&quot;: &quot;http://${dfsp1}:${central-ledger-port}/ilp/ledger/v1/accounts/${senderAccountName}&quot;,&#xd;
-			&quot;amount&quot;: &quot;2.00&quot;,&#xd;
-			&quot;authorized&quot;: true&#xd;
-		}&#xd;
-	],&#xd;
-	&quot;credits&quot;: [&#xd;
-		{&#xd;
-			&quot;account&quot;: &quot;http://${dfsp1}:${central-ledger-port}/ilp/ledger/v1/accounts/dfsp1-testconnector&quot;,&#xd;
-			&quot;amount&quot;: &quot;2.00&quot;,&#xd;
-			&quot;memo&quot;: {&#xd;
-				&quot;ilp_header&quot;: {&#xd;
-					&quot;account&quot;: &quot;levelone.dfsp2.alice.~psk.gzwWYHiiYaM.9PIWsRI5emtRo9SMe_eOkA.9806f14f-0904-4a8b-bd83-bb6ae343a0f4&quot;,&#xd;
-					&quot;amount&quot;: &quot;2.00&quot;,&#xd;
-					&quot;data&quot;: {&#xd;
-						&quot;data&quot;: {&#xd;
-							&quot;blob&quot;: &quot;VqjJCBrbNzEqs0nIbxALeMgQ-RcRoUc0d2arknOHMsyjUDApB2_UotwXg_t6jPw970vAdwsFOwWT0hRE0qi_hC5VSmgJSmeixPL7Uyz29UpNe3mbp7OTzX4U1QLXv_YTqUW9pQtp6ltflZK3dQF26NXtCgpUwvAy8TPBL2mKcLK3u2ELMtXHLGw&quot;&#xd;
-						},&#xd;
-						&quot;expires_at&quot;: &quot;2018-03-30T02:09:05.477Z&quot;&#xd;
-					}&#xd;
-				}&#xd;
-			}&#xd;
-		}&#xd;
-	],&#xd;
-	&quot;execution_condition&quot;: &quot;cc:0:3:0rR08zisf17NJgx-ruvmymLADPkYbT1Tf5Qs8no_zKk:32&quot;,&#xd;
-	&quot;expires_at&quot;: &quot;2018-03-30T02:09:05.477Z&quot;&#xd;
-}</stringProp>
+    &quot;id&quot;: &quot;http://${central-ledger-host}/pocdb/transfers/${transferId}&quot;,&#xd;
+    &quot;ledger&quot;: &quot;http://${central-ledger-host}/pocdb&quot;,&#xd;
+    &quot;debits&quot;: [{&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-host}/pocdb/accounts/dfsp1&quot;,&#xd;
+      &quot;amount&quot;: &quot;50&quot;,&#xd;
+      &quot;memo&quot;: {&#xd;
+        &quot;interledger&quot;: &quot;blah&quot;,&#xd;
+        &quot;path&quot;: &quot;blah&quot;&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;credits&quot;: [{&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-host}/pocdb/accounts/dfsp2&quot;,&#xd;
+      &quot;amount&quot;: &quot;50&quot;,&#xd;
+      &quot;memo&quot;: {&#xd;
+        &quot;interledger&quot;: &quot;blah&quot;,&#xd;
+        &quot;path&quot;: &quot;blah&quot;&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;execution_condition&quot;: &quot;ni:///sha-256;dJ1CsmXWJpyxGhs7a034aEIeQ80XT4wK2QqnSe9pwyw?fpt=preimage-sha-256&amp;cost=32&quot;,&#xd;
+    &quot;expires_at&quot;: &quot;2018-03-30T00:00:01.000Z&quot;&#xd;
+  }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">${dfsp1}</stringProp>
-          <stringProp name="HTTPSampler.port">8014</stringProp>
+          <stringProp name="HTTPSampler.domain">${central-ledger-host}</stringProp>
+          <stringProp name="HTTPSampler.port">${central-ledger-port}</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/ledger/transfers/${uniqueId}</stringProp>
+          <stringProp name="HTTPSampler.path">/pocdb/transfers/${transferId}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -231,10 +220,14 @@
                 <stringProp name="Header.name">Content-Type</stringProp>
                 <stringProp name="Header.value">application/json</stringProp>
               </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">L1p-Trace-Id</stringProp>
+                <stringProp name="Header.value">${paymentId}</stringProp>
+              </elementProp>
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui.JSONPathAssertionGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion" testname="statusTest-executed" enabled="true">
+          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui.JSONPathAssertionGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion" testname="statusTest-prepared" enabled="true">
             <stringProp name="JSON_PATH">$.state</stringProp>
             <stringProp name="EXPECTED_VALUE">prepared</stringProp>
             <boolProp name="JSONVALIDATION">true</boolProp>
@@ -243,14 +236,70 @@
             <boolProp name="ISREGEX">true</boolProp>
           </com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion>
           <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="true">
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="false">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="49587">201</stringProp>
+              <stringProp name="1537238">202
+</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">8</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="fulfill-payment-from-file" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">oCKAIHR7Y-qMvtMAWbD-G0jP8qad_-n8qS8Tk2ZES38z2KyE</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${central-ledger-host}</stringProp>
+          <stringProp name="HTTPSampler.port">${central-ledger-port}</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/pocdb/transfers/${transferId}/fulfillment</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="TestPlan.comments">fulfill transfer</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">text/plain</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui.JSONPathAssertionGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion" testname="statusTest-executed" enabled="true">
+            <stringProp name="JSON_PATH">$.state</stringProp>
+            <stringProp name="EXPECTED_VALUE">executed</stringProp>
+            <boolProp name="JSONVALIDATION">true</boolProp>
+            <boolProp name="EXPECT_NULL">false</boolProp>
+            <boolProp name="INVERT">false</boolProp>
+            <boolProp name="ISREGEX">true</boolProp>
+          </com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion>
+          <hashTree/>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="49586">200</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
@@ -287,7 +336,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">./data/Results20180328.log</stringProp>
+          <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
@@ -328,5 +377,9 @@
         <hashTree/>
       </hashTree>
     </hashTree>
+    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
+      <boolProp name="WorkBench.save">true</boolProp>
+    </WorkBench>
+    <hashTree/>
   </hashTree>
 </jmeterTestPlan>
