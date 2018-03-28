@@ -37,7 +37,7 @@
           <stringProp name="1585867927">dfspc_2</stringProp>
         </collectionProp>
         <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="200584097">
+          <collectionProp name="1782066449">
             <stringProp name="-2048632509">ec2-54-241-147-147.us-west-1.compute.amazonaws.com</stringProp>
             <stringProp name="1716216">8088</stringProp>
             <stringProp name="187832203">${__UUID}</stringProp>
@@ -48,7 +48,7 @@
             <stringProp name="-340426260">Basic VGhlIHNlY29uZCBERlNQOlRoZSBzZWNvbmQgREZTUA==</stringProp>
             <stringProp name="52">4</stringProp>
             <stringProp name="-1204607085">localhost</stringProp>
-            <stringProp name="-1341398235">ae7c894ce327411e8ada0027eebfb29a-457179259.eu-west-2.elb.amazonaws.com</stringProp>
+            <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
             <stringProp name="1784">80</stringProp>
             <stringProp name="1232383307">mojapoc</stringProp>
             <stringProp name="-1204607085">localhost</stringProp>
@@ -793,7 +793,7 @@ vars.put(&quot;dfsp_destination&quot;, &quot;dfsp2&quot;);
         </DebugSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group for SPSP Transaction Dynamic DFSPs" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group for SPSP Transaction Dynamic DFSPs" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1012,17 +1012,17 @@ vars.put(&quot;dfsp_destination&quot;, dfspList[1]);
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group for SPSP Transaction DFSP1 to DFSP2 only" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group for SPSP Transaction DFSP1 to DFSP2 only" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">200</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time"></stringProp>
         <longProp name="ThreadGroup.start_time">1474143365000</longProp>
         <longProp name="ThreadGroup.end_time">1474143365000</longProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">120</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
