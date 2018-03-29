@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<httpSample t="34" lt="34" ct="15" ts="1522324426508" s="true" lb="prepare-payment-test" rc="202" rm="Accepted" tn="Thread Group for SPSP Transaction 1-1" dt="text" by="1074" sby="1234" sc="1" ec="0" ng="2" na="2">
+  <assertionResult>
+    <name>statusTest-prepared</name>
+    <failure>false</failure>
+    <error>false</error>
+    <failureMessage></failureMessage>
+  </assertionResult>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">PUT</method>
+  <queryString class="java.lang.String">{&#xd;
+    &quot;id&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb/transfers/15ab02ca-1a73-423f-a343-965edb8d4d69&quot;,&#xd;
+    &quot;ledger&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb&quot;,&#xd;
+    &quot;debits&quot;: [{&#xd;
+      &quot;account&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb/accounts/dfsp1&quot;,&#xd;
+      &quot;amount&quot;: &quot;50&quot;,&#xd;
+      &quot;memo&quot;: {&#xd;
+        &quot;interledger&quot;: &quot;blah&quot;,&#xd;
+        &quot;path&quot;: &quot;blah&quot;&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;credits&quot;: [{&#xd;
+      &quot;account&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb/accounts/dfsp2&quot;,&#xd;
+      &quot;amount&quot;: &quot;50&quot;,&#xd;
+      &quot;memo&quot;: {&#xd;
+        &quot;interledger&quot;: &quot;blah&quot;,&#xd;
+        &quot;path&quot;: &quot;blah&quot;&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;execution_condition&quot;: &quot;ni:///sha-256;dJ1CsmXWJpyxGhs7a034aEIeQ80XT4wK2QqnSe9pwyw?fpt=preimage-sha-256&amp;cost=32&quot;,&#xd;
+    &quot;expires_at&quot;: &quot;2018-03-30T00:00:01.000Z&quot;&#xd;
+  }</queryString>
+</httpSample>
+<sample t="0" lt="0" ct="0" ts="1522324426543" s="true" lb="Check uniqueId" rc="200" rm="OK" tn="Thread Group for SPSP Transaction 1-1" dt="text" by="905" sby="0" sc="1" ec="0" ng="2" na="2">
+  <samplerData class="java.lang.String">JMeterVariables
+</samplerData>
+</sample>
+<httpSample t="37" lt="37" ct="15" ts="1522324426508" s="true" lb="prepare-payment-test" rc="202" rm="Accepted" tn="Thread Group for SPSP Transaction 1-2" dt="text" by="1074" sby="1234" sc="1" ec="0" ng="1" na="1">
+  <assertionResult>
+    <name>statusTest-prepared</name>
+    <failure>false</failure>
+    <error>false</error>
+    <failureMessage></failureMessage>
+  </assertionResult>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">PUT</method>
+  <queryString class="java.lang.String">{&#xd;
+    &quot;id&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb/transfers/9e3465e9-91da-4fc9-bc70-a71c5d9b2a29&quot;,&#xd;
+    &quot;ledger&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb&quot;,&#xd;
+    &quot;debits&quot;: [{&#xd;
+      &quot;account&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb/accounts/dfsp1&quot;,&#xd;
+      &quot;amount&quot;: &quot;50&quot;,&#xd;
+      &quot;memo&quot;: {&#xd;
+        &quot;interledger&quot;: &quot;blah&quot;,&#xd;
+        &quot;path&quot;: &quot;blah&quot;&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;credits&quot;: [{&#xd;
+      &quot;account&quot;: &quot;http://a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com/pocdb/accounts/dfsp2&quot;,&#xd;
+      &quot;amount&quot;: &quot;50&quot;,&#xd;
+      &quot;memo&quot;: {&#xd;
+        &quot;interledger&quot;: &quot;blah&quot;,&#xd;
+        &quot;path&quot;: &quot;blah&quot;&#xd;
+      }&#xd;
+    }],&#xd;
+    &quot;execution_condition&quot;: &quot;ni:///sha-256;dJ1CsmXWJpyxGhs7a034aEIeQ80XT4wK2QqnSe9pwyw?fpt=preimage-sha-256&amp;cost=32&quot;,&#xd;
+    &quot;expires_at&quot;: &quot;2018-03-30T00:00:01.000Z&quot;&#xd;
+  }</queryString>
+</httpSample>
+<sample t="0" lt="0" ct="0" ts="1522324426546" s="true" lb="Check uniqueId" rc="200" rm="OK" tn="Thread Group for SPSP Transaction 1-2" dt="text" by="905" sby="0" sc="1" ec="0" ng="1" na="1">
+  <samplerData class="java.lang.String">JMeterVariables
+</samplerData>
+</sample>
+
+</testResults>
