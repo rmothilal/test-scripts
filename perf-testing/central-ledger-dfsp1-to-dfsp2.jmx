@@ -37,7 +37,7 @@
           <stringProp name="1585867927">dfspc_2</stringProp>
         </collectionProp>
         <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="1782066449">
+          <collectionProp name="1406487369">
             <stringProp name="-2048632509">ec2-54-241-147-147.us-west-1.compute.amazonaws.com</stringProp>
             <stringProp name="1716216">8088</stringProp>
             <stringProp name="187832203">${__UUID}</stringProp>
@@ -48,7 +48,7 @@
             <stringProp name="-340426260">Basic VGhlIHNlY29uZCBERlNQOlRoZSBzZWNvbmQgREZTUA==</stringProp>
             <stringProp name="52">4</stringProp>
             <stringProp name="-1204607085">localhost</stringProp>
-            <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
+            <stringProp name="890573877">acfa84fc0333e11e8ada0027eebfb29a-1280139954.eu-west-2.elb.amazonaws.com</stringProp>
             <stringProp name="1784">80</stringProp>
             <stringProp name="1232383307">mojapoc</stringProp>
             <stringProp name="-1204607085">localhost</stringProp>
@@ -583,12 +583,12 @@ vars.put(&quot;dfsp_destination&quot;, dfspList[1]);
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">100</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">25</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
         <longProp name="ThreadGroup.start_time">1474143365000</longProp>
         <longProp name="ThreadGroup.end_time">1474143365000</longProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">60</stringProp>
+        <stringProp name="ThreadGroup.duration">120</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
