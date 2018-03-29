@@ -15,9 +15,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">100</stringProp>
+          <stringProp name="LoopController.loops">10</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">150</stringProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
         <longProp name="ThreadGroup.start_time">1474143365000</longProp>
         <longProp name="ThreadGroup.end_time">1474143365000</longProp>
@@ -130,20 +130,6 @@
           <stringProp name="TestPlan.comments">get transfer</stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <boolProp name="resetInterpreter">false</boolProp>
-            <stringProp name="script">uniqueId = vars.get(&quot;uniqueId&quot;);
-log.info(uniqueId);
-
-fOutStream = new FileOutputStream(&quot;/home/awsgui/git/test-scripts/perf-testing/UniqueId-List.csv&quot;, true);
-pStream = new PrintStream(fOutStream);
-this.interpreter.setOut(pStream);
-print(uniqueId);
-fOutStream.close();</stringProp>
-          </BeanShellPostProcessor>
-          <hashTree/>
           <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
@@ -156,6 +142,31 @@ fOutStream.close();</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">code</stringProp>
+            <stringProp name="RegexExtractor.refname">responseCode</stringProp>
+            <stringProp name="RegexExtractor.regex">(\d+)</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default"></stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
+          </RegexExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">uniqueId = vars.get(&quot;uniqueId&quot;);
+responseCode = vars. get(&quot;responseCode&quot;);
+log.info(uniqueId);
+
+fOutStream = new FileOutputStream(&quot;/home/awsgui/git/test-scripts/perf-testing/UniqueId-List.csv&quot;, true);
+pStream = new PrintStream(fOutStream);
+this.interpreter.setOut(pStream);
+print(uniqueId +  &quot;,&quot; + responseCode);
+fOutStream.close();</stringProp>
+          </BeanShellPostProcessor>
           <hashTree/>
           <com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui.JSONPathAssertionGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion" testname="statusTest-prepared" enabled="true">
             <stringProp name="JSON_PATH">$.state</stringProp>
@@ -359,6 +370,7 @@ fOutStream.close();</stringProp>
             </value>
           </objProp>
           <stringProp name="filename">/home/awsgui/git/test-scripts/perf-testing/Mar29-2018-12pmJo.xml</stringProp>
+          <boolProp name="ResultCollector.success_only_logging">true</boolProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
