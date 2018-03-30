@@ -1,5 +1,5 @@
 /**
- * Script for csv files comparisson
+ * Script for csv files comparison
  * Sample: `node csv-compare sample1.csv sample2.csv`
  * Sample: `node csv-compare sample1.csv:3 sample2.csv:2`
  *   - used only with config.match.type = 'key'. Column 3
@@ -147,7 +147,7 @@ function compare (source, dest, cfg) {
 }
 
 /**
- * Writes the result of the comparisson into csv files
+ * Writes the result of the comparison into csv files
  * @param {object} source
  * @param {object} dest
  * @param {object} cfg
@@ -225,8 +225,8 @@ if (typeof args[0] === 'undefined') {
   const dstArg = args[1].split(':')
   const srcFilename = srcArg[0]
   const dstFilename = dstArg[0]
-  const srcCol = srcArg[1] ? srcArg[1] : 0
-  const dstCol = dstArg[1] ? dstArg[1] : 0
+  const srcCol = srcArg[1] ? srcArg[1] : 1
+  const dstCol = dstArg[1] ? dstArg[1] : 1
   try {
     let src = readCsv(srcFilename, config.src, srcCol)
     let dst = readCsv(dstFilename, config.dst, dstCol)
