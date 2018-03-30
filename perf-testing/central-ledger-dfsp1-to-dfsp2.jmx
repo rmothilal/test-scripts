@@ -48,7 +48,7 @@
           <stringProp name="699456037">num_of_dfsps</stringProp>
         </collectionProp>
         <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="-1826210108">
+          <collectionProp name="-1826210032">
             <stringProp name="-2048632509">ec2-54-241-147-147.us-west-1.compute.amazonaws.com</stringProp>
             <stringProp name="1716216">8088</stringProp>
             <stringProp name="187832203">${__UUID}</stringProp>
@@ -81,7 +81,7 @@
             <stringProp name="-2060061973">dfsp1|dfsp4</stringProp>
             <stringProp name="-1172558292">dfsp2|dfsp4</stringProp>
             <stringProp name="-285054611">dfsp3|dfsp4</stringProp>
-            <stringProp name="50">2</stringProp>
+            <stringProp name="52">4</stringProp>
           </collectionProp>
         </collectionProp>
         <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -466,15 +466,20 @@
             <stringProp name="script">// Beanshell script to select the use-case for DFSPs based on the &apos;num_of_dfsps&apos; var
 //
 
-int n = (new Integer(vars.get(&quot;num_of_dfsps&quot;)));
+int n = (new Integer(vars.get(&quot;num_of_dfsps&quot;)))-1;
 int x = 0;
 
-for (int i=0; i&lt;n; i++){
-    x = n*(n+1);
+if( n &gt; 0) {
+	for (int i=0; i&lt;n; i++){
+	    x = n*(n+1);
+	}
+} else {
+	x = 1;
 }
 
 int nextI = java.util.concurrent.ThreadLocalRandom.current().nextInt(1, x+1);
 
+//print(&quot;x=&quot;+x);
 //String dfspc = &quot;${__V(dfspc_${__Random(1,2,)})}&quot;;
 
 String dfspc = vars.get(&quot;dfspc_&quot;+nextI);
@@ -1106,15 +1111,20 @@ vars.put(&quot;dfsp_destination&quot;, &quot;dfsp2&quot;);
             <stringProp name="script">// Beanshell script to select the use-case for DFSPs based on the &apos;num_of_dfsps&apos; var
 //
 
-int n = (new Integer(vars.get(&quot;num_of_dfsps&quot;)));
+int n = (new Integer(vars.get(&quot;num_of_dfsps&quot;)))-1;
 int x = 0;
 
-for (int i=0; i&lt;n; i++){
-    x = n*(n+1);
+if( n &gt; 0) {
+	for (int i=0; i&lt;n; i++){
+	    x = n*(n+1);
+	}
+} else {
+	x = 1;
 }
 
 int nextI = java.util.concurrent.ThreadLocalRandom.current().nextInt(1, x+1);
 
+//print(&quot;x=&quot;+x);
 //String dfspc = &quot;${__V(dfspc_${__Random(1,2,)})}&quot;;
 
 String dfspc = vars.get(&quot;dfspc_&quot;+nextI);
