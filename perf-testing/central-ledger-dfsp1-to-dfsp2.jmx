@@ -48,7 +48,7 @@
           <stringProp name="699456037">num_of_dfsps</stringProp>
         </collectionProp>
         <collectionProp name="UserParameters.thread_values">
-          <collectionProp name="-1826210032">
+          <collectionProp name="1124431375">
             <stringProp name="-2048632509">ec2-54-241-147-147.us-west-1.compute.amazonaws.com</stringProp>
             <stringProp name="1716216">8088</stringProp>
             <stringProp name="187832203">${__UUID}</stringProp>
@@ -59,14 +59,14 @@
             <stringProp name="-340426260">Basic VGhlIHNlY29uZCBERlNQOlRoZSBzZWNvbmQgREZTUA==</stringProp>
             <stringProp name="52">4</stringProp>
             <stringProp name="-1204607085">localhost</stringProp>
-            <stringProp name="890573877">acfa84fc0333e11e8ada0027eebfb29a-1280139954.eu-west-2.elb.amazonaws.com</stringProp>
+            <stringProp name="-1581629556">a83ef3094328a11e8ada0027eebfb29a-1884689510.eu-west-2.elb.amazonaws.com</stringProp>
             <stringProp name="1784">80</stringProp>
-            <stringProp name="1232383307">mojapoc</stringProp>
+            <stringProp name="46421888">/base</stringProp>
             <stringProp name="-1204607085">localhost</stringProp>
             <stringProp name="1567005">3000</stringProp>
             <stringProp name="0"></stringProp>
             <stringProp name="1567005">3000</stringProp>
-            <stringProp name="1567006">3001</stringProp>
+            <stringProp name="1567005">3000</stringProp>
             <stringProp name="1567007">3002</stringProp>
             <stringProp name="1567008">3003</stringProp>
             <stringProp name="-2060061975">dfsp1|dfsp2</stringProp>
@@ -81,7 +81,7 @@
             <stringProp name="-2060061973">dfsp1|dfsp4</stringProp>
             <stringProp name="-1172558292">dfsp2|dfsp4</stringProp>
             <stringProp name="-285054611">dfsp3|dfsp4</stringProp>
-            <stringProp name="52">4</stringProp>
+            <stringProp name="49">1</stringProp>
           </collectionProp>
         </collectionProp>
         <boolProp name="UserParameters.per_iteration">false</boolProp>
@@ -387,13 +387,13 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
         <longProp name="ThreadGroup.start_time">1474143365000</longProp>
         <longProp name="ThreadGroup.end_time">1474143365000</longProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">10</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
@@ -436,7 +436,7 @@
       }&#xd;
     }],&#xd;
     &quot;execution_condition&quot;: &quot;ni:///sha-256;47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU?fpt=preimage-sha-256&amp;cost=0&quot;,&#xd;
-    &quot;expires_at&quot;: &quot;2018-03-30T00:00:01.000Z&quot;&#xd;
+    &quot;expires_at&quot;: &quot;2018-12-30T00:00:01.000Z&quot;&#xd;
   }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -508,7 +508,7 @@ vars.put(&quot;dfsp_destination&quot;, dfspList[1]);
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="49588">202</stringProp>
+              <stringProp name="49587">201</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -1062,10 +1062,10 @@ vars.put(&quot;dfsp_destination&quot;, &quot;dfsp2&quot;);
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;id&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}/transfers/${uniqueId}&quot;,&#xd;
-    &quot;ledger&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}&quot;,&#xd;
+    &quot;id&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}/transfers/${uniqueId}&quot;,&#xd;
+    &quot;ledger&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}&quot;,&#xd;
     &quot;debits&quot;: [{&#xd;
-      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}/accounts/${dfsp_source}&quot;,&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}/accounts/${dfsp_source}&quot;,&#xd;
       &quot;amount&quot;: &quot;50&quot;,&#xd;
       &quot;memo&quot;: {&#xd;
         &quot;interledger&quot;: &quot;blah&quot;,&#xd;
@@ -1073,7 +1073,7 @@ vars.put(&quot;dfsp_destination&quot;, &quot;dfsp2&quot;);
       }&#xd;
     }],&#xd;
     &quot;credits&quot;: [{&#xd;
-      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}/accounts/${dfsp_destination}&quot;,&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}/accounts/${dfsp_destination}&quot;,&#xd;
       &quot;amount&quot;: &quot;50&quot;,&#xd;
       &quot;memo&quot;: {&#xd;
         &quot;interledger&quot;: &quot;blah&quot;,&#xd;
@@ -1278,10 +1278,10 @@ vars.put(&quot;dfsp_destination&quot;, dfspList[1]);
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;id&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}/transfers/${uniqueId}&quot;,&#xd;
-    &quot;ledger&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}&quot;,&#xd;
+    &quot;id&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}/transfers/${uniqueId}&quot;,&#xd;
+    &quot;ledger&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}&quot;,&#xd;
     &quot;debits&quot;: [{&#xd;
-      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}/accounts/${dfsp_source}&quot;,&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}/accounts/${dfsp_source}&quot;,&#xd;
       &quot;amount&quot;: &quot;50&quot;,&#xd;
       &quot;memo&quot;: {&#xd;
         &quot;interledger&quot;: &quot;blah&quot;,&#xd;
@@ -1289,7 +1289,7 @@ vars.put(&quot;dfsp_destination&quot;, dfspList[1]);
       }&#xd;
     }],&#xd;
     &quot;credits&quot;: [{&#xd;
-      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}:${central-ledger-portAWS}/accounts/${dfsp_destination}&quot;,&#xd;
+      &quot;account&quot;: &quot;http://${central-ledger-hostAWS}${central-ledger-pathAWS}/accounts/${dfsp_destination}&quot;,&#xd;
       &quot;amount&quot;: &quot;50&quot;,&#xd;
       &quot;memo&quot;: {&#xd;
         &quot;interledger&quot;: &quot;blah&quot;,&#xd;
@@ -1381,7 +1381,7 @@ vars.put(&quot;dfsp_destination&quot;, &quot;dfsp2&quot;);
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="49588">202</stringProp>
+              <stringProp name="49587">201</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
