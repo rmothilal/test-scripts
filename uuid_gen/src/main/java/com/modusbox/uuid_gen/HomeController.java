@@ -1,8 +1,6 @@
 package com.modusbox.uuid_gen;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.apache.commons.io.*;
 
 import java.io.File;
@@ -23,5 +21,12 @@ public class HomeController {
         }
 
         return "Hello";
+    }
+
+    @RequestMapping(value = "/participants/{Type}/{Id}",method = RequestMethod.PUT)
+    public void getParticipants(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader String correlationId, @RequestBody String payload) throws IOException {
+        logger.info("Header: "+correlationId+" Body: "+ payload);
+        File f = new File("/users/murthy/"+correlationId+".txt");
+        FileUtils.writeStringToFile(f,payload+System.getProperty("line.separator"),true);
     }
 }
