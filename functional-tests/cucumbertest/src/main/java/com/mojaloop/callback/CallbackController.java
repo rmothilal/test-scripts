@@ -1,6 +1,8 @@
 package com.mojaloop.callback;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.boot.json.JacksonJsonParser;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -24,6 +26,12 @@ public class CallbackController {
     public void putParticipants(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         logger.info("Header: "+correlationId.substring(0,correlationId.indexOf(","))+" Body: "+ payload);
         correlationMap.put(correlationId.substring(0,correlationId.indexOf(",")),payload);
+    }
+
+    @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
+    public void addCorrelationId(@RequestBody String payload){
+        JsonParser jsonParser = new JacksonJsonParser();
+        correlationMap.put((String)jsonParser.parseMap(payload).get("correlationId"),(String)jsonParser.parseMap(payload).get("correlationId"));
     }
 
     @RequestMapping(value = "/correlationid/{correlationId}", method = RequestMethod.GET)

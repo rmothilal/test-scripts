@@ -59,5 +59,23 @@ public class UserOnboardingIntegrationTest extends SpringIntegrationTest {
         assertThat(response.getBody(),containsString(dfspName));
         //assertTrue(true);
     }
+
+    @Given("^user \"([^\"]*)\" exists in central directory$")
+    public void userExistsInCentralDirectory(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^user \"([^\"]*)\" is deleted from central directory$")
+    public void userIsDeletedFromCentralDirectory(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^upon further lookup, the result should be empty$")
+    public void uponFurtherLookupTheResultShouldBeEmpty() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }
 
