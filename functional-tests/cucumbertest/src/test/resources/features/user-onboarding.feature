@@ -2,13 +2,13 @@ Feature: User Onboarding
   As a partner DFSP integrating with the Hub
   I want to add/update/delete users by their MSISDN in the hub
 
-  #Refers to story:
+  #Refers to story: lookup request for an MSISDN/DFSP pairing returns the DFSP URL
   Scenario: Adding new user with MSISDN
     Given user "7855501914" does not exist in central directory
     When user "7855501914" that is in "dfsp1" is added in central directory
     Then response should contain "dfsp1" name
 
-  #Refers to story
+  #Refers to story: remove an msisdn-dfsp link
   Scenario: Delete an existing user with MSISDN
     Given user "7855501914" exists in central directory
     When user "7855501914" is deleted from central directory
