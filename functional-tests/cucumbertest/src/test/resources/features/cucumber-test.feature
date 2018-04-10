@@ -1,4 +1,4 @@
-Feature:
+Feature: Cucumber Testing
   As a cucumber user I want to test scenario outline
 
   Scenario Outline:
