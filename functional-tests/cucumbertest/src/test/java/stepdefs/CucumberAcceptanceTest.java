@@ -18,7 +18,7 @@ import cucumber.api.junit.Cucumber;
                 "json:target/cucumber-reports/CucumberTestReport.json",
                 "rerun:target/cucumber-reports/rerun.txt"
         })
-public class CucumberIntegrationTest {
+public class CucumberAcceptanceTest {
 
 
 }

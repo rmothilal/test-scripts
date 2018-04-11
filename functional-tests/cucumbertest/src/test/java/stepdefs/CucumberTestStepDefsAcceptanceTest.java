@@ -1,6 +1,5 @@
 package stepdefs;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.http.HttpEntity;
@@ -13,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class CucumberTestStepDefsIntegrationTest extends SpringIntegrationTest{
+public class CucumberTestStepDefsAcceptanceTest extends SpringAcceptanceTest {
 
     @When("^I add correlation id \"([^\"]*)\"$")
     public void iAddCorrelationId(String correlationId) throws Throwable {

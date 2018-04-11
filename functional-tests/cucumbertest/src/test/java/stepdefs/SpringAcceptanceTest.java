@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest(classes = CallbackMainApplication.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration()
 //@WebAppConfiguration
-public class SpringIntegrationTest {
+public class SpringAcceptanceTest {
 
     @Autowired
     protected TestRestTemplate restTemplate;

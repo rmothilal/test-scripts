@@ -1,6 +1,5 @@
 package stepdefs;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -20,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 import static utils.UtilityClass.getNewCorrelationId;
 
-public class UserOnboardingIntegrationTest extends SpringIntegrationTest {
+public class UserOnboardingAcceptanceTest extends SpringAcceptanceTest {
 
     RequestSpecification reqSpec;
     Response raResponse;
@@ -30,7 +29,7 @@ public class UserOnboardingIntegrationTest extends SpringIntegrationTest {
     String mojaloopHost = "13.58.148.157";
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
-    private Logger logger = Logger.getLogger(UserOnboardingIntegrationTest.class.getName());
+    private Logger logger = Logger.getLogger(UserOnboardingAcceptanceTest.class.getName());
 
     @Given("^user \"([^\"]*)\" does not exist in central directory$")
     public void userDoesNotExistInCentralDirectory(String phNum) throws Throwable {
