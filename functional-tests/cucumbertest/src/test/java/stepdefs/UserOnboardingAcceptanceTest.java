@@ -1,5 +1,6 @@
 package stepdefs;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -31,10 +32,10 @@ public class UserOnboardingAcceptanceTest extends SpringAcceptanceTest {
 
     private Logger logger = Logger.getLogger(UserOnboardingAcceptanceTest.class.getName());
 
-    @Given("^user \"([^\"]*)\" does not exist in central directory$")
-    public void userDoesNotExistInCentralDirectory(String phNum) throws Throwable {
-        assertTrue(true);
-    }
+//    @Given("^user \"([^\"]*)\" does not exist in central directory$")
+//    public void userDoesNotExistInCentralDirectory(String phNum) throws Throwable {
+//        
+//    }
 
     @When("^user \"([^\"]*)\" that is in \"([^\"]*)\" is added in central directory$")
     public void userThatIsInIsAddedInCentralDirectory(String phNum, String dfspName) throws Throwable {
@@ -117,6 +118,42 @@ public class UserOnboardingAcceptanceTest extends SpringAcceptanceTest {
 
         //TODO
         assertFalse("Test Step failing. Needs to be fixed.",false);
+    }
+
+    @Given("^user \"([^\"]*)\" does not exist in central directory$")
+    public void userDoesNotExistInCentralDirectory(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^user \"([^\"]*)\" dfsp is updated \"([^\"]*)\" to \"([^\"]*)\"$")
+    public void userDfspIsUpdatedToDfsp(String arg0, String arg1, int arg2) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^upon further lookup for user \"([^\"]*)\", \"([^\"]*)\" should be returned$")
+    public void uponFurtherLookupForUserShouldBeReturned(String arg0, String arg1) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Given("^user \"([^\"]*)\" exists in central directory whose dfsp is not primary$")
+    public void userExistsInCentralDirectoryWhoseDfspIsNotPrimary(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @When("^user \"([^\"]*)\" dfsp is set to primary$")
+    public void userDfspIsSetToPrimary(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @Then("^upon further lookup for user \"([^\"]*)\", dfsp should be set to default$")
+    public void uponFurtherLookupForUserDfspShouldBeSetToDefault(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }
 
