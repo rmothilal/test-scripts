@@ -23,7 +23,7 @@ public class Utility{
         String correlationId = getNewCorrelationId();
         Response raResponse =
                 given()
-                    .header("FSPIOP-Source","test-dfsp1")
+                    .header("FSPIOP-Source",fspiopSource)
                     .header("X-Forwarded-For",correlationId)
                     .header("Content-Type", "application/json")
                 .when()
@@ -35,17 +35,25 @@ public class Utility{
     }
 
     public static int post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
-
-            Response raResponse = given()
+        Response raResponse =
+                given()
                     .body("{\"fspId\": \"test-dfsp1\",\"currency\": \"USD\"}")
-                    .header("FSPIOP-Source","test-dfsp1")
+                    .header("FSPIOP-Source",fspiopSource)
                     .header("Content-Type", "application/json")
-                    .when()
+                .when()
                     .post(endpoint);
-            logger.info("return status: "+raResponse.statusCode());
+        logger.info("post return status: "+raResponse.statusCode());
+        return raResponse.statusCode();
+    }
 
-            return raResponse.statusCode();
-
-
+    public static int delete( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
+        Response raResponse =
+                given()
+                    .header("FSPIOP-Source",fspiopSource)
+                    .header("Content-Type", "application/json")
+                .when()
+                    .delete(endpoint);
+        logger.info("delete return status: "+raResponse.statusCode());
+        return raResponse.statusCode();
     }
 }
