@@ -30,6 +30,14 @@ public class CallbackController {
         }
     }
 
+    @RequestMapping(value = "/participants/{Type}/{Id}/error",method = RequestMethod.PUT)
+    public void putParticipantsError(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
+        if(correlationId.indexOf(",") != -1) {
+            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
+            correlationMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        }
+    }
+
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
     public void addCorrelationId(@RequestBody String payload){
         JsonParser jsonParser = new JacksonJsonParser();

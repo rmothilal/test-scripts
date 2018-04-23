@@ -1,20 +1,10 @@
 package stepdefs;
 
 import com.mojaloop.utils.Utility;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.*;
-import org.junit.rules.ErrorCollector;
-import org.springframework.http.ResponseEntity;
-
-
 import java.util.logging.Logger;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
@@ -30,7 +20,8 @@ public class UserOnboardingAcceptanceTest extends SpringAcceptanceTest {
 
     @Given("^user \"([^\"]*)\" does not exist in central directory$")
     public void userDoesNotExistInCentralDirectory(String phNum) throws Throwable {
-        assertTrue(true);
+        String responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/"+phNum,"test-dfsp1",null,null,restTemplate);
+        assertThat(responseJson,is(not("")));
     }
 
     @When("^user \"([^\"]*)\" that is in \"([^\"]*)\" is added in central directory$")
