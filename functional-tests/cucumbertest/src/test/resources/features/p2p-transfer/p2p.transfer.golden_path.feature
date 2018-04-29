@@ -7,6 +7,9 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     Then I want to ensure that "<user>" is successfully added to the switch
 
     Examples:
+    |         user        |           fsp          |
+    | Mats Hagman         | BankNrOne              |
+    | Henrik Karlsson     | Mobile Money           |
 
 
   Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
@@ -15,15 +18,20 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     Then Expected Payee "<payee>" results should be returned
 
     Examples:
+    |    payer   |   payer-fsp   |   payee   |   payee-fsp   |
+    | Mats Hagman| BankNrOne     | Henrik Karlsson| Mobile Money   |
 
-  Scenario Outline: Quote. In this step Payer FSP sends a quote to determine fees and commission on the amount that the Payer wants to send
+  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that
+  the Payer wants to send
     Given Payee "<payee>" details are resolved
-    When Payer FSP "<payer-fsp>" sends the quote request
-    Then I should see Payee FSP fees and commission
-
+    When Payer FSP "<payer-fsp>" sends the quote request by providing "<amount>" and "<currency>"
+    Then I should see total fee and commission for the "<amount>" specified by payee
     Examples:
+    | payee | payer-fsp | amount | currency |
+    | Henrik Karlsson| BankNrOne | 100 | USD |
 
   Scenario Outline: Perform the transfer
+    Given the unique transactionID "<transactionID>" and quoteID "<quoteID>"
     When Payer "<payer>" sends the transfer request
     Then Transferred amount "<amount>" should be debited from Payer's account
     And Transferred amount "<amount>" should be credited to Payee's account
