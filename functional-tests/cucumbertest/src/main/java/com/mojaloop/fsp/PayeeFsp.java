@@ -1,10 +1,20 @@
 package com.mojaloop.fsp;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.json.JsonParser;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import javax.jms.Queue;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -17,6 +27,24 @@ public class PayeeFsp {
     private Logger logger = Logger.getLogger(com.mojaloop.fsp.PayeeFsp.class.getName());
 
     private HashMap<String, String> entityMap = new HashMap<String, String>();
+
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
+
+    @Autowired
+    private Queue partiesQueue;
+
+    @Autowired
+    private Queue quotesQueue;
+
+    @Autowired
+    private Queue transfersQueue;
+
+    @Value("${mojaloop.host}")
+    private String mojaloopHost;
+
+    @Value("${mojaloop.port}")
+    private String mohaloopPort;
 
     @RequestMapping(method = {RequestMethod.GET}, value = {"/version"})
     public String getVersion() {
@@ -48,8 +76,21 @@ public class PayeeFsp {
     }
 
     @RequestMapping(value = "/parties/{Type}/{Id}", method = RequestMethod.GET)
-    public String getParties(@PathVariable("Type") String type, @PathVariable("Id") String id) throws IOException {
-        return entityMap.get(id);
+    public HttpStatus getParties(@PathVariable("Type") String type, @PathVariable("Id") String id) throws IOException {
+        this.jmsMessagingTemplate.convertAndSend(this.partiesQueue, "parties request");
+        return HttpStatus.ACCEPTED;
+    }
+
+    @JmsListener(destination = "parties.queue")
+    public void receiveQueue(String text) {
+        logger.info("TESTING: "+text);
+        String endpoint = "http://"+mojaloopHost+":"+mohaloopPort+"/interop/switch/v1/parties/MSISDN"
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("FSPIOP-Source", "payeefsp");
+        headers.set("FSPIOP-Destination", "payerfsp");
+        HttpEntity entity = new HttpEntity(headers);
+        restTemplate.exchange("",HttpMethod.PUT,entity,String.class);
     }
 
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
