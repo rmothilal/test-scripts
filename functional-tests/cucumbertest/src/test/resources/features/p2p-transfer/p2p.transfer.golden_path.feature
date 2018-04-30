@@ -23,17 +23,19 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     | Khomotso Makgopa   | 1272545111      | payerfsp    |
     | Mbuso Makoa        | 1272545112      | payerfsp    |
     | Siabelo Maroka     | 1272545117      | payeefsp    |
-    | Mbuso Makoa        | 1272545118      | payeefsp    |
+    | Nanga Makwetla     | 1272545118      | payeefsp    |
 
 
-#  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
-#    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
-#    When Payer "<payer>" in Payer FSP "<payer-fsp>" does a lookup for payee "<payee>" that is in Payee FSP "<payee-fsp>"
-#    Then Expected Payee "<payee>" results should be returned
-#
-#    Examples:
-#    |    payer   |   payer-fsp   |   payee   |   payee-fsp   |
-#    | Mats Hagman| BankNrOne     | Henrik Karlsson| Mobile Money   |
+  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
+    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
+    When Payer "<payer>" with MSISDN "<payer-msisdn>" does a lookup for payee "<payee>" with MSISDN "<payee-msisdn>"
+    Then Payee "<payee>" results should be returned. Expected values are First Name "<payee-firstname>" Last Name "<payee-lastname>" DOB "<payee-dob>"
+
+    Examples:
+    |    payer              |  payer-msisdn    |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
+    |    Khomotso Makgopa   |  1272545111      |   payerfsp    |   Siabelo Maroka   |   1272545117     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
+    |    Mbuso Makoa        |  1272545112      |   payerfsp    |   Nanga Makwetla   |   1272545118     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
+
 #
 #  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that
 #  the Payer wants to send

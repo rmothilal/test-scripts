@@ -47,6 +47,11 @@ public class PayeeFsp {
         return "200";
     }
 
+    @RequestMapping(value = "/parties/{Type}/{Id}", method = RequestMethod.GET)
+    public String getParties(@PathVariable("Type") String type, @PathVariable("Id") String id) throws IOException {
+        return entityMap.get(id);
+    }
+
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
     public void addCorrelationId(@RequestBody String payload){
         JsonParser jsonParser = new JacksonJsonParser();
