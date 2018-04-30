@@ -1,7 +1,8 @@
 package stepdefs;
 
 import java.util.Collections;
-import com.mojaloop.callback.CallbackMainApplication;
+
+import com.mojaloop.MainApplication;
 import cucumber.api.java.Before;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,8 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.client.RestTemplate;
 
 
-//@SpringBootTest(classes = CallbackMainApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@SpringBootTest(classes = CallbackMainApplication.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = MainApplication.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ContextConfiguration()
 //@WebAppConfiguration
 public class SpringAcceptanceTest {

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import static io.restassured.RestAssured.given;
 
 
-public class Utility{
+public class Utility {
 
     private static Logger logger = Logger.getLogger(Utility.class.getName());
 
@@ -30,15 +30,18 @@ public class Utility{
                     .get(endpoint);
 
         Thread.sleep(2000);
-        ResponseEntity<String> response = restTemplate.getForEntity("/correlationid/"+correlationId,String.class);
+        String corrEndpoint = "/"+fspiopSource+"/correlationid/"+correlationId;
+        ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
         return response.getBody();
     }
 
     public static int post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
+        String correlationId = getNewCorrelationId();
         Response raResponse =
                 given()
-                    .body("{\"fspId\": \"test-dfsp1\",\"currency\": \"USD\"}")
+                    .body(body)
                     .header("FSPIOP-Source",fspiopSource)
+                    .header("X-Forwarded-For",correlationId)
                     .header("Content-Type", "application/json")
                 .when()
                     .post(endpoint);

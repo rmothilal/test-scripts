@@ -1,12 +1,12 @@
-package com.mojaloop.callback;
+package com.mojaloop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CallbackMainApplication {
+public class MainApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CallbackMainApplication.class, args);
+        SpringApplication.run(MainApplication.class, args);
     }
 }
