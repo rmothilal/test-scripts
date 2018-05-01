@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.restassured.path.json.JsonPath;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,6 +27,8 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     private Logger logger = Logger.getLogger(P2PTransferGoldenPathStepdefs.class.getName());
 
     ResponseEntity<String> response;
+
+    String responseJson;
 
     String mojaloopHost = "13.58.148.157";
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
@@ -87,19 +90,19 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
     public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertThat("Skipping",true==true);
     }
 
     @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
-    public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
+        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,restTemplate);
     }
 
     @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")
-    public void payeeResultsShouldBeReturnedExpectedValuesAreFirstNameLastNameDOB(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void payeeResultsShouldBeReturnedExpectedValuesAreFirstNameLastNameDOB(String payeeFullName, String payeeFirstName, String payeeLastName, String payeeDOB) throws Throwable {
+        JsonPath jPath = JsonPath.from(responseJson);
+        assertThat(jPath.getString("party.personalInfo.complexName.firstName"), is(payeeFirstName));
+        assertThat(jPath.getString("party.personalInfo.complexName.lastName"), is(payeeLastName));
+        assertThat(jPath.getString("party.personalInfo.dateOfBirth"), is(payeeDOB));
     }
 }

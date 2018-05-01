@@ -10,6 +10,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.core.MessagePostProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -44,7 +47,7 @@ public class PayeeFsp {
     private String mojaloopHost;
 
     @Value("${mojaloop.port}")
-    private String mohaloopPort;
+    private String mojaloopPort;
 
     @RequestMapping(method = {RequestMethod.GET}, value = {"/version"})
     public String getVersion() {
@@ -75,23 +78,37 @@ public class PayeeFsp {
         return "200";
     }
 
-    @RequestMapping(value = "/parties/{Type}/{Id}", method = RequestMethod.GET)
-    public HttpStatus getParties(@PathVariable("Type") String type, @PathVariable("Id") String id) throws IOException {
-        this.jmsMessagingTemplate.convertAndSend(this.partiesQueue, "parties request");
+    @RequestMapping(value = "/parties/{Type}/{phNum}", method = RequestMethod.GET)
+    public HttpStatus getParties(@PathVariable("Type") String type, @PathVariable("phNum") String phNum, @RequestHeader HttpHeaders httpHeaders) throws IOException {
+        HashMap<String,Object> jmsHeaders = new HashMap<String, Object>();
+        populateJMSHeaders(httpHeaders,jmsHeaders);
+        jmsHeaders.put("type",type);
+        jmsHeaders.put("phNum",phNum);
+
+        this.jmsMessagingTemplate.convertAndSend(this.partiesQueue, "parties request", jmsHeaders);
+
         return HttpStatus.ACCEPTED;
     }
 
     @JmsListener(destination = "parties.queue")
-    public void receiveQueue(String text) {
-        logger.info("TESTING: "+text);
-        String endpoint = "http://"+mojaloopHost+":"+mohaloopPort+"/interop/switch/v1/parties/MSISDN"
+    public void receivePartiesQueue(Message message) {
+        MessageHeaders messageHeaders = message.getHeaders();
+
+        //Looking up for the payee based on the input MSISDN
+        String payee = entityMap.get(messageHeaders.get("phNum"));
+        logger.info("In PayeeFSP. Payee details: "+payee);
+
+        String endpoint = "http://"+mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/parties/"+messageHeaders.get("type")+"/"+messageHeaders.get("phNum");
+        logger.info("Endpoint: "+endpoint);
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("FSPIOP-Source", "payeefsp");
-        headers.set("FSPIOP-Destination", "payerfsp");
-        HttpEntity entity = new HttpEntity(headers);
-        restTemplate.exchange("",HttpMethod.PUT,entity,String.class);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        populateHTTPHeaders(messageHeaders, httpHeaders);
+        HttpEntity entity = new HttpEntity(payee,httpHeaders);
+
+        restTemplate.exchange(endpoint,HttpMethod.PUT,entity,String.class);
     }
+
+
 
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
     public void addCorrelationId(@RequestBody String payload){
@@ -103,5 +120,24 @@ public class PayeeFsp {
     public String getCorrelationId(@PathVariable String correlationId){
         logger.info("correlationId in getCorrelationId: "+correlationId);
         return entityMap.get(correlationId);
+    }
+
+    public void populateJMSHeaders(HttpHeaders httpHeaders, HashMap<String,Object> jmsHeaders){
+        if(httpHeaders.get("FSPIOP-Source") != null && httpHeaders.get("FSPIOP-Source").get(0) != null)
+            jmsHeaders.put("FSPIOP-Source", (String)httpHeaders.get("FSPIOP-Source").get(0));
+        if(httpHeaders.get("FSPIOP-Destination") != null && httpHeaders.get("FSPIOP-Destination").get(0) != null)
+            jmsHeaders.put("FSPIOP-Destination", (String)httpHeaders.get("FSPIOP-Destination").get(0));
+        if(httpHeaders.get("X-Forwarded-For") != null && httpHeaders.get("X-Forwarded-For").get(0) != null)
+            jmsHeaders.put("X-Forwarded-For", (String)httpHeaders.get("X-Forwarded-For").get(0));
+    }
+
+    public void populateHTTPHeaders(MessageHeaders jmsHeaders, HttpHeaders httpHeaders){
+        //Source and Destination are swapped while going back
+        if(jmsHeaders.get("FSPIOP-Source") != null )
+            httpHeaders.add("FSPIOP-Destination", (String)jmsHeaders.get("FSPIOP-Source"));
+        if(jmsHeaders.get("FSPIOP-Destination") != null )
+            httpHeaders.add("FSPIOP-Source", (String)jmsHeaders.get("FSPIOP-Destination"));
+        if(jmsHeaders.get("X-Forwarded-For") != null )
+            httpHeaders.add("X-Forwarded-For", (String)jmsHeaders.get("X-Forwarded-For"));
     }
 }

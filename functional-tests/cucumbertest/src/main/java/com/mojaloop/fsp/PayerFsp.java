@@ -47,6 +47,24 @@ public class PayerFsp {
         return "200";
     }
 
+    @RequestMapping(value = "/parties/{Type}/{Id}",method = RequestMethod.PUT)
+    public HttpStatus putParties(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
+        logger.info("Header: " + correlationId + " Body: " + payload);
+        if(correlationId.indexOf(",") != -1) {
+            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
+            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        }
+        return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/parties/{Type}/{Id}/error",method = RequestMethod.PUT)
+    public void putPartiesError(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
+        if(correlationId.indexOf(",") != -1) {
+            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
+            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        }
+    }
+
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
     public void addCorrelationId(@RequestBody String payload){
         JsonParser jsonParser = new JacksonJsonParser();
