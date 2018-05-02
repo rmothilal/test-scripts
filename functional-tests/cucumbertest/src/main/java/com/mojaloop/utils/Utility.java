@@ -21,9 +21,11 @@ public class Utility {
 
     public static String get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
         String correlationId = getNewCorrelationId();
+        if(fspiopDestination == null) fspiopDestination = "";
         Response raResponse =
                 given()
                     .header("FSPIOP-Source",fspiopSource)
+                    .header("FSPIOP-Destination",fspiopDestination)
                     .header("X-Forwarded-For",correlationId)
                     .header("Content-Type", "application/json")
                 .when()
@@ -35,18 +37,23 @@ public class Utility {
         return response.getBody();
     }
 
-    public static int post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
+    public static String post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
         String correlationId = getNewCorrelationId();
+        if(fspiopDestination == null) fspiopDestination = "";
         Response raResponse =
                 given()
                     .body(body)
                     .header("FSPIOP-Source",fspiopSource)
+                    .header("FSPIOP-Destination",fspiopDestination)
                     .header("X-Forwarded-For",correlationId)
                     .header("Content-Type", "application/json")
                 .when()
                     .post(endpoint);
-        logger.info("post return status: "+raResponse.statusCode());
-        return raResponse.statusCode();
+
+        Thread.sleep(2000);
+        String corrEndpoint = "/"+fspiopSource+"/correlationid/"+correlationId;
+        ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
+        return response.getBody();
     }
 
     public static int delete( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{

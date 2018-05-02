@@ -65,6 +65,24 @@ public class PayerFsp {
         }
     }
 
+    @RequestMapping(value = "/quotes/{quoteId}",method = RequestMethod.PUT)
+    public HttpStatus putQuotes(@PathVariable("quoteId") String quoteId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
+        logger.info("Header: " + correlationId + " Body: " + payload);
+        if(correlationId.indexOf(",") != -1) {
+            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
+            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        }
+        return HttpStatus.OK;
+    }
+
+    @RequestMapping(value = "/quotes/{quoteId}/error",method = RequestMethod.PUT)
+    public void putPartiesError(@PathVariable("quoteId") String quoteId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
+        if(correlationId.indexOf(",") != -1) {
+            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
+            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        }
+    }
+
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
     public void addCorrelationId(@RequestBody String payload){
         JsonParser jsonParser = new JacksonJsonParser();

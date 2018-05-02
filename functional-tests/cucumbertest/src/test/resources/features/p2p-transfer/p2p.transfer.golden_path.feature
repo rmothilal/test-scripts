@@ -36,15 +36,14 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     |    Khomotso Makgopa   |  1272545111      |   payerfsp    |   Siabelo Maroka   |   1272545117     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
     |    Mbuso Makoa        |  1272545112      |   payerfsp    |   Nanga Makwetla   |   1272545118     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
 
-#
-  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that
-  the Payer wants to send
-    Given Payee "<payee>" details are resolved
-    When Payer FSP "<payer-fsp>" sends the quote request by providing "<amount>" and "<currency>"
-    Then I should see total fee and commission for the "<amount>" specified by payee
+
+  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that the Payer wants to send
+    When Payer FSP issues a quote to the switch by providing "<amount>" and "<currency>". Payer MSISDN is "<payer-msisdn>" Payee MSISDN is "<payee-msisdn>"
+    Then Payer FSP should see total fee and commission for the "<amount>" specified by payer. Expected payee fsp fee is "<expected-payee-fee>" and Expected payee fsp commission is "<expected-payee-commission>"
     Examples:
-    | payee | payer-fsp | amount | currency |
-    | Henrik Karlsson| BankNrOne | 100 | USD |
+      |  payer-msisdn    |   payee-msisdn   |  amount  | currency  | expected-payee-fee   |   expected-payee-commission   |
+      |  1272545111      |   1272545117     |   100    |   USD     |          1           |           1                   |
+      |  1272545112      |   1272545118     |   200    |   USD     |          1           |           1                   |
 
 #  Scenario Outline: Perform the transfer
 #    Given the unique transactionID "<transactionID>" and quoteID "<quoteID>"
