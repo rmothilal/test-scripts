@@ -151,4 +151,63 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         assertThat(responseDoc.read("ilpPacket"),is(not("")));
         assertThat(responseDoc.read("condition"),is(not("")));
     }
+
+    @Given("^A quote exists\\. Payer MSISDN \"([^\"]*)\" Payee MSISDN \"([^\"]*)\" Amount \"([^\"]*)\"$")
+    public void aQuoteExistsPayerMSISDNPayeeMSISDNAmount(String payerMsisdn, String payeeMsisdn, String amount) throws Throwable {
+        String quoteRequest = Json.createObjectBuilder()
+                .add("quoteId",UUID.randomUUID().toString())
+                .add("transactionId",UUID.randomUUID().toString())
+                .add("payer", Json.createObjectBuilder()
+                        .add("partyIdInfo",Json.createObjectBuilder()
+                                .add("partyIdentifier",payerMsisdn)
+                                .add("partyIdType","MSISDN")
+                                .add("fspId","payerfsp")
+                        )
+                )
+                .add("payee", Json.createObjectBuilder()
+                        .add("partyIdInfo",Json.createObjectBuilder()
+                                .add("partyIdentifier",payeeMsisdn)
+                                .add("partyIdType","MSISDN")
+                                .add("fspId","payeefsp")
+                        )
+                )
+                .add("amount",Json.createObjectBuilder()
+                        .add("amount",amount)
+                        .add("currency","USD")
+                )
+                .add("amountType","SEND")
+                .add("transactionType", Json.createObjectBuilder()
+                        .add("scenario","DEPOSIT")
+                        .add("initiator","PAYER")
+                        .add("initiatorType","CONSUMER")
+                )
+                .build()
+                .toString();
+        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,restTemplate);
+    }
+
+    @When("^I submit a transfer for amount \"([^\"]*)\"$")
+    public void iSubmitATransferForAmount(String amount) throws Throwable {
+        com.jayway.jsonpath.DocumentContext quoteResponseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        String transferRequest = Json.createObjectBuilder()
+                .add("transferId", UUID.randomUUID().toString())
+                .add("payerFsp", "payerfsp")
+                .add("payeeFsp", "payeefsp")
+                .add("amount", Json.createObjectBuilder()
+                        .add("amount", amount)
+                        .add("currency", "USD")
+                )
+                .add("expiration", quoteResponseDoc.read("expiration").toString())
+                .add("ilpPacket",quoteResponseDoc.read("ilpPacket").toString())
+                .add("condition",quoteResponseDoc.read("ilpCondition").toString())
+                .build()
+                .toString();
+        responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,restTemplate);
+    }
+
+    @Then("^I should get a fulfillment response back\\.$")
+    public void iShouldGetAFulfillmentResponseBack() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
 }

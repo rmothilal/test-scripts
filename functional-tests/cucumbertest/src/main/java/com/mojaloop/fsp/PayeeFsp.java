@@ -4,6 +4,7 @@ import com.ilp.conditions.impl.IlpConditionHandlerImpl;
 import com.ilp.conditions.models.pdp.*;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
+import io.restassured.path.json.JsonPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
@@ -173,6 +174,45 @@ public class PayeeFsp {
 
         String quoteId = cxtOriginalMojaloopQuotesRequest.read("quoteId").toString();
         String endpoint = "http://"+mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/quotes/"+quoteId;
+        logger.info("Endpoint: "+endpoint);
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        populateHTTPHeaders(messageHeaders, httpHeaders);
+
+        HttpEntity entity = new HttpEntity(response,httpHeaders);
+
+
+        restTemplate.exchange(endpoint,HttpMethod.PUT,entity,String.class);
+    }
+
+    @RequestMapping(value = "/transfers", method = RequestMethod.POST)
+    public HttpStatus postTransfers( @RequestBody String payload, @RequestHeader HttpHeaders httpHeaders) throws IOException {
+        HashMap<String,Object> jmsHeaders = new HashMap<String, Object>();
+        populateJMSHeaders(httpHeaders,jmsHeaders);
+
+        this.jmsMessagingTemplate.convertAndSend(this.transfersQueue, payload, jmsHeaders);
+
+        return HttpStatus.ACCEPTED;
+    }
+
+    @JmsListener(destination = "transfers.queue")
+    public void receiveTransfersQueue(Message message) throws IOException {
+        MessageHeaders messageHeaders = message.getHeaders();
+
+
+        JsonPath jPathOriginalMojaloopTransferRequest = JsonPath.from(message.getPayload().toString());
+        String ilpPacket = jPathOriginalMojaloopTransferRequest.getString("ilpPacket");
+        IlpConditionHandlerImpl ilpConditionHandlerImpl = new IlpConditionHandlerImpl();
+        String rawFulfillment = ilpConditionHandlerImpl.generateFulfillment(ilpPacket,"secret".getBytes());
+
+        String response =  Json.createObjectBuilder()
+                .add("fulfilment",rawFulfillment)
+                .add("transferState","COMMITTED")
+                .build()
+                .toString();
+
+        String quoteId = jPathOriginalMojaloopTransferRequest.getString("transferId");
+        String endpoint = "http://"+mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/transfers/"+quoteId;
         logger.info("Endpoint: "+endpoint);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();

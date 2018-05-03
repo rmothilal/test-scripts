@@ -45,10 +45,12 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
       |  1272545111      |   1272545117     |   100    |   USD     |          1           |           1                   |
       |  1272545112      |   1272545118     |   200    |   USD     |          1           |           1                   |
 
-#  Scenario Outline: Perform the transfer
-#    Given the unique transactionID "<transactionID>" and quoteID "<quoteID>"
-#    When Payer "<payer>" sends the transfer request
-#    Then Transferred amount "<amount>" should be debited from Payer's account
-#    And Transferred amount "<amount>" should be credited to Payee's account
-#
-#    Examples:
+  Scenario Outline: Perform the transfer
+    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
+    When I submit a transfer for amount "<amount>"
+    Then I should get a fulfillment response back.
+
+    Examples:
+      |  payer-msisdn    |   payee-msisdn   |  amount  |
+      |  1272545111      |   1272545117     |   100    |
+      |  1272545112      |   1272545118     |   200    |
