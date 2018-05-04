@@ -205,10 +205,10 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,restTemplate);
     }
 
-    @Then("^I should get a fulfillment response back\\.$")
-    public void iShouldGetAFulfillmentResponseBack() throws Throwable {
+    @Then("^I should get a fulfillment response back with a transfer state of \"([^\"]*)\"$")
+    public void iShouldGetAFulfillmentResponseBack(String transferState) throws Throwable {
         com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
-        assertThat(responseDoc.read("transferState"),is("COMMITTED"));
+        assertThat(responseDoc.read("transferState"),is(transferState));
         assertThat(responseDoc.read("fulfilment"),is(not("")));
     }
 }
