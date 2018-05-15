@@ -199,15 +199,16 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 )
                 .add("expiration", quoteResponseDoc.read("expiration").toString())
                 .add("ilpPacket",quoteResponseDoc.read("ilpPacket").toString())
-                .add("condition",quoteResponseDoc.read("ilpCondition").toString())
+                .add("condition",quoteResponseDoc.read("condition").toString())
                 .build()
                 .toString();
         responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,restTemplate);
     }
 
-    @Then("^I should get a fulfillment response back\\.$")
-    public void iShouldGetAFulfillmentResponseBack() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^I should get a fulfillment response back with a transfer state of \"([^\"]*)\"$")
+    public void iShouldGetAFulfillmentResponseBack(String transferState) throws Throwable {
+        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        assertThat(responseDoc.read("transferState"),is(transferState));
+        assertThat(responseDoc.read("fulfilment"),is(not("")));
     }
 }

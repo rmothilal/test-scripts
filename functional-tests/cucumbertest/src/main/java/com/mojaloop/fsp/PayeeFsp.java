@@ -189,7 +189,7 @@ public class PayeeFsp {
     public HttpStatus postTransfers( @RequestBody String payload, @RequestHeader HttpHeaders httpHeaders) throws IOException {
         HashMap<String,Object> jmsHeaders = new HashMap<String, Object>();
         populateJMSHeaders(httpHeaders,jmsHeaders);
-
+        logger.info("In PAYEE FSP TRANSFERS: "+payload);
         this.jmsMessagingTemplate.convertAndSend(this.transfersQueue, payload, jmsHeaders);
 
         return HttpStatus.ACCEPTED;
@@ -211,8 +211,8 @@ public class PayeeFsp {
                 .build()
                 .toString();
 
-        String quoteId = jPathOriginalMojaloopTransferRequest.getString("transferId");
-        String endpoint = "http://"+mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/transfers/"+quoteId;
+        String transferId = jPathOriginalMojaloopTransferRequest.getString("transferId");
+        String endpoint = "http://"+mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/transfers/"+transferId;
         logger.info("Endpoint: "+endpoint);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();

@@ -48,7 +48,7 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
   Scenario Outline: Perform the transfer
     Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
     When I submit a transfer for amount "<amount>"
-    Then I should get a fulfillment response back with a state of "committed"
+    Then I should get a fulfillment response back with a transfer state of "COMMITTED"
 
     Examples:
       |  payer-msisdn    |   payee-msisdn   |  amount  |
