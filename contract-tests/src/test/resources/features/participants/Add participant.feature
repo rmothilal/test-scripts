@@ -1,8 +1,7 @@
-Feature: This feature is used to create the participant information on the server using party's <Type>, <ID> and optionally <SubId>
+Feature: Test participant endpoint in the Mojaloop API.
 
 
-  Scenario Outline: Create/post a participant information on the server.
-    Given <fspId>, <currency> of the participant to add, and <Type> & <ID> of the party that is associated with the participant to be added
+  Scenario Outline: Test POST /participants for participant type MSISDN.
     When  I send a post request on to the server
     Then the participant infomation should be added in the server.
 
