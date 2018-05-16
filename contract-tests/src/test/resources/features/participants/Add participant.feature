@@ -1,4 +1,4 @@
-Feature: Test participant endpoint in the Mojaloop API.
+Feature: Test participant endpoint for adding a participant to the switch.
 
 
   Scenario Outline: Test POST /participants for participant type MSISDN.
@@ -29,4 +29,28 @@ Feature: Test participant endpoint in the Mojaloop API.
     When  I send a request to POST /participants with MSISDN "<MSISDN>" and do not pass FspID in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>" and error description is "<ExpectedErrorDescription>"
     Examples:
-      |  MSISDN   |    ExpectedErrorCode        |    ExpectedErrorDescripton        |
+      |  MSISDN   |    ExpectedErrorCode        |    ExpectedErrorDescription    |
+
+  Scenario Outline: Test POST /participants for missing required field (participant type) should fail the request
+    When  I send a request to POST /participants with FspID  "<FspID>" and ID "<ID>" in the request and do not pass participants type
+    Then An error should be returned. Expected error code is "<ExpectedErrorCode>" and error description is "<ExpectedErrorDescription>"
+    Examples:
+      |   FspID   |    ID       |   ExpectedErrorCode        |    ExpectedErrorDescription    |
+
+
+  Scenario Outline: Test POST /participants for missing required field (participant ID), should fail the request
+    When  I send a request to POST /participants with FspID  "<FspID>" and Type "<Type>" in the request and do not pass participants ID
+    Then An error should be returned. Expected error code is "<ExpectedErrorCode>" and error description is "<ExpectedErrorDescription>"
+    Examples:
+      |      FspID    |    Type       |   ExpectedErrorCode        |    ExpectedErrorDescription    |
+
+
+  Scenario Outline: Test POST /participants for invalid required field participant ID, should fail the request
+    When  I send a request to POST /participants with FspID  "<FspID>" and invalid ID "<ID>" in the request
+    Then An error should be returned. Expected error code is "<ExpectedErrorCode>" and error description is "<ExpectedErrorDescription>"
+    Examples:
+      |     FspID      |          ID           |     ExpectedErrorCode        |    ExpectedErrorDescription    |
+
+
+
+
