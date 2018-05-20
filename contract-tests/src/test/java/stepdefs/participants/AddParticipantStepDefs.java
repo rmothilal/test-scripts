@@ -5,14 +5,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class AddParticipantStepDefs {
-    @Then("^the participant information should be added in the switch\\. Expected FspID in the response is \"([^\"]*)\"$")
-    public void theParticipantInformationShouldBeAddedInTheSwitchExpectedFspIDInTheResponseIs(String arg0) throws Throwable {
+
+    @When("^I send a request to POST /participants with  \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
+    public void iSendARequestToPOSTParticipantsWithAndWith(String arg0, String arg1, String arg2) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
 
-    @When("^I send a request to POST /participants with  \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
-    public void iSendARequestToPOSTParticipantsWithAndWith(String arg0, String arg1, String arg2) throws Throwable {
+    @Then("^the participant information should be added in the switch\\. Expected FspID in the response is \"([^\"]*)\"$")
+    public void theParticipantInformationShouldBeAddedInTheSwitchExpectedFspIDInTheResponseIs(String arg0) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
