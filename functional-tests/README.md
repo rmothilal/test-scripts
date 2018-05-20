@@ -62,12 +62,12 @@ Given this brief overview about Gherkin and how it is impleemnted in Cucumber, t
  
 Contents:
 
-- [Required Software](##requiredsoftware)
+- [Required Software](#required software)
 - [Setup Overview](#setupoverview)
 - [Running Tests](#runningtests)
 - [Reports](#reports)
 
-## RequiredSoftware
+## Required Software
 
 1. [JDK 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 2. [Apache Maven](https://maven.apache.org/download.cgi)
