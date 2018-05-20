@@ -62,12 +62,12 @@ Given this brief overview about Gherkin and how it is impleemnted in Cucumber, t
  
 Contents:
 
-- [Required Software](#requiredsoftware)
+- [Required Software](##requiredsoftware)
 - [Setup Overview](#setupoverview)
 - [Running Tests](#runningtests)
 - [Reports](#reports)
 
-## Required Software
+## RequiredSoftware
 
 1. [JDK 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 2. [Apache Maven](https://maven.apache.org/download.cgi)
@@ -82,7 +82,7 @@ Contents:
     
 4. ngrok (Optional. If you plan to run test cases from laptop)
 
-## Setup Overview
+## SetupOverview
 The below diagram represents the different components that are part of this testing setup.
 
  ![Sequence](sequencediagram.png)
