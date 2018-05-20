@@ -69,13 +69,27 @@ Contents:
 
 ## Required Software
 
-1. JDK 1.8 or later
-2. Apache Maven
+1. [JDK 1.8 or later](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+2. [Apache Maven](https://maven.apache.org/download.cgi)
 3. Any IDE (Steps are included for Intellij and Eclipse)
+
+    3.1 [Intellij Community/Ultimate Edition](https://www.jetbrains.com/idea/download/index.html#section=windows)
+    
+    - Please refer to this link [Cucumber support in Intellij](https://www.jetbrains.com/help/idea/bdd-frameworks.html) to Enable Cucumber support in Intellij using Maven.
+    - If not enabled by default, go to File -> Settings -> File Types. Select Cucumber Scenario and in Registered Patterns add '.feature".
+    
+    3.2 [Eclipse](http://www.eclipse.org/downloads/) 
+    
 4. ngrok (Optional. If you plan to run test cases from laptop)
 
 ## Setup Overview
- ![Sequence](SequenceDiagram.jpg)
+The below diagram represents the different components that are part of this testing setup.
+
+ ![Sequence](sequencediagram.png)
+ 
+ - _PayerFSP Simulator, PayeeFSP Simulator_: Mock Simulators that represent Payer and Payee FSPs that are used to receive the callbacks from Mojaloop switch and also to return default payer/payee details and quote responses.
+ - _Cucumber_: Represents the Cucumber-Java Step Definitions that sends the requests to the Switch and query PayerFSP/PayeeFSP for the callback responses.
+ - _Switch_: Represents Mojaloop Switch against which all these test cases are executed.
 
 
 
