@@ -62,9 +62,9 @@ Given this brief overview about Gherkin and how it is impleemnted in Cucumber, t
  
 Contents:
 
-- [Required Software](#required software)
-- [Setup Overview](#setup overview)
-- [Running Tests](#running tests)
+- [Required Software](#requiredsoftware)
+- [Setup Overview](#setupoverview)
+- [Running Tests](#runningtests)
 - [Reports](#reports)
 
 ## Required Software
