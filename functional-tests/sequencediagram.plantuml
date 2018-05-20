@@ -1,0 +1,28 @@
+@startuml
+title Cucumber Functional Tests Setup
+
+actor PayerFSP Simulator
+participant Cucumber
+participant Switch
+actor PayeeFSP Simulator
+
+
+PayerFSP Simulator ->Switch: 1. Register Callback
+PayeeFSP Simulator->Switch: 1. Register Callback
+
+
+Cucumber->Switch: 2. Receiver Lookup
+activate Switch
+Switch ->Cucumber: HTTP Response 202
+deactivate Switch
+
+Switch->PayeeFSP Simulator: 3. Get Receiver Details
+activate PayeeFSP Simulator
+PayeeFSP Simulator->Switch: Receiver Details
+deactivate PayeeFSP Simulator
+
+Switch->PayerFSP Simulator: 4. Receiver Details(Callback)
+
+Cucumber<-PayerFSP Simulator: Get Respose Details
+Cucumber->Cucumber: Response Validation
+@enduml
