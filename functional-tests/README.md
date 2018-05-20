@@ -62,7 +62,7 @@ Given this brief overview about Gherkin and how it is impleemnted in Cucumber, t
  
 Contents:
 
-- [Required Software]("#required%20software")
+- [Required Software](#required software)
 - [Setup Overview](#setupoverview)
 - [Running Tests](#runningtests)
 - [Reports](#reports)
@@ -88,8 +88,21 @@ The below diagram represents the different components that are part of this test
  ![Sequence](sequencediagram.png)
  
  - _PayerFSP Simulator, PayeeFSP Simulator_: Mock Simulators that represent Payer and Payee FSPs that are used to receive the callbacks from Mojaloop switch and also to return default payer/payee details and quote responses.
+    These simulators are developed using Spring Boot framework and are provisioned once the tests are started using maven.
  - _Cucumber_: Represents the Cucumber-Java Step Definitions that sends the requests to the Switch and query PayerFSP/PayeeFSP for the callback responses.
  - _Switch_: Represents Mojaloop Switch against which all these test cases are executed.
+ 
+ ## Running Tests
+ There are different ways in which these tests can be executed. 
+  - From IDE - Intellij: 
+    - Doing a Right-Click on the feature files gives you different options to run  the entire frature or a specific scenario.
+    - 
+  
+  - From IDE - Eclipse:
+  
+  - From Command Line: 
+    - Apache maven should be successfully installed to run this command
+    - From the command line go to the directory of these tests, type `mvn clean verify` to trigger the tests.
 
 
 
