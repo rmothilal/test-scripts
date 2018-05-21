@@ -80,6 +80,10 @@ Contents:
     
     3.2 [Eclipse](http://www.eclipse.org/downloads/) 
     
+    - Once Eclipse is installed, Cucumber plugin needs to be installed. Click Help -> Install New Software and click "Add" in the "Work With" section.
+    - In the next screen to _Add Repository_, use "http://cucumber.github.com/cucumber-eclipse/update-site" in the Location field.
+    - In the next screen, click "Cucumber Eclipse Plugin" to install the plugin.
+    
 4. ngrok (Optional. If you plan to run test cases from laptop)
 
 ## SetupOverview
