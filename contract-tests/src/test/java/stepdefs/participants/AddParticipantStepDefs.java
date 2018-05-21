@@ -1,33 +1,53 @@
 package stepdefs.participants;
 
+import com.mojaloop.utils.Utility;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.springframework.http.ResponseEntity;
+import stepdefs.SpringAcceptanceTest;
 
-public class AddParticipantStepDefs {
+import javax.json.Json;
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class AddParticipantStepDefs extends SpringAcceptanceTest {
+
+    ResponseEntity<String> response;
+
+    String responseJson;
+
+    String mojaloopHost = "13.58.148.157";
+    String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
     @When("^I send a request to POST /participants with  \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
-    public void iSendARequestToPOSTParticipantsWithAndWith(String arg0, String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iSendARequestToPOSTParticipantsWithAndWith(String msisdn, String fspId, String currency) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", fspId)
+                .add("currency","USD")
+                .build().toString();
+        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fspId,null,null,requestJson,restTemplate);
     }
 
     @Then("^the participant information should be added in the switch\\. Expected FspID in the response is \"([^\"]*)\"$")
-    public void theParticipantInformationShouldBeAddedInTheSwitchExpectedFspIDInTheResponseIs(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void theParticipantInformationShouldBeAddedInTheSwitchExpectedFspIDInTheResponseIs(String expectedFspId) throws Throwable {
+        assertThat(responseJson,containsString(expectedFspId));
     }
 
     @When("^I send a request to POST /participants with \"([^\"]*)\" and FspID \"([^\"]*)\" and do not pass currency in the request$")
-    public void iSendARequestToPOSTParticipantsWithAndFspIDAndDoNotPassCurrencyInTheRequest(String arg0, String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iSendARequestToPOSTParticipantsWithAndFspIDAndDoNotPassCurrencyInTheRequest(String msisdn, String fspId) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", fspId)
+                .build().toString();
+        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fspId,null,null,requestJson,restTemplate);
     }
 
     @When("^I send a request to POST /participants with \"([^\"]*)\" and do not pass FspID in the request$")
-    public void iSendARequestToPOSTParticipantsWithAndDoNotPassFspIDInTheRequest(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iSendARequestToPOSTParticipantsWithAndDoNotPassFspIDInTheRequest(String msisdn) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .build().toString();
+        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,"",null,null,requestJson,restTemplate);
     }
 
     @Then("^An error should be returned\\. Expected error code is \"([^\"]*)\" and error description is \"([^\"]*)\"$")
