@@ -60,7 +60,7 @@ public void receiverDetails(String expectedName, String expectedDOB) throws Thro
 
 Given this brief overview about Gherkin and how it is impleemnted in Cucumber, the following sections talk about Installing the required software to run these tests, Steps to run the tests and an overview of the reports that will be generated.
  
-Contents:
+##Contents:
 
 - [Required Software](#requiredsoftware)
 - [Setup Overview](#setupoverview)
