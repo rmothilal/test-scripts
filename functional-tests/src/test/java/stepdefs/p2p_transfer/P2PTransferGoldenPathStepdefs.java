@@ -49,7 +49,6 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     String responseJson;
 
-    //String mojaloopHost = "52.208.201.14";
     String mojaloopHost = System.getProperty("mojaloop.host");
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
@@ -104,8 +103,6 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
 
         response = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
-
-        logger.info("ENV VAR"+System.getProperty("mojaloop.host"));
 
     }
 
@@ -192,63 +189,63 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         assertThat(responseDoc.read("condition"),is(not("")));
     }
 
-//    @Given("^A quote exists\\. Payer MSISDN \"([^\"]*)\" Payee MSISDN \"([^\"]*)\" Amount \"([^\"]*)\"$")
-//    public void aQuoteExistsPayerMSISDNPayeeMSISDNAmount(String payerMsisdn, String payeeMsisdn, String amount) throws Throwable {
-//        String quoteRequest = Json.createObjectBuilder()
-//                .add("quoteId",UUID.randomUUID().toString())
-//                .add("transactionId",UUID.randomUUID().toString())
-//                .add("payer", Json.createObjectBuilder()
-//                        .add("partyIdInfo",Json.createObjectBuilder()
-//                                .add("partyIdentifier",payerMsisdn)
-//                                .add("partyIdType","MSISDN")
-//                                .add("fspId","payerfsp")
-//                        )
-//                )
-//                .add("payee", Json.createObjectBuilder()
-//                        .add("partyIdInfo",Json.createObjectBuilder()
-//                                .add("partyIdentifier",payeeMsisdn)
-//                                .add("partyIdType","MSISDN")
-//                                .add("fspId","payeefsp")
-//                        )
-//                )
-//                .add("amount",Json.createObjectBuilder()
-//                        .add("amount",amount)
-//                        .add("currency","USD")
-//                )
-//                .add("amountType","SEND")
-//                .add("transactionType", Json.createObjectBuilder()
-//                        .add("scenario","DEPOSIT")
-//                        .add("initiator","PAYER")
-//                        .add("initiatorType","CONSUMER")
-//                )
-//                .build()
-//                .toString();
-//        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,restTemplate);
-//    }
-//
-//    @When("^I submit a transfer for amount \"([^\"]*)\"$")
-//    public void iSubmitATransferForAmount(String amount) throws Throwable {
-//        com.jayway.jsonpath.DocumentContext quoteResponseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
-//        String transferRequest = Json.createObjectBuilder()
-//                .add("transferId", UUID.randomUUID().toString())
-//                .add("payerFsp", "payerfsp")
-//                .add("payeeFsp", "payeefsp")
-//                .add("amount", Json.createObjectBuilder()
-//                        .add("amount", amount)
-//                        .add("currency", "USD")
-//                )
-//                .add("expiration", quoteResponseDoc.read("expiration").toString())
-//                .add("ilpPacket",quoteResponseDoc.read("ilpPacket").toString())
-//                .add("condition",quoteResponseDoc.read("condition").toString())
-//                .build()
-//                .toString();
-//        responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,restTemplate);
-//    }
-//
-//    @Then("^I should get a fulfillment response back with a transfer state of \"([^\"]*)\"$")
-//    public void iShouldGetAFulfillmentResponseBack(String transferState) throws Throwable {
-//        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
-//        assertThat(responseDoc.read("transferState"),is(transferState));
-//        assertThat(responseDoc.read("fulfilment"),is(not("")));
-//    }
+    @Given("^A quote exists\\. Payer MSISDN \"([^\"]*)\" Payee MSISDN \"([^\"]*)\" Amount \"([^\"]*)\"$")
+    public void aQuoteExistsPayerMSISDNPayeeMSISDNAmount(String payerMsisdn, String payeeMsisdn, String amount) throws Throwable {
+        String quoteRequest = Json.createObjectBuilder()
+                .add("quoteId",UUID.randomUUID().toString())
+                .add("transactionId",UUID.randomUUID().toString())
+                .add("payer", Json.createObjectBuilder()
+                        .add("partyIdInfo",Json.createObjectBuilder()
+                                .add("partyIdentifier",payerMsisdn)
+                                .add("partyIdType","MSISDN")
+                                .add("fspId","payerfsp")
+                        )
+                )
+                .add("payee", Json.createObjectBuilder()
+                        .add("partyIdInfo",Json.createObjectBuilder()
+                                .add("partyIdentifier",payeeMsisdn)
+                                .add("partyIdType","MSISDN")
+                                .add("fspId","payeefsp")
+                        )
+                )
+                .add("amount",Json.createObjectBuilder()
+                        .add("amount",amount)
+                        .add("currency","USD")
+                )
+                .add("amountType","SEND")
+                .add("transactionType", Json.createObjectBuilder()
+                        .add("scenario","DEPOSIT")
+                        .add("initiator","PAYER")
+                        .add("initiatorType","CONSUMER")
+                )
+                .build()
+                .toString();
+        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,getRestTemplate());
+    }
+
+    @When("^I submit a transfer for amount \"([^\"]*)\"$")
+    public void iSubmitATransferForAmount(String amount) throws Throwable {
+        com.jayway.jsonpath.DocumentContext quoteResponseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        String transferRequest = Json.createObjectBuilder()
+                .add("transferId", UUID.randomUUID().toString())
+                .add("payerFsp", "payerfsp")
+                .add("payeeFsp", "payeefsp")
+                .add("amount", Json.createObjectBuilder()
+                        .add("amount", amount)
+                        .add("currency", "USD")
+                )
+                .add("expiration", quoteResponseDoc.read("expiration").toString())
+                .add("ilpPacket",quoteResponseDoc.read("ilpPacket").toString())
+                .add("condition",quoteResponseDoc.read("condition").toString())
+                .build()
+                .toString();
+        responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,getRestTemplate());
+    }
+
+    @Then("^I should get a fulfillment response back with a transfer state of \"([^\"]*)\"$")
+    public void iShouldGetAFulfillmentResponseBack(String transferState) throws Throwable {
+        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        assertThat(responseDoc.read("transferState"),is(transferState));
+        assertThat(responseDoc.read("fulfilment"),is(not("")));
+    }
 }
