@@ -146,49 +146,49 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         assertThat(jPath.getString("party.personalInfo.dateOfBirth"), is(payeeDOB));
     }
 
-//    @When("^Payer FSP issues a quote to the switch by providing \"([^\"]*)\" and \"([^\"]*)\"\\. Payer MSISDN is \"([^\"]*)\" Payee MSISDN is \"([^\"]*)\"$")
-//    public void payerFSPIssuesAQuoteToTheSwitchByProvidingAndPayerMSISDNIsPayeeMSISDNIs(String amount, String currency, String payerMsisdn, String payeeMsisdn) throws Throwable {
-//        String quoteRequest = Json.createObjectBuilder()
-//                .add("quoteId",UUID.randomUUID().toString())
-//                .add("transactionId",UUID.randomUUID().toString())
-//                .add("payer", Json.createObjectBuilder()
-//                        .add("partyIdInfo",Json.createObjectBuilder()
-//                                .add("partyIdentifier",payerMsisdn)
-//                                .add("partyIdType","MSISDN")
-//                                .add("fspId","payerfsp")
-//                        )
-//                )
-//                .add("payee", Json.createObjectBuilder()
-//                        .add("partyIdInfo",Json.createObjectBuilder()
-//                                .add("partyIdentifier",payeeMsisdn)
-//                                .add("partyIdType","MSISDN")
-//                                .add("fspId","payeefsp")
-//                        )
-//                )
-//                .add("amount",Json.createObjectBuilder()
-//                        .add("amount",amount)
-//                        .add("currency",currency)
-//                )
-//                .add("amountType","SEND")
-//                .add("transactionType", Json.createObjectBuilder()
-//                        .add("scenario","DEPOSIT")
-//                        .add("initiator","PAYER")
-//                        .add("initiatorType","CONSUMER")
-//                )
-//                .build()
-//                .toString();
-//        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,restTemplate);
-//    }
-//
-//    @Then("^Payer FSP should see total fee and commission for the \"([^\"]*)\" specified by payer\\. Expected payee fsp fee is \"([^\"]*)\" and Expected payee fsp commission is \"([^\"]*)\"$")
-//    public void payerFSPShouldSeeTotalFeeAndCommissionForTheSpecifiedByPayeeExpectedPayeeFspFeeIsAndExpectedPayeeFspCommissionIs(String arg0, String arg1, String arg2) throws Throwable {
-//        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
-//        assertThat(responseDoc.read("payeeFspFee.amount"),is("1"));
-//        assertThat(responseDoc.read("payeeFspCommission.amount"),is("1"));
-//        assertThat(responseDoc.read("ilpPacket"),is(not("")));
-//        assertThat(responseDoc.read("condition"),is(not("")));
-//    }
-//
+    @When("^Payer FSP issues a quote to the switch by providing \"([^\"]*)\" and \"([^\"]*)\"\\. Payer MSISDN is \"([^\"]*)\" Payee MSISDN is \"([^\"]*)\"$")
+    public void payerFSPIssuesAQuoteToTheSwitchByProvidingAndPayerMSISDNIsPayeeMSISDNIs(String amount, String currency, String payerMsisdn, String payeeMsisdn) throws Throwable {
+        String quoteRequest = Json.createObjectBuilder()
+                .add("quoteId",UUID.randomUUID().toString())
+                .add("transactionId",UUID.randomUUID().toString())
+                .add("payer", Json.createObjectBuilder()
+                        .add("partyIdInfo",Json.createObjectBuilder()
+                                .add("partyIdentifier",payerMsisdn)
+                                .add("partyIdType","MSISDN")
+                                .add("fspId","payerfsp")
+                        )
+                )
+                .add("payee", Json.createObjectBuilder()
+                        .add("partyIdInfo",Json.createObjectBuilder()
+                                .add("partyIdentifier",payeeMsisdn)
+                                .add("partyIdType","MSISDN")
+                                .add("fspId","payeefsp")
+                        )
+                )
+                .add("amount",Json.createObjectBuilder()
+                        .add("amount",amount)
+                        .add("currency",currency)
+                )
+                .add("amountType","SEND")
+                .add("transactionType", Json.createObjectBuilder()
+                        .add("scenario","DEPOSIT")
+                        .add("initiator","PAYER")
+                        .add("initiatorType","CONSUMER")
+                )
+                .build()
+                .toString();
+        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,getRestTemplate());
+    }
+
+    @Then("^Payer FSP should see total fee and commission for the \"([^\"]*)\" specified by payer\\. Expected payee fsp fee is \"([^\"]*)\" and Expected payee fsp commission is \"([^\"]*)\"$")
+    public void payerFSPShouldSeeTotalFeeAndCommissionForTheSpecifiedByPayeeExpectedPayeeFspFeeIsAndExpectedPayeeFspCommissionIs(String arg0, String arg1, String arg2) throws Throwable {
+        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        assertThat(responseDoc.read("payeeFspFee.amount"),is("1"));
+        assertThat(responseDoc.read("payeeFspCommission.amount"),is("1"));
+        assertThat(responseDoc.read("ilpPacket"),is(not("")));
+        assertThat(responseDoc.read("condition"),is(not("")));
+    }
+
 //    @Given("^A quote exists\\. Payer MSISDN \"([^\"]*)\" Payee MSISDN \"([^\"]*)\" Amount \"([^\"]*)\"$")
 //    public void aQuoteExistsPayerMSISDNPayeeMSISDNAmount(String payerMsisdn, String payeeMsisdn, String amount) throws Throwable {
 //        String quoteRequest = Json.createObjectBuilder()
