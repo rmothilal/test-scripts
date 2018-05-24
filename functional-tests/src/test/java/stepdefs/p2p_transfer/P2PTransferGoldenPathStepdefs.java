@@ -2,10 +2,7 @@ package stepdefs.p2p_transfer;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
-import com.mojaloop.utils.HttpClient;
 import com.mojaloop.utils.Utility;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -17,10 +14,10 @@ import org.springframework.http.ResponseEntity;
 import stepdefs.SpringAcceptanceTest;
 
 import javax.json.Json;
-
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import static com.mojaloop.utils.Utility.getRestTemplate;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -30,10 +27,9 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     private Logger logger = Logger.getLogger(P2PTransferGoldenPathStepdefs.class.getName());
 
     ResponseEntity<String> response;
-
     String responseJson;
 
-    String mojaloopHost = "13.58.148.157";
+    String mojaloopHost = System.getProperty("mojaloop.host");
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
     @When("^In fsp \"([^\"]*)\" when I add user with the following details  MSISDN: \"([^\"]*)\" Full Name: \"([^\"]*)\" First Name: \"([^\"]*)\" Last Name: \"([^\"]*)\" DOB: \"([^\"]*)\"$")
@@ -63,9 +59,9 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<String> entity = new HttpEntity<String>(data,headers);
-        response = restTemplate.postForEntity(endPoint,entity,String.class);
+
+        response = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
 
     }
 
@@ -81,7 +77,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                                     .add("fspId", fsp)
                                     .add("currency","USD")
                                     .build().toString();
-        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fsp,null,null,requestJson,restTemplate);
+        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fsp,null,null,requestJson,getRestTemplate());
 
     }
 
@@ -98,7 +94,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
     public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
-        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,restTemplate);
+        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,getRestTemplate());
     }
 
     @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")
@@ -140,7 +136,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 )
                 .build()
                 .toString();
-        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,restTemplate);
+        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,getRestTemplate());
     }
 
     @Then("^Payer FSP should see total fee and commission for the \"([^\"]*)\" specified by payer\\. Expected payee fsp fee is \"([^\"]*)\" and Expected payee fsp commission is \"([^\"]*)\"$")
@@ -183,7 +179,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 )
                 .build()
                 .toString();
-        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,restTemplate);
+        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,getRestTemplate());
     }
 
     @When("^I submit a transfer for amount \"([^\"]*)\"$")
@@ -202,7 +198,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 .add("condition",quoteResponseDoc.read("condition").toString())
                 .build()
                 .toString();
-        responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,restTemplate);
+        responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,getRestTemplate());
     }
 
     @Then("^I should get a fulfillment response back with a transfer state of \"([^\"]*)\"$")
