@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import stepdefs.SpringAcceptanceTest;
+import static com.mojaloop.utils.Utility.getRestTemplate;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -52,22 +53,22 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     String mojaloopHost = System.getProperty("mojaloop.host");
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
-    public TestRestTemplate getRestTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-        TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
-            @Override
-            public boolean isTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-                return true;
-            }
-        };
-        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
-        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
-        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-        requestFactory.setHttpClient(httpClient);
-        TestRestTemplate restTemplate = new TestRestTemplate();
-        restTemplate.getRestTemplate().setRequestFactory(requestFactory);
-        return restTemplate;
-    }
+//    public TestRestTemplate getRestTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+//        TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
+//            @Override
+//            public boolean isTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+//                return true;
+//            }
+//        };
+//        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+//        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
+//        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
+//        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+//        requestFactory.setHttpClient(httpClient);
+//        TestRestTemplate restTemplate = new TestRestTemplate();
+//        restTemplate.getRestTemplate().setRequestFactory(requestFactory);
+//        return restTemplate;
+//    }
 
     @When("^In fsp \"([^\"]*)\" when I add user with the following details  MSISDN: \"([^\"]*)\" Full Name: \"([^\"]*)\" First Name: \"([^\"]*)\" Last Name: \"([^\"]*)\" DOB: \"([^\"]*)\"$")
     public void inFspWhenIAddUserWithTheFollowingDetailsMSISDNFullNameFirstNameLastNameDOB(String fsp, String msisdn, String fullName, String firstName, String lastName, String dob) throws Throwable {
