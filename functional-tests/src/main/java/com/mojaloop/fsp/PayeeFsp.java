@@ -64,7 +64,7 @@ public class PayeeFsp {
 
     @RequestMapping(value = "/participants/{Type}/{Id}",method = RequestMethod.PUT)
     public HttpStatus putParticipants(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
-        logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
+        logger.info("Header: " + correlationId + " Body: " + payload);
         if(correlationId.indexOf(",") != -1) {
             logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
             entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
