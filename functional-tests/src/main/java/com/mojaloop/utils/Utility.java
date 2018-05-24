@@ -15,6 +15,8 @@ public class Utility {
 
     private static Logger logger = Logger.getLogger(Utility.class.getName());
 
+    private static String baseUrl = "https://localhost:8444/";
+
     public static String getNewCorrelationId(){
         return UUID.randomUUID().toString();
     }
@@ -32,7 +34,7 @@ public class Utility {
                     .get(endpoint);
 
         Thread.sleep(2000);
-        String corrEndpoint = "/"+fspiopSource+"/correlationid/"+correlationId;
+        String corrEndpoint = baseUrl+fspiopSource+"/correlationid/"+correlationId;
         ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
         return response.getBody();
     }
@@ -51,7 +53,7 @@ public class Utility {
                     .post(endpoint);
 
         Thread.sleep(2000);
-        String corrEndpoint = "/"+fspiopSource+"/correlationid/"+correlationId;
+        String corrEndpoint = baseUrl+fspiopSource+"/correlationid/"+correlationId;
         ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
         return response.getBody();
     }
