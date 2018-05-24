@@ -27,7 +27,7 @@ public class PayerFsp {
         logger.info("Header: " + correlationId + " Body: " + payload);
         if(correlationId.indexOf(",") != -1)
             correlationId = correlationId.substring(0, correlationId.indexOf(","));
-        entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        entityMap.put(correlationId, payload);
         return HttpStatus.OK;
     }
 
@@ -35,7 +35,7 @@ public class PayerFsp {
     public void putParticipantsError(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         if(correlationId.indexOf(",") != -1)
             correlationId = correlationId.substring(0, correlationId.indexOf(","));
-        entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
+        entityMap.put(correlationId, payload);
 
     }
 
