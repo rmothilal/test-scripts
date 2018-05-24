@@ -49,55 +49,55 @@ public class PayerFsp {
     @RequestMapping(value = "/parties/{Type}/{Id}",method = RequestMethod.PUT)
     public HttpStatus putParties(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         logger.info("Header: " + correlationId + " Body: " + payload);
-        if(correlationId.indexOf(",") != -1) {
-            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
-            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
-        }
+        if(correlationId.indexOf(",") != -1)
+            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(correlationId, payload);
+
         return HttpStatus.OK;
     }
 
     @RequestMapping(value = "/parties/{Type}/{Id}/error",method = RequestMethod.PUT)
     public void putPartiesError(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
-        if(correlationId.indexOf(",") != -1) {
-            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
-            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
-        }
+        if(correlationId.indexOf(",") != -1)
+            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(correlationId, payload);
+
     }
 
     @RequestMapping(value = "/quotes/{quoteId}",method = RequestMethod.PUT)
     public HttpStatus putQuotes(@PathVariable("quoteId") String quoteId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         logger.info("Header: " + correlationId + " Body: " + payload);
-        if(correlationId.indexOf(",") != -1) {
-            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
-            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
-        }
+        if(correlationId.indexOf(",") != -1)
+            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(correlationId, payload);
+
         return HttpStatus.OK;
     }
 
     @RequestMapping(value = "/quotes/{quoteId}/error",method = RequestMethod.PUT)
     public void putQuotesError(@PathVariable("quoteId") String quoteId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
-        if(correlationId.indexOf(",") != -1) {
-            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
-            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
-        }
+        if(correlationId.indexOf(",") != -1)
+            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(correlationId, payload);
+
     }
 
     @RequestMapping(value = "/transfers/{transferId}",method = RequestMethod.PUT)
     public HttpStatus putTransfers(@PathVariable("transferId") String transferId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         logger.info("Header: " + correlationId + " Body: " + payload);
-        if(correlationId.indexOf(",") != -1) {
-            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
-            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
-        }
+        if(correlationId.indexOf(",") != -1)
+            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(correlationId, payload);
+
         return HttpStatus.OK;
     }
 
     @RequestMapping(value = "/transfers/{transferId}/error",method = RequestMethod.PUT)
     public void putTransfersError(@PathVariable("transferId") String transferId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
-        if(correlationId.indexOf(",") != -1) {
-            logger.info("Header: " + correlationId.substring(0, correlationId.indexOf(",")) + " Body: " + payload);
-            entityMap.put(correlationId.substring(0, correlationId.indexOf(",")), payload);
-        }
+        if(correlationId.indexOf(",") != -1)
+            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(correlationId, payload);
+
     }
 
     @RequestMapping(value = "/correlationid", method = RequestMethod.POST)
