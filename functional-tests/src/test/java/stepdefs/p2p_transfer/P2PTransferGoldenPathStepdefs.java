@@ -127,25 +127,25 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         //String responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/"+msisdn,fsp,null,null,restTemplate);
         assertThat(responseJson,containsString(fsp));
     }
-//
-//    @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
-//    public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-//        assertThat("Skipping",true==true);
-//    }
-//
-//    @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
-//    public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
-//        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,restTemplate);
-//    }
-//
-//    @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")
-//    public void payeeResultsShouldBeReturnedExpectedValuesAreFirstNameLastNameDOB(String payeeFullName, String payeeFirstName, String payeeLastName, String payeeDOB) throws Throwable {
-//        JsonPath jPath = JsonPath.from(responseJson);
-//        assertThat(jPath.getString("party.personalInfo.complexName.firstName"), is(payeeFirstName));
-//        assertThat(jPath.getString("party.personalInfo.complexName.lastName"), is(payeeLastName));
-//        assertThat(jPath.getString("party.personalInfo.dateOfBirth"), is(payeeDOB));
-//    }
-//
+
+    @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
+    public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String arg0, String arg1, String arg2, String arg3) throws Throwable {
+        assertThat("Skipping",true==true);
+    }
+
+    @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
+    public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
+        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,getRestTemplate());
+    }
+
+    @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")
+    public void payeeResultsShouldBeReturnedExpectedValuesAreFirstNameLastNameDOB(String payeeFullName, String payeeFirstName, String payeeLastName, String payeeDOB) throws Throwable {
+        JsonPath jPath = JsonPath.from(responseJson);
+        assertThat(jPath.getString("party.personalInfo.complexName.firstName"), is(payeeFirstName));
+        assertThat(jPath.getString("party.personalInfo.complexName.lastName"), is(payeeLastName));
+        assertThat(jPath.getString("party.personalInfo.dateOfBirth"), is(payeeDOB));
+    }
+
 //    @When("^Payer FSP issues a quote to the switch by providing \"([^\"]*)\" and \"([^\"]*)\"\\. Payer MSISDN is \"([^\"]*)\" Payee MSISDN is \"([^\"]*)\"$")
 //    public void payerFSPIssuesAQuoteToTheSwitchByProvidingAndPayerMSISDNIsPayeeMSISDNIs(String amount, String currency, String payerMsisdn, String payeeMsisdn) throws Throwable {
 //        String quoteRequest = Json.createObjectBuilder()
