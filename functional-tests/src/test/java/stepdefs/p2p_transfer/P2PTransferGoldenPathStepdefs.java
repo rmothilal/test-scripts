@@ -7,37 +7,17 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.path.json.JsonPath;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import stepdefs.SpringAcceptanceTest;
-import static com.mojaloop.utils.Utility.getRestTemplate;
-
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import javax.net.ssl.SSLContext;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-
 
 import javax.json.Json;
-import javax.net.ssl.SSLContext;
-
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import static com.mojaloop.utils.Utility.getRestTemplate;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -47,28 +27,10 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     private Logger logger = Logger.getLogger(P2PTransferGoldenPathStepdefs.class.getName());
 
     ResponseEntity<String> response;
-
     String responseJson;
 
     String mojaloopHost = System.getProperty("mojaloop.host");
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
-
-//    public TestRestTemplate getRestTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-//        TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
-//            @Override
-//            public boolean isTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
-//                return true;
-//            }
-//        };
-//        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
-//        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
-//        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
-//        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-//        requestFactory.setHttpClient(httpClient);
-//        TestRestTemplate restTemplate = new TestRestTemplate();
-//        restTemplate.getRestTemplate().setRequestFactory(requestFactory);
-//        return restTemplate;
-//    }
 
     @When("^In fsp \"([^\"]*)\" when I add user with the following details  MSISDN: \"([^\"]*)\" Full Name: \"([^\"]*)\" First Name: \"([^\"]*)\" Last Name: \"([^\"]*)\" DOB: \"([^\"]*)\"$")
     public void inFspWhenIAddUserWithTheFollowingDetailsMSISDNFullNameFirstNameLastNameDOB(String fsp, String msisdn, String fullName, String firstName, String lastName, String dob) throws Throwable {
@@ -97,11 +59,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
         HttpEntity<String> entity = new HttpEntity<String>(data,headers);
-
-        //response = restTemplate.postForEntity(endPoint,entity,String.class);
-
 
         response = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
 
