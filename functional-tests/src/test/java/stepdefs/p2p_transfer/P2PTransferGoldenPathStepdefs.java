@@ -49,7 +49,8 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     String responseJson;
 
-    String mojaloopHost = "52.208.201.14";
+    //String mojaloopHost = "52.208.201.14";
+    String mojaloopHost = System.getProperty("mojaloop.host");
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
     public TestRestTemplate getRestTemplate() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
@@ -103,6 +104,8 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
 
         response = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
+
+        logger.info("ENV VAR"+System.getProperty("mojaloop.host"));
 
     }
 
