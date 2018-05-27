@@ -2,7 +2,7 @@ Feature: This feature is used by payer FSP, to findout in which FSP (payee FSP) 
 
   Scenario Outline: Lookup Participant information using <Type> and <ID> for the participant that exist in switch
     Given the payee <Type> <ID>
-    When  the payer FSP asks switch to get payee FSP information
+    When  the payer FSP requests switch to get payee FSP information
     Then the payee FSP information <FSPID> should be returned.
 
     Examples:
