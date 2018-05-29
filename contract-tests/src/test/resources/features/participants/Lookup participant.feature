@@ -62,7 +62,7 @@ Feature: This feature is used by payer FSP, to findout in which FSP (payee FSP) 
 
 
   Scenario Outline: Test GET /participants for invalid required field <ID>, should fail the request
-    When  I send a request to GET /participants with a valid "<Type>" invalid ID "<ID>" in the request
+    When I send a request to GET /participants with a valid "<Type>" invalid ID "<ID>" in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
     And error description is "<ExpectedErrorDescription>"
     And Http response code is "<ExpectedResponseCode>"
