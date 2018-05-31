@@ -6,46 +6,45 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
     Then the participant information should be added in the switch. Expected FspID in the response is "<ExpectedFspID>"
 
     Examples:
-    |  Type   |     ID     |    FspID    |  Currency  |  ExpectedFspID   |
-    | MSISDN  | 1272545111 |   payerfsp  |    USD     |     payerfsp     |
-    | MSISDN  | 1272545117 |   payeefsp  |    USD     |     payeefsp     |
+      |  Type   |     ID     |    FspID    |  Currency  |  ExpectedFspID   |
+      | MSISDN  | 1272545111 |   payerfsp  |    USD     |     payerfsp     |
+      | MSISDN  | 1272545117 |   payeefsp  |    USD     |     payeefsp     |
 
 
   Scenario Outline: Test POST /participants for participant type MSISDN  without passing in optional currency, should not fail the request
     When  I send a request to POST /participants with Type is "<Type>", ID is "<ID>" and FspID "<FspID>" and do not pass "<Currency>" in the request
-    Then the participant information should be added in the switch. Expected FspID in the response is "<ExpectedFspID>"
+    Then the participant information should be added in the switch without currency. Expected FspID in the response is "<ExpectedFspID>"
     Examples:
-     |   Type    |    ID    |    FspID    |  Currency  |   ExpectedFspID  |
-     |  MSISDN   |1272545111 |   payerfsp  |            |     payerfsp     |
-     |  MSISDN   |1272545117 |   payeefsp  |            |     payeefsp     |
+      |   Type    |    ID    |    FspID    |  Currency  |   ExpectedFspID  |
+      |  MSISDN   |1272545111 |   payerfsp  |            |     payerfsp     |
+      |  MSISDN   |1272545117 |   payeefsp  |            |     payeefsp     |
 
-   Scenario Outline: Test POST /participant when try to add a participant that already exist in switch, should throw a message
-     Given a participant exists in switch with a "<FspID>"
-     When I add the participant with the same "<Type>" , "<ID>" and "<FspID>" to the switch
-     Then I should get a response "<Message>"
+  Scenario Outline: Test POST /participant when try to add a participant that already exist in switch, should throw a message
+    Given a participant with MSISDN "<ID>" exists in switch with a "<FspID>"
+    When I add the participant with the same "<Type>" , "<ID>" and "<FspID>" to the switch
+    Then I should get a response "<Message>"
 
-     Examples:
+    Examples:
       |   Type   |     ID     |    FspID   |      Message    |
       |  MSISDN  | 1272545111 |  payerfsp  | User already exists |
 
   Scenario Outline: Test POST /participants for missing any of the required fields, should fail the request
     When  I send a request to POST /participants with "<Type>" and one of these fileds missing "<ID>" "<FspID>" in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-         And error description is "<ExpectedErrorDescription>"
-         And Http Response code is "<ExpectedResponseCode>"
+    And error description is "<ExpectedErrorDescription>"
 
     Examples:
-    |    Type   |     ID     |   FspID   | ExpectedResponseCode |  ExpectedErrorCode  |             ExpectedErrorDescription            |
-    |   MSISDN  |            |  payerfsp |         404          |        3102         | Mandatory eliment in  the data model was missing|
-    |   MSISDN  | 1272545117 |           |         404          |        3102         | Mandatory eliment in the datta model was missing|
+      |    Type   |     ID     |   FspID   | ExpectedResponseCode |  ExpectedErrorCode  |             ExpectedErrorDescription            |
+      |   MSISDN  |            |  payerfsp |         404          |        3102         | Mandatory eliment in  the data model was missing|
+      |   MSISDN  | 1272545117 |           |         404          |        3102         | Mandatory eliment in the datta model was missing|
 
 
 
   Scenario Outline: Test POST /participants for invalid required field FspID, should fail the request
     When  I send a request to POST /participants with an invalid FspID  "<FspID>", a valid Type "<Type>" and "<ID>" in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-         And Error description is "<ExpectedErrorDescription>"
-         And Http Response code is "<ExpectedResponseCode>"
+    And Error description is "<ExpectedErrorDescription>"
+    And Http Response code is "<ExpectedResponseCode>"
 
     Examples:
       |     FspID    |    Type       |     ID      |ExpectedResponseCode |  ExpectedErrorCode  |     ExpectedErrorDescription     |
@@ -56,8 +55,8 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
   Scenario Outline: Test POST /participants for invalid field Type, should fail the request
     When  I send a request to POST /participants with a valid FspID  "<FspID>" and invalid Type "<Type>" in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-         And error description is "<ExpectedErrorDescription>"
-         And Http response code is "<ExpectedResponseCode>"
+    And error description is "<ExpectedErrorDescription>"
+    And Http response code is "<ExpectedResponseCode>"
 
     Examples:
       |     FspID      |     Type     |     ID      | ExpectedResponseCode | ExpectedErrorCode |    ExpectedErrorDescription    |
@@ -67,8 +66,8 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
   Scenario Outline: Test POST /participants for invalid required field ID, should fail the request
     When  I send a request to POST /participants with a valid FspID "<FspID>" and valid "<Type>" invalid ID "<ID>" in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-         And error description is "<ExpectedErrorDescription>"
-         And Http response code is "<ExpectedResponseCode>"
+    And error description is "<ExpectedErrorDescription>"
+    And Http response code is "<ExpectedResponseCode>"
     Examples:
       |     FspID      |     Type   |      ID     | ExpectedResponseCode | ExpectedErrorCode |    ExpectedErrorDescription      |
       |    payerfsp    |   MSISDN   | 01272545111 |         400          |        3101       | Format of parameter is not valid |
@@ -81,8 +80,8 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
     Given Currency
     When I send POST /participant request with "<Currency> along with "<FspID>","<Type>" and "<ID>"
     Then I should see the "<ErrorCode>"
-         And "<ErrorDescription>"
-         And Http Response code is "<ExpectedResponseCode>"
+    And "<ErrorDescription>"
+    And Http Response code is "<ExpectedResponseCode>"
     Examples:
       |   FspID  |   MSISDN     | Currency | ExpectedResponseCode | ErrorCode |          ErrorDescription        |
       | payerfsp |  1272545111  |    USSD  |      400             |    3101   | Format of parameter is not valid |
@@ -90,9 +89,9 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
       | payerfsp |  1272545111  |    USA   |      400             |    3101   | Format of parameter is not valid |
 
 
-    Scenario: Testing Http Response code 401
-      When I submit a request wihtout authorization
-      Then I should get response code "401"
+  Scenario: Testing Http Response code 401
+    When I submit a request wihtout authorization
+    Then I should get response code "401"
 
     #To do
       #Scenario: Testing Http Response code 401- unauthorized (missing/bad token - need to test when the application is available)
@@ -119,14 +118,14 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
     When I send a valid request on POST /participants
     Then I should get an error code of "<3003>" with an error message of "<Error occured while adding party information>"
 
-    Scenario: Testing ErrorCode 3201 - Destination Fsp does not exist or can't be found
-      When I send a
+  Scenario: Testing ErrorCode 3201 - Destination Fsp does not exist or can't be found
+    When I send a
 
 
-      Scenario Outline: Testing Error code for missing the required Headers in Http request
-        When I send a request to POST /participants with one of the missing required "<Headers>"
-        Then I should get the Response code "<ResponseCode>" with an error code "<ErrorCode>" and Error msg "<ErrorMessage>"
+  Scenario Outline: Testing Error code for missing the required Headers in Http request
+    When I send a request to POST /participants with one of the missing required "<Headers>"
+    Then I should get the Response code "<ResponseCode>" with an error code "<ErrorCode>" and Error msg "<ErrorMessage>"
 
-        Examples:
-        |   Type   |     ID     |    FspID   |    Headers    | ResponseCode |  ErrorCode   |  ErrorMessage  |
-        |  MSISDN  | 1272545111 |  payerfsp  |               |     400      |              |                |
+    Examples:
+      |   Type   |     ID     |    FspID   |    Headers    | ResponseCode |  ErrorCode   |  ErrorMessage  |
+      |  MSISDN  | 1272545111 |  payerfsp  |               |     400      |              |                |
