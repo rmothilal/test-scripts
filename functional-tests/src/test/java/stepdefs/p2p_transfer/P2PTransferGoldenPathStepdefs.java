@@ -89,7 +89,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
     public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-        assertThat("Skipping",true==true);
+        //assertThat("Skipping",true==true);
     }
 
     @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
