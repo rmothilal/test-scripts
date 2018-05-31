@@ -14,7 +14,6 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
   Scenario Outline: Test POST /participants for participant type MSISDN  without passing in optional currency, should not fail the request
     When  I send a request to POST /participants with Type is "<Type>", ID is "<ID>" and FspID "<FspID>" and do not pass "<Currency>" in the request
     Then the participant information should be added in the switch. Expected FspID in the response is "<ExpectedFspID>"
-
     Examples:
      |   Type    |    ID    |    FspID    |  Currency  |   ExpectedFspID  |
      |  MSISDN   |1272545111 |   payerfsp  |            |     payerfsp     |
@@ -106,8 +105,8 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
 
     Examples:
       |  Type   |     ID     |    FspID    | ExpectedResponseCode |  ErrorMsg  |
-      | MSISDN  | 1272545111 |   payerfsp  |          405         |
-      | MSISDN  | 1272545117 |   payeefsp  |          405         |
+      | MSISDN  | 1272545111 |   payerfsp  |          405         |            |
+      | MSISDN  | 1272545117 |   payeefsp  |          405         |            |
 
   Scenario: Testing Http Response code 406, i.e throwing an error response code for unsupported versions in the required Accept header from the client request,ing
     When I send a request with unsupported version 2, in the required Accept header
@@ -130,4 +129,4 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
 
         Examples:
         |   Type   |     ID     |    FspID   |    Headers    | ResponseCode |  ErrorCode   |  ErrorMessage  |
-        |  MSISDN  | 1272545111 |  payerfsp  |               |     400      |
+        |  MSISDN  | 1272545111 |  payerfsp  |               |     400      |              |                |
