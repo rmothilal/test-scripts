@@ -2,7 +2,7 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
 
 
   Scenario Outline: Test POST /participants for participant type MSISDN.
-    When  I send a request to POST /participants with  "<Type>" "<ID>" and  "<FspID>" with  "<Currency>"
+    When  I send a request to POST /participants with Type "<Type>" ID "<ID>" and  "<FspID>" with  "<Currency>"
     Then the participant information should be added in the switch. Expected FspID in the response is "<ExpectedFspID>"
 
     Examples:
@@ -42,9 +42,9 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
 
   Scenario Outline: Test POST /participants for invalid required field FspID, should fail the request
     When  I send a request to POST /participants with an invalid FspID  "<FspID>", a valid Type "<Type>" and "<ID>" in the request
-    Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-    And Error description is "<ExpectedErrorDescription>"
-    And Http Response code is "<ExpectedResponseCode>"
+    Then An error should be returned for invalid FspID. Expected error code is "<ExpectedErrorCode>"
+    And Error description for invalid FspId is "<ExpectedErrorDescription>"
+    And Http Response code for invalid FspId is "<ExpectedResponseCode>"
 
     Examples:
       |     FspID    |    Type       |     ID      |ExpectedResponseCode |  ExpectedErrorCode  |     ExpectedErrorDescription     |
@@ -64,7 +64,7 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
       |    payeefsp    |   MSSIS**N   | 2272545117  |           400        |        3101       | Format of parameter is not valid |
 
   Scenario Outline: Test POST /participants for invalid required field ID, should fail the request
-    When  I send a request to POST /participants with a valid FspID "<FspID>" and valid "<Type>" invalid ID "<ID>" in the request
+    When  I send a request to POST /participants with a valid FspID "<FspID>" and valid Type "<Type>" invalid ID "<ID>" in the request
     Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
     And error description is "<ExpectedErrorDescription>"
     And Http response code is "<ExpectedResponseCode>"

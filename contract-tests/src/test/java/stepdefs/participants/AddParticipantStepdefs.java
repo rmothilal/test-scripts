@@ -27,13 +27,13 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
 
 
-    @When("^I send a request to POST /participants with  \"([^\"]*)\" \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
+    @When("^I send a request to POST /participants with  Type\"([^\"]*)\" ID \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
     public void iSendARequestToPOSTParticipantsWithAndWith(String type, String msisdn, String fspId, String currency) throws Throwable {
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", fspId)
                 .add("currency",currency)
                 .build().toString();
-        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fspId,null,null,requestJson,getRestTemplate());
+        responseJson = Utility.post(mojaloopUrl + "/participants/" +type +"/"+ msisdn,fspId,null,null,requestJson,getRestTemplate());
     }
 
     @Then("^the participant information should be added in the switch\\. Expected FspID in the response is \"([^\"]*)\"$")
@@ -55,8 +55,8 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
     }
 
     @Given("^a participant with MSISDN \"([^\"]*)\" exists in switch with a \"([^\"]*)\"$")
-    public void aParticipantExistsInSwitchWithA(String msisdn, String fspId) throws Throwable {
-        responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/" + msisdn,fspId,null,null,getRestTemplate());
+    public void aParticipantExistsInSwitchWithA(String id, String fspId) throws Throwable {
+        responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/" + id ,fspId,null,null,getRestTemplate());
         assertThat(responseJson,containsString(fspId));
     }
 
@@ -91,8 +91,27 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         assertThat(responseJson,containsString(expectedErrorDescription));
     }
 
-    @When("^I send a request to POST /participants with an invalid FspID  \"([^\"]*)\", a valid Type \"([^\"]*)\" and \"([^\"]*)\" in the request$")
-    public void iSendARequestToPOSTParticipantsWithAnInvalidFspIDAValidTypeAndInTheRequest(String arg0, String arg1, String arg2) throws Throwable {
+    @When("^I send a request to POST /participants with an invalid FspID \"([^\"]*)\", a valid Type \"([^\"]*)\" and  ID \"([^\"]*)\" in the request$")
+    public void iSendARequestToPOSTParticipantsWithAnInvalidFspIDAValidTypeAndIDInTheRequest(String fspId, String type, String id) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", fspId)
+                .build().toString();
+        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + id,fspId,null,null,requestJson,getRestTemplate());
+    }
+    @Then("^An error should be returned for invalid FspID Expected error code is \"([^\"]*)\"$")
+    public void anErrorShouldBeReturnedForInvalidFspIDExpectedErrorCodeIs(String Errorcode) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @And("^Error description for invalid FspId is \"([^\"]*)\"$")
+    public void errorDescriptionForInvalidFspIdIs(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
+    @And("^Http Response code for invalid FspId is \"([^\"]*)\"$")
+    public void httpResponseCodeForInvalidFspIdIs(String arg0) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
@@ -103,7 +122,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         throw new PendingException();
     }
 
-    @When("^I send a request to POST /participants with a valid FspID \"([^\"]*)\" and valid \"([^\"]*)\" invalid ID \"([^\"]*)\" in the request$")
+    @When("^I send a request to POST /participants with a valid FspID \"([^\"]*)\" and valid Type \"([^\"]*)\" invalid ID \"([^\"]*)\" in the request$")
     public void iSendARequestToPOSTParticipantsWithAValidFspIDAndValidInvalidIDInTheRequest(String arg0, String arg1, String arg2) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
@@ -126,5 +145,13 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
+
+    @When("^I send a request to POST /participants with Type \"([^\"]*)\" ID \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
+    public void iSendARequestToPOSTParticipantsWithTypeIDAndWith(String arg0, String arg1, String arg2, String arg3) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
+    }
+
 }
 
