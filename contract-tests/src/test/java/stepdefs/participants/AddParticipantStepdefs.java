@@ -47,8 +47,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
 
     MLResponse response;
 
-    String mojaloopHost = System.getProperty("mojaloop.host");
-    String participantsBaseUrl = "http://"+mojaloopHost+"/interop/switch/v1/participants";
+    String participantsBaseUrl = mojaloopHost+"/interop/switch/v1/participants";
 
 
     @When("^I send a request to POST /participants with  Type\"([^\"]*)\" ID \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")

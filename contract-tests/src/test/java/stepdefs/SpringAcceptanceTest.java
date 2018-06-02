@@ -43,6 +43,8 @@ import org.springframework.web.client.RestTemplate;
 //@WebAppConfiguration
 public class SpringAcceptanceTest {
 
+    public String mojaloopHost = "http://"+ System.getProperty("mojaloop.host");
+
     @Autowired
     protected TestRestTemplate restTemplate;
 

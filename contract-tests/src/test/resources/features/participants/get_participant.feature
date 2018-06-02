@@ -1,15 +1,15 @@
 Feature: This feature is used by payer FSP, to determine in which FSP (payee FSP) the required party (payee) is located.
-#
-#  Scenario Outline: Lookup Participant information using <Type>,<ID> and optional <Currency> for the participant that exist in switch
-#    Given the payee "<Type>" "<ID>"
-#    When  the payer FSP requests switch to get payee FSP information
-#    Then the payee FSP information <FSPID> should be returned.
-#
-#    Examples:
-#    |  Type   |     ID     |  Currency |   FSPID  |
-#    | MSISDN  | 1272545117 |           | payeefsp |
-#    | MSISDN  | 1272545111 |           | payerfsp |
-#
+
+  Scenario Outline: Lookup Participant information using <type>,<payeeid> for the participant that exist in switch
+    Given Payee "<payeeid>" with "<type>" exists in switch under "<payeefsp>"
+    When  Payer FSP does a lookup for payee "<payeeid>" and type "<type>" in the switch
+    Then Payee FSP information "<payeefsp>" should be returned.
+
+    Examples:
+    |  type   |     payeeid     |   payeefsp   |
+    | MSISDN  |    1272545117   |  fsp1        |
+    | MSISDN  |    1272545111   |  fsp2        |
+
 #  Scenario Outline:  payer FSP can filter the payee FSP results based on currency it supports, if a payee is associated
 #  with multiple FSP's with different currencies.
 #
