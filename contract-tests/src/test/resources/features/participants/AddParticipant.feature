@@ -53,10 +53,10 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
       |   pa?yer*    |    MSISDN     | 1272545112  |       400           |        3101         | Format of parameter is not valid |
 
   Scenario Outline: Test POST /participants for invalid field Type, should fail the request
-    When  I send a request to POST /participants with a valid FspID  "<FspID>" and invalid Type "<Type>" in the request
-    Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-    And error description is "<ExpectedErrorDescription>"
-    And Http response code is "<ExpectedResponseCode>"
+    When  I send a request to POST /participants with a valid ID "<ID>", FspID  "<FspID>" and invalid Type "<Type>" in the request
+    Then An error should be returned for Invalid Type. Expected error code is "<ExpectedErrorCode>"
+    And error description for Invalid Type is "<ExpectedErrorDescription>"
+    And Http response code for Invalid Type is "<ExpectedResponseCode>"
 
     Examples:
       |     FspID      |     Type     |     ID      | ExpectedResponseCode | ExpectedErrorCode |    ExpectedErrorDescription    |
@@ -64,10 +64,10 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
       |    payeefsp    |   MSSIS**N   | 2272545117  |           400        |        3101       | Format of parameter is not valid |
 
   Scenario Outline: Test POST /participants for invalid required field ID, should fail the request
-    When  I send a request to POST /participants with a valid FspID "<FspID>" and valid Type "<Type>" invalid ID "<ID>" in the request
-    Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-    And error description is "<ExpectedErrorDescription>"
-    And Http response code is "<ExpectedResponseCode>"
+    When  I send a request to POST /participants with a valid FspID "<FspID>", valid Type "<Type>" and invalid ID "<ID>" in the request
+    Then An error should be returned for invalid ID. Expected error code is "<ExpectedErrorCode>"
+    And error description for invalid ID is "<ExpectedErrorDescription>"
+    And Http response code for invalid ID is "<ExpectedResponseCode>"
     Examples:
       |     FspID      |     Type   |      ID     | ExpectedResponseCode | ExpectedErrorCode |    ExpectedErrorDescription      |
       |    payerfsp    |   MSISDN   | 01272545111 |         400          |        3101       | Format of parameter is not valid |
@@ -76,22 +76,17 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
       |    payeefsp    |   MSISDN   |   @27254/17 |         400          |        3101       | Format of parameter is not valid |
 
 
-  Scenario Outline: Validating Field length and data type for the field "<Currency>"
-    Given Currency
-    When I send POST /participant request with "<Currency> along with "<FspID>","<Type>" and "<ID>"
-    Then I should see the "<ErrorCode>"
-    And "<ErrorDescription>"
-    And Http Response code is "<ExpectedResponseCode>"
+  Scenario Outline: Validating Field length and data type for the field Currency
+    When I send POST /participant request with invalid "<Currency>" along with "<FspID>" and "<ID>"
+    Then An error should be returned for invalid currency. Expected error code is "<ExpectedErrorCode>"
+    And  error description for invalid currency is "<ExpectedErrorDescription>"
+    And Http response code for invalid currency is "<ExpectedResponseCode>"
     Examples:
-      |   FspID  |   MSISDN     | Currency | ExpectedResponseCode | ErrorCode |          ErrorDescription        |
+      |   FspID  |   ID     | Currency | ExpectedResponseCode | ExpectedErrorCode |          ExpectedErrorDescription        |
       | payerfsp |  1272545111  |    USSD  |      400             |    3101   | Format of parameter is not valid |
       | payeefsp |  1272545117  |    US    |      400             |    3101   | Format of parameter is not valid |
       | payerfsp |  1272545111  |    USA   |      400             |    3101   | Format of parameter is not valid |
 
-
-  Scenario: Testing Http Response code 401
-    When I submit a request wihtout authorization
-    Then I should get response code "401"
 
     #To do
       #Scenario: Testing Http Response code 401- unauthorized (missing/bad token - need to test when the application is available)

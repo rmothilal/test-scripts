@@ -2,16 +2,16 @@ package stepdefs.participants;
 
 import com.mojaloop.utils.MLResponse;
 import com.mojaloop.utils.Utility;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.path.json.JsonPath;
-import org.springframework.http.ResponseEntity;
 import stepdefs.SpringAcceptanceTest;
 
 import javax.json.Json;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static com.mojaloop.utils.Utility.getRestTemplate;
@@ -26,16 +26,22 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
     MLResponse response;
 
     String mojaloopHost = System.getProperty("mojaloop.host");
-    String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
+    String participantsBaseUrl = "http://"+mojaloopHost+"/interop/switch/v1/participants";
 
 
     @When("^I send a request to POST /participants with  Type\"([^\"]*)\" ID \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
     public void iSendARequestToPOSTParticipantsWithAndWith(String type, String msisdn, String fspId, String currency) throws Throwable {
+
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", fspId)
                 .add("currency",currency)
                 .build().toString();
-        response = Utility.post(mojaloopUrl + "/participants/" +type +"/"+ msisdn,fspId,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", msisdn),requestJson,headers, null,getRestTemplate());
     }
 
     @Then("^the participant information should be added in the switch\\. Expected FspID in the response is \"([^\"]*)\"$")
@@ -48,7 +54,13 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", fspId)
                 .build().toString();
-        response = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fspId,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", msisdn),requestJson,headers, null,getRestTemplate());
+
     }
 
     @Then("^the participant information should be added in the switch without currency\\. Expected FspID in the response is \"([^\"]*)\"$")
@@ -58,7 +70,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
 
     @Given("^a participant with MSISDN \"([^\"]*)\" exists in switch with a \"([^\"]*)\"$")
     public void aParticipantExistsInSwitchWithA(String id, String fspId) throws Throwable {
-        response = Utility.get(mojaloopUrl + "/participants/MSISDN/" + id ,fspId,null,null,getRestTemplate());
+        response = Utility.get(participantsBaseUrl + "/participants/MSISDN/" + id ,fspId,null,null,getRestTemplate());
         assertThat(response.getResponseBody(),containsString(fspId));
     }
 
@@ -67,7 +79,13 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", fspId)
                 .build().toString();
-        response = Utility.post(mojaloopUrl + "/participants/MSISDN/" + id,fspId,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+
     }
 
     @Then("^I should get a response \"([^\"]*)\"$")
@@ -80,7 +98,13 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", fspId)
                 .build().toString();
-        response = Utility.post(mojaloopUrl + "/participants/MSISDN/" + id,fspId,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+
     }
 
     @Then("^An error should be returned\\. Expected error code is \"([^\"]*)\"$")
@@ -98,7 +122,13 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", fspId)
                 .build().toString();
-        response = Utility.post(mojaloopUrl + "/participants/MSISDN/" + id,fspId,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+
     }
     @Then("^An error should be returned for invalid FspID Expected error code is \"([^\"]*)\"$")
     public void anErrorShouldBeReturnedForInvalidFspIDExpectedErrorCodeIs(String errorcode) throws Throwable {
@@ -118,42 +148,102 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         assertThat(response.getResponseCode(),is(expectedResponseCode));
     }
 
-    @When("^I send a request to POST /participants with a valid FspID  \"([^\"]*)\" and invalid Type \"([^\"]*)\" in the request$")
-    public void iSendARequestToPOSTParticipantsWithAValidFspIDAndInvalidTypeInTheRequest(String arg0, String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @When("^I send a request to POST /participants with a valid ID \"([^\"]*)\", FspID  \"([^\"]*)\" and invalid Type \"([^\"]*)\" in the request$")
+    public void iSendARequestToPOSTParticipantsWithAValidFspIDAndInvalidTypeInTheRequest(String id, String fspId, String type) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", fspId)
+                .build().toString();
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+
     }
 
-    @When("^I send a request to POST /participants with a valid FspID \"([^\"]*)\" and valid Type \"([^\"]*)\" invalid ID \"([^\"]*)\" in the request$")
-    public void iSendARequestToPOSTParticipantsWithAValidFspIDAndValidInvalidIDInTheRequest(String arg0, String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @Then("^An error should be returned for Invalid Type\\. Expected error code is \"([^\"]*)\"$")
+    public void anErrorShouldBeReturnedForInvalidTypeExpectedErrorCodeIs(String expectedErrorCode) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorCode"), is(expectedErrorCode));
     }
 
-    @Given("^Currency$")
-    public void currency() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @And("^error description for Invalid Type is \"([^\"]*)\"$")
+    public void errorDescriptionForInvalidTypeIs(String expectedErrorDescription) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorDescription"), is(expectedErrorDescription));
     }
 
-    @When("^I send POST /participant request with \"([^\"]*)\"<FspID>\"([^\"]*)\"<Type>\"([^\"]*)\"<ID>\"$")
-    public void iSendPOSTParticipantRequestWithFspIDTypeID(String arg0, String arg1, String arg2) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @And("^Http response code for Invalid Type is \"([^\"]*)\"$")
+    public void httpResponseCodeForInvalidTypeIs(String expectedResponseCode) throws Throwable {
+        assertThat(response.getResponseCode(),is(expectedResponseCode));
     }
 
-    @Then("^I should see the \"([^\"]*)\"$")
-    public void iShouldSeeThe(String arg0) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    @When("^I send a request to POST /participants with a valid FspID \"([^\"]*)\", valid Type \"([^\"]*)\" and invalid ID \"([^\"]*)\" in the request$")
+    public void iSendARequestToPOSTParticipantsWithAValidFspIDValidTypeAndInvalidIDInTheRequest(String fspId, String type, String id) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", fspId)
+                .build().toString();
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+
+    }
+
+    @Then("^An error should be returned for invalid ID\\. Expected error code is \"([^\"]*)\"$")
+    public void anErrorShouldBeReturnedForInvalidIDExpectedErrorCodeIs(String expectedErrorCode) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorCode"), is(expectedErrorCode));
+    }
+
+    @And("^error description for invalid ID is \"([^\"]*)\"$")
+    public void errorDescriptionForInvalidIDIs(String expectedErrorDescription) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorDescription"), is(expectedErrorDescription));
+    }
+
+    @And("^Http response code for invalid ID is \"([^\"]*)\"$")
+    public void httpResponseCodeForInvalidIDIs(String expectedResponseCode) throws Throwable {
+        assertThat(response.getResponseCode(),is(expectedResponseCode));
+    }
+
+    @When("^I send POST /participant request with invalid \"([^\"]*)\" along with \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void iSendPOSTParticipantRequestWithInvalidAlongWithAnd(String currency, String fspId, String id) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", fspId)
+                .add("currency",currency)
+                .build().toString();
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(String.join(participantsBaseUrl).join("/","MSISDN").join("/", id),requestJson,headers, null,getRestTemplate());
+
+
+    }
+
+    @Then("^An error should be returned for invalid currency\\. Expected error code is \"([^\"]*)\"$")
+    public void anErrorShouldBeReturnedForInvalidCurrencyExpectedErrorCodeIs(String expectedErrorCode) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorCode"), is(expectedErrorCode));
+    }
+
+    @And("^error description for invalid currency is \"([^\"]*)\"$")
+    public void errorDescriptionForInvalidCurrencyIs(String expectedErrorDescription) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorDescription"), is(expectedErrorDescription));
+    }
+
+    @And("^Http response code for invalid currency is \"([^\"]*)\"$")
+    public void httpResponseCodeForInvalidCurrencyIs(String expectedResponseCode) throws Throwable {
+        assertThat(response.getResponseCode(),is(expectedResponseCode));
     }
 
 
-    @When("^I send a request to POST /participants with Type \"([^\"]*)\" ID \"([^\"]*)\" and  \"([^\"]*)\" with  \"([^\"]*)\"$")
-    public void iSendARequestToPOSTParticipantsWithTypeIDAndWith(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
 
 }
 

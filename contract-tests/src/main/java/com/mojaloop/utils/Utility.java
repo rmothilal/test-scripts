@@ -16,6 +16,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -32,44 +33,44 @@ public class Utility {
         return UUID.randomUUID().toString();
     }
 
-    public static MLResponse get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
+    public static MLResponse get(String endpoint, Map<String,String> headers, Map<String,String> queryParams, TestRestTemplate restTemplate) throws Exception {
         String correlationId = getNewCorrelationId();
         MLResponse response = new MLResponse();
-        if(fspiopDestination == null) fspiopDestination = "";
         Response raResponse =
                 given()
-                        .header("FSPIOP-Source",fspiopSource)
-                        .header("FSPIOP-Destination",fspiopDestination)
-                        .header("X-Forwarded-For",correlationId)
-                        .header("Content-Type", "application/json")
-                        .when()
-                        .get(endpoint);
+                    .header("Accept",headers.get("Accept"))
+                    .header("Content-Type", "application/json")
+                    .header("FSPIOP-Source",headers.get("FSPIOP-Source"))
+                    .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
+                    .header("X-Forwarded-For",correlationId)
+                .when()
+                    .get(endpoint);
 
         response.setResponseCode(String.valueOf(raResponse.getStatusCode()));
 
         Thread.sleep(2000);
-        String corrEndpoint = simulatorUrl+fspiopSource+"/correlationid/"+correlationId;
+        String corrEndpoint = simulatorUrl+"/payerfsp/correlationid/"+correlationId;
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
         response.setResponseBody(responseEntity.getBody());
         return response;
     }
 
-    public static MLResponse post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
+    public static MLResponse post(String endpoint, String body, Map<String,String> headers, Map<String,String> queryParams, TestRestTemplate restTemplate) throws Exception{
         String correlationId = getNewCorrelationId();
         MLResponse response = new MLResponse();
-        if(fspiopDestination == null) fspiopDestination = "";
         Response raResponse =
                 given()
-                    .body(body)
-                    .header("FSPIOP-Source",fspiopSource)
-                    .header("FSPIOP-Destination",fspiopDestination)
-                    .header("X-Forwarded-For",correlationId)
+                    .header("Accept",headers.get("Accept"))
                     .header("Content-Type", "application/json")
+                    .header("FSPIOP-Source",headers.get("FSPIOP-Source"))
+                    .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
+                    .header("X-Forwarded-For",correlationId)
+                    .body(body)
                 .when()
                     .post(endpoint);
 
         Thread.sleep(2000);
-        String corrEndpoint = "/"+fspiopSource+"/correlationid/"+correlationId;
+        String corrEndpoint = "/payerfsp/correlationid/"+correlationId;
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
         response.setResponseBody(responseEntity.getBody());
         return response;
