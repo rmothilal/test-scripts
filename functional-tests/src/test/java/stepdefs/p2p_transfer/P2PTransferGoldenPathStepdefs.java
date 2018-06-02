@@ -2,6 +2,7 @@ package stepdefs.p2p_transfer;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
+import com.mojaloop.utils.MLResponse;
 import com.mojaloop.utils.Utility;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -94,7 +95,8 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
     public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
-        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,getRestTemplate());
+        MLResponse response = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,getRestTemplate());
+        responseJson = response.getResponseBody();
     }
 
     @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")

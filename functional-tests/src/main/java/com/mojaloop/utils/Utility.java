@@ -16,7 +16,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -27,14 +26,15 @@ public class Utility {
 
     private static Logger logger = Logger.getLogger(Utility.class.getName());
 
-    private static String baseUrl = "https://localhost:8444/";
+    private static String simulatorUrl = "https://localhost:8444/";
 
     public static String getNewCorrelationId(){
         return UUID.randomUUID().toString();
     }
 
-    public static String get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
+    public static MLResponse get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
         String correlationId = getNewCorrelationId();
+        MLResponse response = new MLResponse();
         if(fspiopDestination == null) fspiopDestination = "";
         Response raResponse =
                 given()
@@ -45,10 +45,13 @@ public class Utility {
                 .when()
                     .get(endpoint);
 
+        response.setResponseCode(String.valueOf(raResponse.getStatusCode()));
+
         Thread.sleep(2000);
-        String corrEndpoint = baseUrl+fspiopSource+"/correlationid/"+correlationId;
-        ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
-        return response.getBody();
+        String corrEndpoint = simulatorUrl +fspiopSource+"/correlationid/"+correlationId;
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
+        response.setResponseBody(responseEntity.getBody());
+        return response;
     }
 
     public static String post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
@@ -65,7 +68,7 @@ public class Utility {
                     .post(endpoint);
 
         Thread.sleep(2000);
-        String corrEndpoint = baseUrl+fspiopSource+"/correlationid/"+correlationId;
+        String corrEndpoint = simulatorUrl +fspiopSource+"/correlationid/"+correlationId;
         ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
         return response.getBody();
     }
