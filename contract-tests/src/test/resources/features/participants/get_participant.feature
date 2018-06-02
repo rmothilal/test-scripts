@@ -1,4 +1,4 @@
-Feature: This feature is used by payer FSP, to findout in which FSP (payee FSP) the required party (payee) is located.
+Feature: This feature is used by payer FSP, to determine in which FSP (payee FSP) the required party (payee) is located.
 #
 #  Scenario Outline: Lookup Participant information using <Type>,<ID> and optional <Currency> for the participant that exist in switch
 #    Given the payee "<Type>" "<ID>"
