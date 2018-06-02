@@ -16,7 +16,7 @@
  their names indented and be marked with a '-'. Email address can be added
  optionally within square brackets <email>.
  * Gates Foundation
- - Name Sridevi Miriyala <sridevi.miriyala@modusbox.com>
+ - Name Murthy Kakarlamudi <murthy@modusbox.com>
  --------------
  ******/
 package com.mojaloop;
