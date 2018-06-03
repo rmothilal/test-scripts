@@ -19,7 +19,7 @@ Feature: This feature is used by payer FSP, to determine in which FSP (payee FSP
 #    | MSISDN  | 1272545117 |   USD    | payeefsp |
 #    | MSISDN  | 1272545111 |   USD    | payerfsp |
 
-  Scenario: Doing a lookup on a receiver that does not exist in switch should result in error
+  Scenario Outline: Doing a lookup on a receiver that does not exist in switch should result in error
     Given Payee "<payeeid>" with "<type>" does not exist in switch
     When  Payer FSP does a lookup for non existing payee "<payeeid>" and type "<type>" in the switch
     Then error should be returned. Expected values are "<errorcode>" and "<errorDescription>"
@@ -50,21 +50,16 @@ Feature: This feature is used by payer FSP, to determine in which FSP (payee FSP
       | CreditCard |  2272545111 |         400          |        3101       | Format of parameter Type is invalid |
       |   MSI*4SDN |  2272545112 |         400          |        3101       | Format of parameter Type is invalid |
 
-#
-#
-#  Scenario Outline: Test GET /participants for invalid required field <ID>, should fail the request
-#    When I send a request to GET /participants with a valid "<Type>" invalid ID "<ID>" in the request
-#    Then An error should be returned. Expected error code is "<ExpectedErrorCode>"
-#    And error description is "<ExpectedErrorDescription>"
-#    And Http response code is "<ExpectedResponseCode>"
-#    Examples:
-#      |     Type   |      ID     | ExpectedResponseCode | ExpectedErrorCode |    ExpectedErrorDescription      |
-#      |   MSISDN   | 01272545111 |         400          |        3101       | Format of parameter is not valid |
-#      |   MSISDN   |   12725511  |         400          |        3101       | Format of parameter is not valid |
-#      |   MSISDN   |  227254ab11 |         400          |        3101       | Format of parameter is not valid |
-#      |   MSISDN   |   @27254/17 |         400          |        3101       | Format of parameter is not valid |
-#
-#
-#
-#
-#
+
+
+  Scenario Outline: Sending invalid value for MSISDN, should fail the request
+    When I send a request to GET /participants with a valid "<Type>" invalid ID "<ID>" in the request
+    Then An error should be returned. Expected error code for invalid ID is "<ExpectedErrorCode>"
+    And error description for invalid ID is "<ExpectedErrorDescription>"
+    And Http response code for invalid ID is "<ExpectedResponseCode>"
+    Examples:
+      |     Type   |      ID     | ExpectedResponseCode | ExpectedErrorCode |    ExpectedErrorDescription         |
+      |   MSISDN   | 01272545111 |         400          |        3101       | Format of parameter ID is not valid |
+      |   MSISDN   |   12725511  |         400          |        3101       | Format of parameter ID is not valid |
+      |   MSISDN   |  227254ab11 |         400          |        3101       | Format of parameter ID is not valid |
+      |   MSISDN   |   @27254/17 |         400          |        3101       | Format of parameter ID is not valid |

@@ -119,4 +119,31 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         JsonPath jPath = JsonPath.from(response.getResponseBody());
         assertThat(jPath.getString("errorInformation.errorCode"), is(expectedErrorCode));
     }
+
+
+    @When("^I send a request to GET /participants with a valid \"([^\"]*)\" invalid ID \"([^\"]*)\" in the request$")
+    public void iSendARequestToGETParticipantsWithAValidInvalidIDInTheRequest(String type, String payeeid) throws Throwable {
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, null,getRestTemplate());
+    }
+
+    @Then("^An error should be returned\\. Expected error code for invalid ID is \"([^\"]*)\"$")
+    public void anErrorShouldBeReturnedExpectedErrorCodeForInvalidIDIs(String expectedErrorCode) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorCode"), is(expectedErrorCode));
+    }
+
+    @And("^error description for invalid ID is \"([^\"]*)\"$")
+    public void errorDescriptionForInvalidIDIs(String expectedErrorDescription) throws Throwable {
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
+        assertThat(jPath.getString("errorInformation.errorDescription"), is(expectedErrorDescription));
+    }
+
+    @And("^Http response code for invalid ID is \"([^\"]*)\"$")
+    public void httpResponseCodeForInvalidIDIs(String expectedResponseCode) throws Throwable {
+        assertThat(response.getResponseCode(),is(expectedResponseCode));
+    }
 }
