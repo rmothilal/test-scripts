@@ -60,9 +60,9 @@ public class Utility {
         MLResponse response = new MLResponse();
         Response raResponse =
                 given()
-                    .header("Accept",headers.get("Accept"))
-                    .header("Content-Type", "application/json")
-                    .header("FSPIOP-Source",headers.get("FSPIOP-Source"))
+                    .header("Accept",((headers.get("Accept") != null) ? headers.get("Accept") : "" ))
+                    .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
+                    .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
                     .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
                     .header("X-Forwarded-For",correlationId)
                 .when()
@@ -70,11 +70,16 @@ public class Utility {
 
         response.setResponseCode(String.valueOf(raResponse.getStatusCode()));
 
-        Thread.sleep(2000);
-        String corrEndpoint = simulatorUrl+"/payerfsp/correlationid/"+correlationId;
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
-        response.setResponseBody(responseEntity.getBody());
-        return response;
+        if(raResponse.getStatusCode() == 202) {
+            Thread.sleep(2000);
+            String corrEndpoint = simulatorUrl + "/payerfsp/correlationid/" + correlationId;
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint, String.class);
+            response.setResponseBody(responseEntity.getBody());
+            return response;
+        } else {
+            response.setResponseBody(raResponse.getBody().asString());
+            return response;
+        }
     }
 
     public static MLResponse post(String endpoint, String body, Map<String,String> headers, Map<String,String> queryParams, TestRestTemplate restTemplate) throws Exception{
@@ -82,20 +87,25 @@ public class Utility {
         MLResponse response = new MLResponse();
         Response raResponse =
                 given()
-                    .header("Accept",headers.get("Accept"))
-                    .header("Content-Type", "application/json")
-                    .header("FSPIOP-Source",headers.get("FSPIOP-Source"))
+                    .header("Accept",((headers.get("Accept") != null) ? headers.get("Accept") : "" ))
+                    .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
+                    .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
                     .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
                     .header("X-Forwarded-For",correlationId)
                     .body(body)
                 .when()
                     .post(endpoint);
 
-        Thread.sleep(2000);
-        String corrEndpoint = "/payerfsp/correlationid/"+correlationId;
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
-        response.setResponseBody(responseEntity.getBody());
-        return response;
+        if(raResponse.getStatusCode() == 202) {
+            Thread.sleep(2000);
+            String corrEndpoint = simulatorUrl + "/payerfsp/correlationid/" + correlationId;
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint, String.class);
+            response.setResponseBody(responseEntity.getBody());
+            return response;
+        } else {
+            response.setResponseBody(raResponse.getBody().asString());
+            return response;
+        }
     }
 
     public static int delete( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
