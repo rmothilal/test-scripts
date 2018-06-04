@@ -12,7 +12,6 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
       |    payeefsp        |         1272545117        |        Siabelo Maroka        |     Siabelo      |    Maroka      |    3/3/1973    |
       |    payeefsp        |         1272545118        |        Nanga Makwetla        |     Nanga        |    Makwetla    |    4/4/1974    |
 
-
   @Demo
   Scenario Outline: Demo Adding users into the switch
     When Demo I add MSISDN "<MSISDN>" in fsp "<fsp>"
@@ -27,12 +26,11 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
 
   @Demo
   Scenario Outline: Demo Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
-    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
-    When Payer "<payer>" with MSISDN "<payer-msisdn>" does a lookup for payee "<payee>" with MSISDN "<payee-msisdn>"
-    Then Payee "<payee>" results should be returned. Expected values are First Name "<payee-firstname>" Last Name "<payee-lastname>" DOB "<payee-dob>"
+    Given Demo Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
+    When Demo Payer "<payer>" with MSISDN "<payer-msisdn>" does a lookup for payee MSISDN "<payee-msisdn>"
+    Then Demo Payee "<payee>" results should be returned. Expected values are First Name "<payee-firstname>" Last Name "<payee-lastname>" DOB "<payee-dob>"
 
     Examples:
       |    payer              |  payer-msisdn    |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
       |    Khomotso Makgopa   |  1272545111      |   payerfsp    |   Siabelo Maroka   |   1272545117     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
       |    Mbuso Makoa        |  1272545112      |   payerfsp    |   Nanga Makwetla   |   1272545118     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
-
