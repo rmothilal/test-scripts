@@ -144,4 +144,4 @@ Feature: Test participant endpoint for adding a participant (POST /participant) 
 
     Examples:
       |   Type   |     ID     |    FspID   |    Headers    | ResponseCode |  ErrorCode   |  ErrorMessage  |
-      |  MSISDN  | 1272545111 |  payerfsp  |               |     400      |              |                |
+      |  MSISDN  | 1272545111 |  payerfsp  |    Accept     |     400      |              |                |
