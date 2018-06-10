@@ -3,6 +3,7 @@ package stepdefs.p2p_transfer;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
 import com.mojaloop.utils.Utility;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import stepdefs.SpringAcceptanceTest;
 
 import javax.json.Json;
+import java.net.InetAddress;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -31,6 +33,27 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     String mojaloopHost = System.getProperty("mojaloop.host");
     String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
+
+    @When("^I add \"([^\"]*)\" and \"([^\"]*)\" to the switch$")
+    public void iAddAndToTheSwitch(String payerFsp, String payeeFsp) throws Throwable {
+        String hostIp = InetAddress.getLocalHost().getHostAddress();
+        String requestJson = Json.createObjectBuilder()
+                .add("fspId", payerFsp)
+                .add("baseUrl","http://"+hostIp+":8444/payerfsp")
+                .build().toString();
+        responseJson = Utility.post(mojaloopUrl + "/fsp",payerFsp,null,null,requestJson,getRestTemplate());
+
+        requestJson = Json.createObjectBuilder()
+                .add("fspId", payeeFsp)
+                .add("baseUrl","http://"+hostIp+":8444/payeefsp")
+                .build().toString();
+        responseJson = Utility.post(mojaloopUrl + "/fsp",payeeFsp,null,null,requestJson,getRestTemplate());
+    }
+
+    @Then("^They should be successfully added$")
+    public void theyShouldBeSuccessfullyAdded() throws Throwable {
+        //skipping
+    }
 
     @When("^In fsp \"([^\"]*)\" when I add user with the following details  MSISDN: \"([^\"]*)\" Full Name: \"([^\"]*)\" First Name: \"([^\"]*)\" Last Name: \"([^\"]*)\" DOB: \"([^\"]*)\"$")
     public void inFspWhenIAddUserWithTheFollowingDetailsMSISDNFullNameFirstNameLastNameDOB(String fsp, String msisdn, String fullName, String firstName, String lastName, String dob) throws Throwable {
@@ -83,14 +106,9 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     @Then("^I want to ensure that MSISDN \"([^\"]*)\" is successfully added to the switch under fsp \"([^\"]*)\"$")
     public void iWantToEnsureThatMSISDNIsSuccessfullyAddedToTheSwitch(String msisdn, String fsp) throws Throwable {
-        //String responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/"+msisdn,fsp,null,null,restTemplate);
         assertThat(responseJson,containsString(fsp));
     }
 
-    @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
-    public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String arg0, String arg1, String arg2, String arg3) throws Throwable {
-        //assertThat("Skipping",true==true);
-    }
 
     @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
     public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
@@ -207,4 +225,12 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         assertThat(responseDoc.read("transferState"),is(transferState));
         assertThat(responseDoc.read("fulfilment"),is(not("")));
     }
+
+
+
+//    @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
+//    public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String arg0, String arg1, String arg2, String arg3) throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
 }
