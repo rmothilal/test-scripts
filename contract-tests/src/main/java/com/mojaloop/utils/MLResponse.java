@@ -19,36 +19,71 @@
  - Name Murthy Kakarlamudi <murthy@modusbox.com>
  --------------
  ******/
-package com.mojaloop;
 
-import org.apache.activemq.command.ActiveMQQueue;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jms.annotation.EnableJms;
+package com.mojaloop.utils;
 
-import javax.jms.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
-@SpringBootApplication
-@EnableJms
-public class MainApplication {
+public class MLResponse {
 
-    @Bean
-    public Queue partiesQueue() {
-        return new ActiveMQQueue("parties.queue");
+    public String responseCode;
+
+    public String responseBody;
+
+    public String errorCode;
+
+    public String errorDescription;
+
+    public Map<String,String> headers;
+
+    public String getResponseCode() {
+        return responseCode;
     }
 
-    @Bean
-    public Queue quotesQueue() {
-        return new ActiveMQQueue("quotes.queue");
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
     }
 
-    @Bean
-    public Queue transfersQueue() {
-        return new ActiveMQQueue("transfers.queue");
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(MainApplication.class, args);
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
+    public void addHeader(String headerName, String headerValue){
+        if(headers == null)
+            headers = new HashMap<>();
+
+        headers.put(headerName,headerValue);
+    }
+
+    public String getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(String responseBody) {
+        this.responseBody = responseBody;
+    }
+
+
+
 }
