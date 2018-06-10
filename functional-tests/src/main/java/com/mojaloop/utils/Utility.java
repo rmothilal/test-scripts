@@ -32,7 +32,7 @@ public class Utility {
         return UUID.randomUUID().toString();
     }
 
-    public static MLResponse get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
+    public static String get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
         String correlationId = getNewCorrelationId();
         MLResponse response = new MLResponse();
         if(fspiopDestination == null) fspiopDestination = "";
@@ -50,8 +50,9 @@ public class Utility {
         Thread.sleep(2000);
         String corrEndpoint = simulatorUrl +fspiopSource+"/correlationid/"+correlationId;
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
-        response.setResponseBody(responseEntity.getBody());
-        return response;
+        //response.setResponseBody(responseEntity.getBody());
+        //return response;
+        return responseEntity.getBody();
     }
 
     public static String post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{

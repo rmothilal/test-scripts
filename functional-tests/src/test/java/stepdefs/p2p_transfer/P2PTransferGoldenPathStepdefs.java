@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import stepdefs.SpringAcceptanceTest;
 
 import javax.json.Json;
+import java.net.InetAddress;
 import java.util.UUID;
 import java.util.logging.Logger;
 
