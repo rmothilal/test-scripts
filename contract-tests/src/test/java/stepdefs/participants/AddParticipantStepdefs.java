@@ -62,7 +62,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", msisdn),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", msisdn),requestJson,headers ,getRestTemplate());
     }
 
     @Then("^the participant information should be added in the switch\\. Expected FspID in the response is \"([^\"]*)\"$")
@@ -80,7 +80,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", msisdn),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", msisdn),requestJson,headers, getRestTemplate());
 
     }
 
@@ -95,7 +95,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/","MSISDN").join("/", id) ,headers,null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/","MSISDN").join("/", id) ,headers,getRestTemplate());
 
         assertThat(response.getResponseBody(),containsString(fspId));
     }
@@ -110,7 +110,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, getRestTemplate());
 
     }
 
@@ -129,7 +129,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, getRestTemplate());
 
     }
 
@@ -153,7 +153,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, getRestTemplate());
 
     }
     @Then("^An error should be returned for invalid FspID Expected error code is \"([^\"]*)\"$")
@@ -184,7 +184,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, getRestTemplate());
 
     }
 
@@ -215,7 +215,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", id),requestJson,headers, getRestTemplate());
 
     }
 
@@ -247,7 +247,7 @@ public class AddParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/","MSISDN").join("/", id),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/","MSISDN").join("/", id),requestJson,headers, getRestTemplate());
 
     }
 

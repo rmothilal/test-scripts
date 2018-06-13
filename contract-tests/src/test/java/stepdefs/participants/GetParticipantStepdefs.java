@@ -38,7 +38,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),requestJson,headers, null,getRestTemplate());
+        response = Utility.post(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),requestJson,headers, getRestTemplate());
     }
 
     @When("^Payer FSP does a lookup for payee \"([^\"]*)\" and type \"([^\"]*)\" in the switch$")
@@ -47,7 +47,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, getRestTemplate());
     }
 
     @Then("^Payee FSP information \"([^\"]*)\" should be returned\\.$")
@@ -62,7 +62,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, getRestTemplate());
 
         JsonPath jPath = JsonPath.from(response.getResponseBody());
         assertThat(jPath.getString("errorInformation.errorCode"), is("3201"));
@@ -75,7 +75,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, getRestTemplate());
     }
 
     @Then("^error should be returned\\. Expected values are \"([^\"]*)\" and \"([^\"]*)\"$")
@@ -90,7 +90,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         Map<String,String> headers = new HashMap<>();
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/","MSISDN").join("/", "1272545118"),headers, null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/","MSISDN").join("/", "1272545118"),headers, getRestTemplate());
     }
 
     @Then("^I should get an error with error code \"([^\"]*)\" and the error message containing missing header \"([^\"]*)\"$")
@@ -106,7 +106,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, getRestTemplate());
     }
 
     @Then("^Return Http response code for invald type is \"([^\"]*)\"$")
@@ -127,7 +127,7 @@ public class GetParticipantStepdefs extends SpringAcceptanceTest {
         headers.put("Accept","application/vnd.interoperability.participants+json;version=1");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, null,getRestTemplate());
+        response = Utility.get(String.join(participantsBaseUrl).join("/",type).join("/", payeeid),headers, getRestTemplate());
     }
 
     @Then("^An error should be returned\\. Expected error code for invalid ID is \"([^\"]*)\"$")

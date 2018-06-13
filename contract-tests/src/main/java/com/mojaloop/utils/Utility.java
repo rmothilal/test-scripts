@@ -17,6 +17,7 @@
  optionally within square brackets <email>.
  * Gates Foundation
  - Name Murthy Kakarlamudi <murthy@modusbox.com>
+ - Name Sridevi Miriyala <sridevi.miriyala@modusbox.com>
  --------------
  ******/
 
@@ -55,7 +56,7 @@ public class Utility {
         return UUID.randomUUID().toString();
     }
 
-    public static MLResponse get(String endpoint, Map<String,String> headers, Map<String,String> queryParams, TestRestTemplate restTemplate) throws Exception {
+    public static MLResponse get(String endpoint, Map<String,String> headers, TestRestTemplate restTemplate) throws Exception {
         String correlationId = getNewCorrelationId();
         MLResponse response = new MLResponse();
         Response raResponse =
@@ -82,7 +83,7 @@ public class Utility {
         }
     }
 
-    public static MLResponse post(String endpoint, String body, Map<String,String> headers, Map<String,String> queryParams, TestRestTemplate restTemplate) throws Exception{
+    public static MLResponse post(String endpoint, String body, Map<String,String> headers, TestRestTemplate restTemplate) throws Exception{
         String correlationId = getNewCorrelationId();
         MLResponse response = new MLResponse();
         Response raResponse =
