@@ -16,6 +16,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -32,55 +33,66 @@ public class Utility {
         return UUID.randomUUID().toString();
     }
 
-    public static String get(String endpoint, String fspiopSource, String fspiopDestination, String queryParam, TestRestTemplate restTemplate) throws Exception {
+    public static MLResponse get(String endpoint, Map<String,String> headers, TestRestTemplate restTemplate) throws Exception {
         String correlationId = getNewCorrelationId();
         MLResponse response = new MLResponse();
-        if(fspiopDestination == null) fspiopDestination = "";
         Response raResponse =
                 given()
-                    .header("FSPIOP-Source",fspiopSource)
-                    .header("FSPIOP-Destination",fspiopDestination)
-                    .header("X-Forwarded-For",correlationId)
-                    .header("Content-Type", "application/json")
-                .when()
-                    .get(endpoint);
+                        .header("Accept",((headers.get("Accept") != null) ? headers.get("Accept") : "" ))
+                        .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
+                        .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
+                        .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
+                        .header("X-Forwarded-For",correlationId)
+                        .when()
+                        .get(endpoint);
 
         response.setResponseCode(String.valueOf(raResponse.getStatusCode()));
 
-        Thread.sleep(2000);
-        String corrEndpoint = simulatorUrl +fspiopSource+"/correlationid/"+correlationId;
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint,String.class);
-        //response.setResponseBody(responseEntity.getBody());
-        //return response;
-        return responseEntity.getBody();
+        if(raResponse.getStatusCode() == 202) {
+            Thread.sleep(2000);
+            String corrEndpoint = simulatorUrl + "/payerfsp/correlationid/" + correlationId;
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint, String.class);
+            response.setResponseBody(responseEntity.getBody());
+            return response;
+        } else {
+            response.setResponseBody(raResponse.getBody().asString());
+            return response;
+        }
     }
 
-    public static String post( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
+    public static MLResponse post(String endpoint, String body, Map<String,String> headers, TestRestTemplate restTemplate) throws Exception{
         String correlationId = getNewCorrelationId();
-        if(fspiopDestination == null) fspiopDestination = "";
+        MLResponse response = new MLResponse();
         Response raResponse =
                 given()
-                    .body(body)
-                    .header("FSPIOP-Source",fspiopSource)
-                    .header("FSPIOP-Destination",fspiopDestination)
-                    .header("X-Forwarded-For",correlationId)
-                    .header("Content-Type", "application/json")
-                .when()
-                    .post(endpoint);
+                        .header("Accept",((headers.get("Accept") != null) ? headers.get("Accept") : "" ))
+                        .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
+                        .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
+                        .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
+                        .header("X-Forwarded-For",correlationId)
+                        .body(body)
+                        .when()
+                        .post(endpoint);
 
-        Thread.sleep(2000);
-        String corrEndpoint = simulatorUrl +fspiopSource+"/correlationid/"+correlationId;
-        ResponseEntity<String> response = restTemplate.getForEntity(corrEndpoint,String.class);
-        return response.getBody();
+        if(raResponse.getStatusCode() == 202) {
+            Thread.sleep(2000);
+            String corrEndpoint = simulatorUrl + "/payerfsp/correlationid/" + correlationId;
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint, String.class);
+            response.setResponseBody(responseEntity.getBody());
+            return response;
+        } else {
+            response.setResponseBody(raResponse.getBody().asString());
+            return response;
+        }
     }
 
     public static int delete( String endpoint, String fspiopSource, String fspiopDestination, String queryParam, String body, TestRestTemplate restTemplate) throws Exception{
         Response raResponse =
                 given()
-                    .header("FSPIOP-Source",fspiopSource)
-                    .header("Content-Type", "application/json")
-                .when()
-                    .delete(endpoint);
+                        .header("FSPIOP-Source",fspiopSource)
+                        .header("Content-Type", "application/json")
+                        .when()
+                        .delete(endpoint);
         logger.info("delete return status: "+raResponse.statusCode());
         return raResponse.statusCode();
     }

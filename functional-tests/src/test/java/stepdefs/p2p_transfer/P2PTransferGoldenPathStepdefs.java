@@ -16,6 +16,8 @@ import stepdefs.SpringAcceptanceTest;
 
 import javax.json.Json;
 import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -28,26 +30,36 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     private Logger logger = Logger.getLogger(P2PTransferGoldenPathStepdefs.class.getName());
 
-    ResponseEntity<String> response;
-    String responseJson;
+    MLResponse response;
+    ResponseEntity<String> responseEntity;
 
-    String mojaloopHost = System.getProperty("mojaloop.host");
-    String mojaloopUrl = "http://"+mojaloopHost+":8088/interop/switch/v1";
+    public String mojaloopHost = "http://"+ System.getProperty("mojaloop.host");
+    String mojaloopBaseUrl = mojaloopHost+"/interop/switch/v1/";
 
     @When("^I add \"([^\"]*)\" and \"([^\"]*)\" to the switch$")
     public void iAddAndToTheSwitch(String payerFsp, String payeeFsp) throws Throwable {
+
         String hostIp = InetAddress.getLocalHost().getHostAddress();
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", payerFsp)
                 .add("baseUrl","http://"+hostIp+":8444/payerfsp")
                 .build().toString();
-        responseJson = Utility.post(mojaloopUrl + "/fsp",payerFsp,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
 
         requestJson = Json.createObjectBuilder()
                 .add("fspId", payeeFsp)
                 .add("baseUrl","http://"+hostIp+":8444/payeefsp")
                 .build().toString();
-        responseJson = Utility.post(mojaloopUrl + "/fsp",payeeFsp,null,null,requestJson,getRestTemplate());
+
+        headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payeefsp");
+        response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
     }
 
     @Then("^They should be successfully added$")
@@ -76,21 +88,19 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                             .build()
                             .toString();
 
-        logger.info("Maven property: "+System.getProperty("test"));
-
         String endPoint = "/"+fsp+"/parties/MSISDN/"+msisdn;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<String>(data,headers);
 
-        response = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
+        responseEntity = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
 
     }
 
     @Then("^User \"([^\"]*)\" should be successfully added$")
     public void userShouldBeSuccessfullyAdded(String arg0) throws Throwable {
-        assertThat(response.getStatusCodeValue(), is(200));
+        assertThat(responseEntity.getStatusCodeValue(), is(200));
     }
 
 
@@ -100,14 +110,19 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                                     .add("fspId", fsp)
                                     .add("currency","USD")
                                     .build().toString();
-        responseJson = Utility.post(mojaloopUrl + "/participants/MSISDN/" + msisdn,fsp,null,null,requestJson,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(mojaloopBaseUrl + "/participants/MSISDN/" + msisdn,requestJson,headers,getRestTemplate());
 
     }
 
     @Then("^I want to ensure that MSISDN \"([^\"]*)\" is successfully added to the switch under fsp \"([^\"]*)\"$")
     public void iWantToEnsureThatMSISDNIsSuccessfullyAddedToTheSwitch(String msisdn, String fsp) throws Throwable {
         //String responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/"+msisdn,fsp,null,null,restTemplate);
-        assertThat(responseJson,containsString(fsp));
+        assertThat(response.getResponseBody(),containsString(fsp));
     }
 
     @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
@@ -117,12 +132,16 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
     @When("^Payer \"([^\"]*)\" with MSISDN \"([^\"]*)\" does a lookup for payee \"([^\"]*)\" with MSISDN \"([^\"]*)\"$")
     public void payerWithMSISDNDoesALookupForPayeeWithMSISDN(String payerName, String payerMSISDN, String payeeName, String payeeMSISDN) throws Throwable {
-        responseJson = Utility.get(mojaloopUrl + "/parties/MSISDN/"+payeeMSISDN,"payerfsp","payeefsp",null,getRestTemplate());
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.get(mojaloopBaseUrl + "/parties/MSISDN/"+payeeMSISDN,headers,getRestTemplate());
     }
 
     @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")
     public void payeeResultsShouldBeReturnedExpectedValuesAreFirstNameLastNameDOB(String payeeFullName, String payeeFirstName, String payeeLastName, String payeeDOB) throws Throwable {
-        JsonPath jPath = JsonPath.from(responseJson);
+        JsonPath jPath = JsonPath.from(response.getResponseBody());
         assertThat(jPath.getString("party.personalInfo.complexName.firstName"), is(payeeFirstName));
         assertThat(jPath.getString("party.personalInfo.complexName.lastName"), is(payeeLastName));
         assertThat(jPath.getString("party.personalInfo.dateOfBirth"), is(payeeDOB));
@@ -159,12 +178,17 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 )
                 .build()
                 .toString();
-        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(mojaloopBaseUrl + "/quotes",quoteRequest,headers,getRestTemplate());
     }
 
     @Then("^Payer FSP should see total fee and commission for the \"([^\"]*)\" specified by payer\\. Expected payee fsp fee is \"([^\"]*)\" and Expected payee fsp commission is \"([^\"]*)\"$")
     public void payerFSPShouldSeeTotalFeeAndCommissionForTheSpecifiedByPayeeExpectedPayeeFspFeeIsAndExpectedPayeeFspCommissionIs(String arg0, String arg1, String arg2) throws Throwable {
-        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(response.getResponseBody(), Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
         assertThat(responseDoc.read("payeeFspFee.amount"),is("1"));
         assertThat(responseDoc.read("payeeFspCommission.amount"),is("1"));
         assertThat(responseDoc.read("ilpPacket"),is(not("")));
@@ -202,12 +226,18 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 )
                 .build()
                 .toString();
-        responseJson = Utility.post(mojaloopUrl + "/quotes","payerfsp","payeefsp",null,quoteRequest,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+
+        response = Utility.post(mojaloopBaseUrl + "/quotes",quoteRequest, headers, getRestTemplate());
     }
 
     @When("^I submit a transfer for amount \"([^\"]*)\"$")
     public void iSubmitATransferForAmount(String amount) throws Throwable {
-        com.jayway.jsonpath.DocumentContext quoteResponseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        com.jayway.jsonpath.DocumentContext quoteResponseDoc = com.jayway.jsonpath.JsonPath.parse(response.getResponseBody(), Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
         String transferRequest = Json.createObjectBuilder()
                 .add("transferId", UUID.randomUUID().toString())
                 .add("payerFsp", "payerfsp")
@@ -221,12 +251,17 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
                 .add("condition",quoteResponseDoc.read("condition").toString())
                 .build()
                 .toString();
-        responseJson = Utility.post(mojaloopUrl + "/transfers","payerfsp","payeefsp",null,transferRequest,getRestTemplate());
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(mojaloopBaseUrl + "/transfers",transferRequest, headers, getRestTemplate());
     }
 
     @Then("^I should get a fulfillment response back with a transfer state of \"([^\"]*)\"$")
     public void iShouldGetAFulfillmentResponseBack(String transferState) throws Throwable {
-        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(responseJson, Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
+        com.jayway.jsonpath.DocumentContext responseDoc = com.jayway.jsonpath.JsonPath.parse(response.getResponseBody(), Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS));
         assertThat(responseDoc.read("transferState"),is(transferState));
         assertThat(responseDoc.read("fulfilment"),is(not("")));
     }
