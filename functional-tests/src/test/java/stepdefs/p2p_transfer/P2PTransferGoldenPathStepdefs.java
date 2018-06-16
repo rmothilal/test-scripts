@@ -48,6 +48,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
         Map<String,String> headers = new HashMap<>();
         headers.put("Accept","");
+        headers.put("Content-Type","application/json");
         headers.put("FSPIOP-Source","payerfsp");
 
         response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
@@ -59,6 +60,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
         headers = new HashMap<>();
         headers.put("Accept","");
+        headers.put("Content-Type","application/json");
         headers.put("FSPIOP-Source","payeefsp");
         response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
     }
