@@ -17,18 +17,18 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
       |    payeefsp        |         1272545118        |        Nanga Makwetla        |     Nanga        |    Makwetla    |    4/4/1974    |
 
 
-#
-#  Scenario Outline: Adding users into the switch
-#    When I add MSISDN "<MSISDN>" in fsp "<fsp>"
-#    Then I want to ensure that MSISDN "<MSISDN>" is successfully added to the switch under fsp "<fsp>"
-#
-#    Examples:
-#    |    user            |    MSISDN       |   fsp       |
-#    | Khomotso Makgopa   | 1272545111      | payerfsp    |
-#    | Mbuso Makoa        | 1272545112      | payerfsp    |
-#    | Siabelo Maroka     | 1272545117      | payeefsp    |
-#    | Nanga Makwetla     | 1272545118      | payeefsp    |
-#
+
+  Scenario Outline: Adding users into the switch
+    When I add MSISDN "<MSISDN>" in fsp "<fsp>"
+    Then I want to ensure that MSISDN "<MSISDN>" is successfully added to the switch under fsp "<fsp>"
+
+    Examples:
+    |    user            |    MSISDN       |   fsp       |
+    | Khomotso Makgopa   | 1272545111      | payerfsp    |
+    | Mbuso Makoa        | 1272545112      | payerfsp    |
+    | Siabelo Maroka     | 1272545117      | payeefsp    |
+    | Nanga Makwetla     | 1272545118      | payeefsp    |
+
 #
 #  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
 #    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch

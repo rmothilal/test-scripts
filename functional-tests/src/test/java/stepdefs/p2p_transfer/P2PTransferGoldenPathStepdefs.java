@@ -107,28 +107,28 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         assertThat(responseEntity.getStatusCodeValue(), is(200));
     }
 
-//
-//    @When("^I add MSISDN \"([^\"]*)\" in fsp \"([^\"]*)\"$")
-//    public void iAddMSISDNInFsp(String msisdn, String fsp) throws Throwable {
-//        String requestJson = Json.createObjectBuilder()
-//                                    .add("fspId", fsp)
-//                                    .add("currency","USD")
-//                                    .build().toString();
-//
-//        Map<String,String> headers = new HashMap<>();
-//        headers.put("Accept","");
-//        headers.put("FSPIOP-Source","payerfsp");
-//
-//        response = Utility.post(mojaloopBaseUrl + "/participants/MSISDN/" + msisdn,requestJson,headers,getRestTemplate());
-//
-//    }
-//
-//    @Then("^I want to ensure that MSISDN \"([^\"]*)\" is successfully added to the switch under fsp \"([^\"]*)\"$")
-//    public void iWantToEnsureThatMSISDNIsSuccessfullyAddedToTheSwitch(String msisdn, String fsp) throws Throwable {
-//        //String responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/"+msisdn,fsp,null,null,restTemplate);
-//        assertThat(response.getResponseBody(),containsString(fsp));
-//    }
-//
+
+    @When("^I add MSISDN \"([^\"]*)\" in fsp \"([^\"]*)\"$")
+    public void iAddMSISDNInFsp(String msisdn, String fsp) throws Throwable {
+        String requestJson = Json.createObjectBuilder()
+                                    .add("fspId", fsp)
+                                    .add("currency","USD")
+                                    .build().toString();
+
+        Map<String,String> headers = new HashMap<>();
+        headers.put("Accept","");
+        headers.put("FSPIOP-Source","payerfsp");
+
+        response = Utility.post(mojaloopBaseUrl + "/participants/MSISDN/" + msisdn,requestJson,headers,getRestTemplate());
+
+    }
+
+    @Then("^I want to ensure that MSISDN \"([^\"]*)\" is successfully added to the switch under fsp \"([^\"]*)\"$")
+    public void iWantToEnsureThatMSISDNIsSuccessfullyAddedToTheSwitch(String msisdn, String fsp) throws Throwable {
+        //String responseJson = Utility.get(mojaloopUrl + "/participants/MSISDN/"+msisdn,fsp,null,null,restTemplate);
+        assertThat(response.getResponseBody(),containsString(fsp));
+    }
+
 //    @Given("^Payer \"([^\"]*)\" in Payer FSP \"([^\"]*)\" and Payee \"([^\"]*)\" in Payee FSP \"([^\"]*)\" exists in the switch$")
 //    public void payerInPayerFSPAndPayeeInPayeeFSPExistsInTheSwitch(String payer, String payerfsp, String payee, String payeefsp) throws Throwable {
 //        //assertThat("Skipping",true==true);
