@@ -10,11 +10,11 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     Then User "<user>" should be successfully added
 
     Examples:
-      |      fsp           |           MSISDN          |           full_name          |    first_name    |   last_name    |      dob       |
-      |    payerfsp        |         1272545111        |        Khomotso Makgopa      |     Khomotso     |    Makgopa     |    1/1/1971    |
-      |    payerfsp        |         1272545112        |        Mbuso Makoa           |     Mbuso        |    Makoa       |    2/2/1972    |
-      |    payeefsp        |         1272545117        |        Siabelo Maroka        |     Siabelo      |    Maroka      |    3/3/1973    |
-      |    payeefsp        |         1272545118        |        Nanga Makwetla        |     Nanga        |    Makwetla    |    4/4/1974    |
+      |      fsp           |           MSISDN           |           full_name          |    first_name    |   last_name    |      dob       |
+      |    payerfsp        |         27713803910        |        Khomotso Makgopa      |     Khomotso     |    Makgopa     |    1/1/1971    |
+      |    payerfsp        |         27713803911        |        Mbuso Makoa           |     Mbuso        |    Makoa       |    2/2/1972    |
+      |    payeefsp        |         27713803912        |        Siabelo Maroka        |     Siabelo      |    Maroka      |    3/3/1973    |
+      |    payeefsp        |         27713803913        |        Nanga Makwetla        |     Nanga        |    Makwetla    |    4/4/1974    |
 
 
 
@@ -23,11 +23,11 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     Then I want to ensure that MSISDN "<MSISDN>" is successfully added to the switch under fsp "<fsp>"
 
     Examples:
-    |    user            |    MSISDN       |   fsp       |
-    | Khomotso Makgopa   | 1272545111      | payerfsp    |
-    | Mbuso Makoa        | 1272545112      | payerfsp    |
-    | Siabelo Maroka     | 1272545117      | payeefsp    |
-    | Nanga Makwetla     | 1272545118      | payeefsp    |
+    |    user            |    MSISDN        |   fsp       |
+    | Khomotso Makgopa   | 27713803910      | payerfsp    |
+    | Mbuso Makoa        | 27713803911      | payerfsp    |
+    | Siabelo Maroka     | 27713803912      | payeefsp    |
+    | Nanga Makwetla     | 27713803913      | payeefsp    |
 
 #
 #  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
@@ -36,9 +36,9 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
 #    Then Payee "<payee>" results should be returned. Expected values are First Name "<payee-firstname>" Last Name "<payee-lastname>" DOB "<payee-dob>"
 #
 #    Examples:
-#    |    payer              |  payer-msisdn    |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
-#    |    Khomotso Makgopa   |  1272545111      |   payerfsp    |   Siabelo Maroka   |   1272545117     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
-#    |    Mbuso Makoa        |  1272545112      |   payerfsp    |   Nanga Makwetla   |   1272545118     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
+#    |    payer              |  payer-msisdn     |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
+#    |    Khomotso Makgopa   |  27713803910      |   payerfsp    |   Siabelo Maroka   |   1272545117     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
+#    |    Mbuso Makoa        |  27713803911      |   payerfsp    |   Nanga Makwetla   |   1272545118     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
 #
 #
 #  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that the Payer wants to send
@@ -46,8 +46,8 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
 #    Then Payer FSP should see total fee and commission for the "<amount>" specified by payer. Expected payee fsp fee is "<expected-payee-fee>" and Expected payee fsp commission is "<expected-payee-commission>"
 #    Examples:
 #      |  payer-msisdn    |   payee-msisdn   |  amount  | currency  | expected-payee-fee   |   expected-payee-commission   |
-#      |  1272545111      |   1272545117     |   100    |   USD     |          1           |           1                   |
-#      |  1272545112      |   1272545118     |   200    |   USD     |          1           |           1                   |
+#      |  27713803910      |   27713803912     |   100    |   USD     |          1           |           1                   |
+#      |  27713803911      |   27713803913     |   200    |   USD     |          1           |           1                   |
 #
 #  Scenario Outline: Perform the transfer
 #    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
