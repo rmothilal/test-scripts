@@ -11,6 +11,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 import javax.net.ssl.SSLContext;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -112,5 +116,14 @@ public class Utility {
         TestRestTemplate restTemplate = new TestRestTemplate();
         restTemplate.getRestTemplate().setRequestFactory(requestFactory);
         return restTemplate;
+    }
+
+    public static String getLocalHostIp() throws IOException {
+        URL whatismyip = new URL("http://checkip.amazonaws.com");
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                whatismyip.openStream()));
+
+        String ip = in.readLine(); //you get the IP as a String
+        return ip;
     }
 }

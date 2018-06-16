@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import static com.mojaloop.utils.Utility.getLocalHostIp;
 import static com.mojaloop.utils.Utility.getRestTemplate;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,7 +41,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     @When("^I add \"([^\"]*)\" and \"([^\"]*)\" to the switch$")
     public void iAddAndToTheSwitch(String payerFsp, String payeeFsp) throws Throwable {
 
-        String hostIp = InetAddress.getLocalHost().getHostAddress();
+        String hostIp = getLocalHostIp();
         String requestJson = Json.createObjectBuilder()
                 .add("fspId", payerFsp)
                 .add("baseUrl","http://"+hostIp+":8444/payerfsp")
