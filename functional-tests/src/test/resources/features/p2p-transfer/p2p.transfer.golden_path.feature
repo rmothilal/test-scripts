@@ -1,7 +1,7 @@
 Feature: As a Stakeholder responsible for Mojaloop Application, I want to make sure that the golden path for
   a p2p money transfer works without errors
 
-  Scenario: Ab to register FSPs with their callback details
+  Scenario: Able to register FSPs with their callback details
     When I add "payerfsp" and "payeefsp" to the switch
     Then They should be successfully added
 

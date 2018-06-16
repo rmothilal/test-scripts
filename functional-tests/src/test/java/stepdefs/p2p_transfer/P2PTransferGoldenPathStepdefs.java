@@ -34,7 +34,8 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     ResponseEntity<String> responseEntity;
 
     public String mojaloopHost = "http://"+ System.getProperty("mojaloop.host");
-    String mojaloopBaseUrl = mojaloopHost+"/interop/switch/v1/";
+    public String mojaloopPort = System.getProperty("mojaloop.port");
+    String mojaloopBaseUrl = mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/";
 
     @When("^I add \"([^\"]*)\" and \"([^\"]*)\" to the switch$")
     public void iAddAndToTheSwitch(String payerFsp, String payeeFsp) throws Throwable {
