@@ -1,22 +1,22 @@
 Feature: As a Stakeholder responsible for Mojaloop Application, I want to make sure that the golden path for
   a p2p money transfer works without errors
 
-  Scenario: Able to register FSPs with their callback details
-    When I add "payerfsp" and "payeefsp" to the switch
-    Then They should be successfully added
+#  Scenario: Able to register FSPs with their callback details
+#    When I add "payerfsp" and "payeefsp" to the switch
+#    Then They should be successfully added
 
-#  Scenario Outline: Test Preparation. Adding users to Payer FSP and Payee FSP
-#    When In fsp "<fsp>" when I add user with the following details  MSISDN: "<MSISDN>" Full Name: "<full_name>" First Name: "<first_name>" Last Name: "<last_name>" DOB: "<dob>"
-#    Then User "<user>" should be successfully added
-#
-#    Examples:
-#      |      fsp           |           MSISDN          |           full_name          |    first_name    |   last_name    |      dob       |
-#      |    payerfsp        |         1272545111        |        Khomotso Makgopa      |     Khomotso     |    Makgopa     |    1/1/1971    |
-#      |    payerfsp        |         1272545112        |        Mbuso Makoa           |     Mbuso        |    Makoa       |    2/2/1972    |
-#      |    payeefsp        |         1272545117        |        Siabelo Maroka        |     Siabelo      |    Maroka      |    3/3/1973    |
-#      |    payeefsp        |         1272545118        |        Nanga Makwetla        |     Nanga        |    Makwetla    |    4/4/1974    |
-#
-#
+  Scenario Outline: Test Preparation. Adding users to Payer FSP and Payee FSP
+    When In fsp "<fsp>" when I add user with the following details  MSISDN: "<MSISDN>" Full Name: "<full_name>" First Name: "<first_name>" Last Name: "<last_name>" DOB: "<dob>"
+    Then User "<user>" should be successfully added
+
+    Examples:
+      |      fsp           |           MSISDN          |           full_name          |    first_name    |   last_name    |      dob       |
+      |    payerfsp        |         1272545111        |        Khomotso Makgopa      |     Khomotso     |    Makgopa     |    1/1/1971    |
+      |    payerfsp        |         1272545112        |        Mbuso Makoa           |     Mbuso        |    Makoa       |    2/2/1972    |
+      |    payeefsp        |         1272545117        |        Siabelo Maroka        |     Siabelo      |    Maroka      |    3/3/1973    |
+      |    payeefsp        |         1272545118        |        Nanga Makwetla        |     Nanga        |    Makwetla    |    4/4/1974    |
+
+
 #
 #  Scenario Outline: Adding users into the switch
 #    When I add MSISDN "<MSISDN>" in fsp "<fsp>"

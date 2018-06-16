@@ -38,75 +38,75 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
     public String mojaloopPort = System.getProperty("mojaloop.port");
     String mojaloopBaseUrl = mojaloopHost+":"+mojaloopPort+"/interop/switch/v1/";
 
-    @When("^I add \"([^\"]*)\" and \"([^\"]*)\" to the switch$")
-    public void iAddAndToTheSwitch(String payerFsp, String payeeFsp) throws Throwable {
-
-        String hostIp = getLocalHostIp();
-        String requestJson = Json.createObjectBuilder()
-                .add("fspId", payerFsp)
-                .add("baseUrl","http://"+hostIp+":8444/payerfsp")
-                .build().toString();
-
-        Map<String,String> headers = new HashMap<>();
-        headers.put("Accept","");
-        headers.put("Content-Type","application/json");
-        headers.put("FSPIOP-Source","payerfsp");
-
-        response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
-
-        requestJson = Json.createObjectBuilder()
-                .add("fspId", payeeFsp)
-                .add("baseUrl","http://"+hostIp+":8444/payeefsp")
-                .build().toString();
-
-        headers = new HashMap<>();
-        headers.put("Accept","");
-        headers.put("Content-Type","application/json");
-        headers.put("FSPIOP-Source","payeefsp");
-        response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
-    }
-
-    @Then("^They should be successfully added$")
-    public void theyShouldBeSuccessfullyAdded() throws Throwable {
-        //skipping
-    }
-
-//    @When("^In fsp \"([^\"]*)\" when I add user with the following details  MSISDN: \"([^\"]*)\" Full Name: \"([^\"]*)\" First Name: \"([^\"]*)\" Last Name: \"([^\"]*)\" DOB: \"([^\"]*)\"$")
-//    public void inFspWhenIAddUserWithTheFollowingDetailsMSISDNFullNameFirstNameLastNameDOB(String fsp, String msisdn, String fullName, String firstName, String lastName, String dob) throws Throwable {
-//        String data = Json.createObjectBuilder()
-//                            .add("party", Json.createObjectBuilder()
-//                                .add("partyIdInfo", Json.createObjectBuilder()
-//                                        .add("partyIdType","MSISDN")
-//                                        .add("partyIdentifier", msisdn)
-//                                        .add("fspId", fsp)
-//                                )
-//                                .add("name", fullName)
-//                                .add("personalInfo", Json.createObjectBuilder()
-//                                    .add("complexName",Json.createObjectBuilder()
-//                                            .add("firstName", firstName)
-//                                            .add("lastName", lastName)
-//                                    )
-//                                    .add("dateOfBirth",dob)
-//                                )
-//                            )
-//                            .build()
-//                            .toString();
+//    @When("^I add \"([^\"]*)\" and \"([^\"]*)\" to the switch$")
+//    public void iAddAndToTheSwitch(String payerFsp, String payeeFsp) throws Throwable {
 //
-//        String endPoint = "/"+fsp+"/parties/MSISDN/"+msisdn;
+//        String hostIp = getLocalHostIp();
+//        String requestJson = Json.createObjectBuilder()
+//                .add("fspId", payerFsp)
+//                .add("baseUrl","http://"+hostIp+":8444/payerfsp")
+//                .build().toString();
 //
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        HttpEntity<String> entity = new HttpEntity<String>(data,headers);
+//        Map<String,String> headers = new HashMap<>();
+//        headers.put("Accept","");
+//        headers.put("Content-Type","application/json");
+//        headers.put("FSPIOP-Source","payerfsp");
 //
-//        responseEntity = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
+//        response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
 //
+//        requestJson = Json.createObjectBuilder()
+//                .add("fspId", payeeFsp)
+//                .add("baseUrl","http://"+hostIp+":8444/payeefsp")
+//                .build().toString();
+//
+//        headers = new HashMap<>();
+//        headers.put("Accept","");
+//        headers.put("Content-Type","application/json");
+//        headers.put("FSPIOP-Source","payeefsp");
+//        response = Utility.post(mojaloopBaseUrl + "/fsp",requestJson,headers,getRestTemplate());
 //    }
 //
-//    @Then("^User \"([^\"]*)\" should be successfully added$")
-//    public void userShouldBeSuccessfullyAdded(String arg0) throws Throwable {
-//        assertThat(responseEntity.getStatusCodeValue(), is(200));
+//    @Then("^They should be successfully added$")
+//    public void theyShouldBeSuccessfullyAdded() throws Throwable {
+//        //skipping
 //    }
-//
+
+    @When("^In fsp \"([^\"]*)\" when I add user with the following details  MSISDN: \"([^\"]*)\" Full Name: \"([^\"]*)\" First Name: \"([^\"]*)\" Last Name: \"([^\"]*)\" DOB: \"([^\"]*)\"$")
+    public void inFspWhenIAddUserWithTheFollowingDetailsMSISDNFullNameFirstNameLastNameDOB(String fsp, String msisdn, String fullName, String firstName, String lastName, String dob) throws Throwable {
+        String data = Json.createObjectBuilder()
+                            .add("party", Json.createObjectBuilder()
+                                .add("partyIdInfo", Json.createObjectBuilder()
+                                        .add("partyIdType","MSISDN")
+                                        .add("partyIdentifier", msisdn)
+                                        .add("fspId", fsp)
+                                )
+                                .add("name", fullName)
+                                .add("personalInfo", Json.createObjectBuilder()
+                                    .add("complexName",Json.createObjectBuilder()
+                                            .add("firstName", firstName)
+                                            .add("lastName", lastName)
+                                    )
+                                    .add("dateOfBirth",dob)
+                                )
+                            )
+                            .build()
+                            .toString();
+
+        String endPoint = "/"+fsp+"/parties/MSISDN/"+msisdn;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<String>(data,headers);
+
+        responseEntity = getRestTemplate().postForEntity("https://localhost:8444"+endPoint,entity,String.class);
+
+    }
+
+    @Then("^User \"([^\"]*)\" should be successfully added$")
+    public void userShouldBeSuccessfullyAdded(String arg0) throws Throwable {
+        assertThat(responseEntity.getStatusCodeValue(), is(200));
+    }
+
 //
 //    @When("^I add MSISDN \"([^\"]*)\" in fsp \"([^\"]*)\"$")
 //    public void iAddMSISDNInFsp(String msisdn, String fsp) throws Throwable {
