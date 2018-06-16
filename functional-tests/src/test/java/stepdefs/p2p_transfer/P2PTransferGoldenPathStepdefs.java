@@ -117,6 +117,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
 
         Map<String,String> headers = new HashMap<>();
         headers.put("Accept","");
+        headers.put("Content-Type","application/json");
         headers.put("FSPIOP-Source","payerfsp");
 
         response = Utility.post(mojaloopBaseUrl + "/participants/MSISDN/" + msisdn,requestJson,headers,getRestTemplate());
