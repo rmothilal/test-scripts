@@ -29,7 +29,7 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     | Siabelo Maroka     | 27713803912      | payeefsp    |
     | Nanga Makwetla     | 27713803913      | payeefsp    |
 
-#
+
 #  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
 #    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
 #    When Payer "<payer>" with MSISDN "<payer-msisdn>" does a lookup for payee "<payee>" with MSISDN "<payee-msisdn>"
