@@ -1,9 +1,9 @@
 Feature: As a Stakeholder responsible for Mojaloop Application, I want to make sure that the golden path for
   a p2p money transfer works without errors
 
-#  Scenario: Able to register FSPs with their callback details
-#    When I add "payerfsp" and "payeefsp" to the switch
-#    Then They should be successfully added
+  Scenario: Able to register FSPs with their callback details
+    When I add "payerfsp" and "payeefsp" to the switch
+    Then They should be successfully added
 
   Scenario Outline: Test Preparation. Adding users to Payer FSP and Payee FSP
     When In fsp "<fsp>" when I add user with the following details  MSISDN: "<MSISDN>" Full Name: "<full_name>" First Name: "<first_name>" Last Name: "<last_name>" DOB: "<dob>"
