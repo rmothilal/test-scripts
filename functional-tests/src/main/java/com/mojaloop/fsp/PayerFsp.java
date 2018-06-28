@@ -25,9 +25,6 @@ public class PayerFsp {
     @RequestMapping(value = "/participants/{Type}/{Id}",method = RequestMethod.PUT)
     public HttpStatus putParticipants(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         logger.info("Id: " + id + " Body: " + payload);
-//        if(correlationId.indexOf(",") != -1)
-//            correlationId = correlationId.substring(0, correlationId.indexOf(","));
-//        entityMap.put(correlationId, payload);
         entityMap.put(id, payload);
         return HttpStatus.OK;
     }
@@ -50,8 +47,6 @@ public class PayerFsp {
     @RequestMapping(value = "/parties/{Type}/{Id}",method = RequestMethod.PUT)
     public HttpStatus putParties(@PathVariable("Type") String type, @PathVariable("Id") String id, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
         logger.info("Id: " + id + " Body: " + payload);
-//        if(correlationId.indexOf(",") != -1)
-//            correlationId = correlationId.substring(0, correlationId.indexOf(","));
         entityMap.put(id, payload);
 
         return HttpStatus.OK;
