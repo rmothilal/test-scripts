@@ -107,9 +107,11 @@ public class Utility {
             String corrEndpoint = simulatorUrl + "/payerfsp/correlationid/" + correlationId;
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint, String.class);
             response.setResponseBody(responseEntity.getBody());
+            logger.info("IN 202 response: "+responseEntity.getBody());
             return response;
         } else {
             response.setResponseBody(raResponse.getBody().asString());
+            logger.info("IN non-202 response: "+raResponse.getBody().asString());
             return response;
         }
     }
