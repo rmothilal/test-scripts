@@ -37,8 +37,8 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
 
     Examples:
     |    payer              |  payer-msisdn     |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
-    |    Khomotso Makgopa   |  27713803910      |   payerfsp    |   Siabelo Maroka   |   1272545117     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
-    |    Mbuso Makoa        |  27713803911      |   payerfsp    |   Nanga Makwetla   |   1272545118     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
+    |    Khomotso Makgopa   |  27713803910      |   payerfsp    |   Siabelo Maroka   |   27713803912     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
+    |    Mbuso Makoa        |  27713803911      |   payerfsp    |   Nanga Makwetla   |   27713803913     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
 #
 #
 #  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that the Payer wants to send
