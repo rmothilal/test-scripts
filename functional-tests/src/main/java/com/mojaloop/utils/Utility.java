@@ -123,6 +123,7 @@ public class Utility {
                     .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
                     .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
                     .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
+                    .header("Date",((headers.get("Date") != null) ? headers.get("Date") : "" ))
                     .body(body)
                 .when()
                     .post(endpoint);
