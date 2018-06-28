@@ -69,14 +69,14 @@ public class Utility {
         MLResponse response = new MLResponse();
         Response raResponse =
                 given()
-                        .header("Accept",((headers.get("Accept") != null) ? headers.get("Accept") : "" ))
-                        .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
-                        .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
-                        .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
-                        .header("X-Forwarded-For",correlationId)
-                        .body(body)
-                        .when()
-                        .post(endpoint);
+                    .header("Accept",((headers.get("Accept") != null) ? headers.get("Accept") : "" ))
+                    .header("Content-Type", ((headers.get("Content-Type") != null) ? headers.get("Content-Type") : "" ))
+                    .header("FSPIOP-Source",((headers.get("FSPIOP-Source") != null) ? headers.get("FSPIOP-Source") : "" ))
+                    .header("FSPIOP-Destination",((headers.get("FSPIOP-Destination") != null) ? headers.get("FSPIOP-Destination") : "" ))
+                    .header("X-Forwarded-For",correlationId)
+                    .body(body)
+                .when()
+                    .post(endpoint);
 
         if(raResponse.getStatusCode() == 202) {
             Thread.sleep(2000);
