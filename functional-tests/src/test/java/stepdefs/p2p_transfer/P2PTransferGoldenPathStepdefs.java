@@ -269,6 +269,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         headers.put("Content-Type","application/json");
         headers.put("FSPIOP-Source","payerfsp");
         headers.put("FSPIOP-Destination","payeefsp");
+        headers.put("Date","2018-06-21T18:22:56.694Z");
 
         response = Utility.post(mojaloopBaseUrl + "/transfers",transferRequest, headers, getRestTemplate(),transferId);
     }
