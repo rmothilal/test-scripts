@@ -142,7 +142,7 @@ public class P2PTransferGoldenPathStepdefs extends SpringAcceptanceTest {
         headers.put("Content-Type","application/json");
         headers.put("FSPIOP-Source","payerfsp");
 
-        response = Utility.get(mojaloopBaseUrl + "/parties/MSISDN/"+payeeMSISDN,headers,getRestTemplate());
+        response = Utility.get(mojaloopBaseUrl + "/parties/MSISDN/"+payeeMSISDN,headers,getRestTemplate(),payeeMSISDN);
     }
 
     @Then("^Payee \"([^\"]*)\" results should be returned\\. Expected values are First Name \"([^\"]*)\" Last Name \"([^\"]*)\" DOB \"([^\"]*)\"$")
