@@ -129,7 +129,6 @@ public class Utility {
         if(raResponse.getStatusCode() == 202) {
             Thread.sleep(2000);
             String corrEndpoint = simulatorUrl + "/payerfsp/correlationid/" + correlationId;
-            //ResponseEntity<String> responseEntity = restTemplate.getForEntity(corrEndpoint, String.class);
             ResponseEntity<String> responseEntity = getRestTemplate().getForEntity(corrEndpoint,String.class);
             response.setResponseBody(responseEntity.getBody());
             logger.info("IN 202 response: "+responseEntity.getBody());

@@ -39,16 +39,16 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     |    payer              |  payer-msisdn     |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
     |    Khomotso Makgopa   |  27713803910      |   payerfsp    |   Siabelo Maroka   |   27713803912     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
     |    Mbuso Makoa        |  27713803911      |   payerfsp    |   Nanga Makwetla   |   27713803913     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
-#
-#
-#  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that the Payer wants to send
-#    When Payer FSP issues a quote to the switch by providing "<amount>" and "<currency>". Payer MSISDN is "<payer-msisdn>" Payee MSISDN is "<payee-msisdn>"
-#    Then Payer FSP should see total fee and commission for the "<amount>" specified by payer. Expected payee fsp fee is "<expected-payee-fee>" and Expected payee fsp commission is "<expected-payee-commission>"
-#    Examples:
-#      |  payer-msisdn    |   payee-msisdn   |  amount  | currency  | expected-payee-fee   |   expected-payee-commission   |
-#      |  27713803910      |   27713803912     |   100    |   USD     |          1           |           1                   |
-#      |  27713803911      |   27713803913     |   200    |   USD     |          1           |           1                   |
-#
+
+
+  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that the Payer wants to send
+    When Payer FSP issues a quote to the switch by providing "<amount>" and "<currency>". Payer MSISDN is "<payer-msisdn>" Payee MSISDN is "<payee-msisdn>"
+    Then Payer FSP should see total fee and commission for the "<amount>" specified by payer. Expected payee fsp fee is "<expected-payee-fee>" and Expected payee fsp commission is "<expected-payee-commission>"
+    Examples:
+      |  payer-msisdn    |   payee-msisdn   |  amount  | currency  | expected-payee-fee   |   expected-payee-commission   |
+      |  27713803910      |   27713803912     |   100    |   USD     |          1           |           1                   |
+      |  27713803911      |   27713803913     |   200    |   USD     |          1           |           1                   |
+
 #  Scenario Outline: Perform the transfer
 #    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
 #    When I submit a transfer for amount "<amount>"

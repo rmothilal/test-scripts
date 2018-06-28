@@ -62,10 +62,10 @@ public class PayerFsp {
 
     @RequestMapping(value = "/quotes/{quoteId}",method = RequestMethod.PUT)
     public HttpStatus putQuotes(@PathVariable("quoteId") String quoteId, @RequestHeader("X-Forwarded-For") String correlationId, @RequestBody String payload) throws IOException {
-        logger.info("Header: " + correlationId + " Body: " + payload);
-        if(correlationId.indexOf(",") != -1)
-            correlationId = correlationId.substring(0, correlationId.indexOf(","));
-        entityMap.put(correlationId, payload);
+        logger.info("QuoteId: " + quoteId + " Body: " + payload);
+//        if(correlationId.indexOf(",") != -1)
+//            correlationId = correlationId.substring(0, correlationId.indexOf(","));
+        entityMap.put(quoteId, payload);
 
         return HttpStatus.OK;
     }
