@@ -49,12 +49,12 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
       |  27713803910      |   27713803912     |   100    |   USD     |          1           |           1                   |
       |  27713803911      |   27713803913     |   200    |   USD     |          1           |           1                   |
 
-#  Scenario Outline: Perform the transfer
-#    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
-#    When I submit a transfer for amount "<amount>"
-#    Then I should get a fulfillment response back with a transfer state of "COMMITTED"
-#
-#    Examples:
-#      |  payer-msisdn    |   payee-msisdn   |  amount  |
-#      |  1272545111      |   1272545117     |   100    |
-#      |  1272545112      |   1272545118     |   200    |
+  Scenario Outline: Perform the transfer
+    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
+    When I submit a transfer for amount "<amount>"
+    Then I should get a fulfillment response back with a transfer state of "COMMITTED"
+
+    Examples:
+      |  payer-msisdn    |   payee-msisdn   |  amount  |
+      |  27713803910      |   27713803912     |   100    |
+      |  27713803911      |   27713803913     |   200    |
