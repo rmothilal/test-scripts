@@ -30,15 +30,15 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
 #    | Nanga Makwetla     | 27713803913      | payeefsp    |
 
 
-  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
-    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
-    When Payer "<payer>" with MSISDN "<payer-msisdn>" does a lookup for payee "<payee>" with MSISDN "<payee-msisdn>"
-    Then Payee "<payee>" results should be returned. Expected values are First Name "<payee-firstname>" Last Name "<payee-lastname>" DOB "<payee-dob>"
-
-    Examples:
-    |    payer              |  payer-msisdn     |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
-    |    Khomotso Makgopa   |  27713803910      |   payerfsp    |   Siabelo Maroka   |   27713803912     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
-    |    Mbuso Makoa        |  27713803911      |   payerfsp    |   Nanga Makwetla   |   27713803913     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
+#  Scenario Outline: Payer doing a looking on the receiver(payee). This is the first step in p2p money transfer
+#    Given Payer "<payer>" in Payer FSP "<payer-fsp>" and Payee "<payee>" in Payee FSP "<payee-fsp>" exists in the switch
+#    When Payer "<payer>" with MSISDN "<payer-msisdn>" does a lookup for payee "<payee>" with MSISDN "<payee-msisdn>"
+#    Then Payee "<payee>" results should be returned. Expected values are First Name "<payee-firstname>" Last Name "<payee-lastname>" DOB "<payee-dob>"
+#
+#    Examples:
+#    |    payer              |  payer-msisdn     |   payer-fsp   |   payee            |   payee-msisdn   |    payee-fsp   | payee-firstname   | payee-lastname   | payee-dob   |
+#    |    Khomotso Makgopa   |  27713803910      |   payerfsp    |   Siabelo Maroka   |   27713803912     |    payeefsp    |     Siabelo       |    Maroka        | 3/3/1973    |
+#    |    Mbuso Makoa        |  27713803911      |   payerfsp    |   Nanga Makwetla   |   27713803913     |    payeefsp    |     Nanga         |    Makwetla      | 4/4/1974    |
 
 
 #  Scenario Outline: Quote. In this step Payer FSP requests a quote to determine fees and commission on the amount that the Payer wants to send
@@ -49,12 +49,12 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
 #      |  27713803910      |   27713803912     |   100    |   USD     |          1           |           1                   |
 #      |  27713803911      |   27713803913     |   200    |   USD     |          1           |           1                   |
 #
-#  Scenario Outline: Perform the transfer
-#    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
-#    When I submit a transfer for amount "<amount>"
-#    Then I should get a fulfillment response back with a transfer state of "COMMITTED"
-#
-#    Examples:
-#      |  payer-msisdn    |   payee-msisdn   |  amount  |
-#      |  27713803910      |   27713803912     |   100    |
-#      |  27713803911      |   27713803913     |   200    |
+  Scenario Outline: Perform the transfer
+    Given A quote exists. Payer MSISDN "<payer-msisdn>" Payee MSISDN "<payee-msisdn>" Amount "<amount>"
+    When I submit a transfer for amount "<amount>"
+    Then I should get a fulfillment response back with a transfer state of "COMMITTED"
+
+    Examples:
+      |  payer-msisdn    |   payee-msisdn   |  amount  |
+      |  27713803910      |   27713803912     |   100    |
+      |  27713803911      |   27713803913     |   200    |
