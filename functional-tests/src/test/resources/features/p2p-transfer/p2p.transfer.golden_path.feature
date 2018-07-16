@@ -57,4 +57,4 @@ Feature: As a Stakeholder responsible for Mojaloop Application, I want to make s
     Examples:
       |  payer-msisdn    |   payee-msisdn   |  amount  |
       |  27713803910      |   27713803912     |   100    |
-      |  27713803911      |   27713803913     |   200    |
+#      |  27713803911      |   27713803913     |   200    |
