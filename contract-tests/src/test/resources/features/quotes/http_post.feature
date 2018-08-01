@@ -15,6 +15,7 @@ Feature: The HTTP request POST /quotes is used by payer DFSP to request the crea
       | quoteId | transactionId | transactionRequestId | payeePartyIdType | payeePartyIdentifier | payeePartySubIdOrType | payeeFspId | payeeMerchantClassificationCode | payeeName | payeeFirstName | payeeMiddleName | payeeLastName | payeeDOB | payerPartyIdType | payerPartyIdentifier | payerPartySubIdOrType | payerFspId | payerMerchantClassificationCode | payerName | payerFirstName | payerMiddleName | payerLastName | payerDOB | amountType | currency | amount | feeCurrency | feeAmount |scenario | subScenario | initiator | initiatorType |originalTransactionId | refundReason | balanceOfPayments | latitude | longitude | note | expiration | extensionKey | extensionValue |
 
   # Testing Error Code 3000, Generic Client Error
+  # Need to check with Dev team in which situations this error can happen
 
   # Testing Error Code 3001, Unacceptable version requested
   Scenario Outline: Sending a quote request with invalid version number should result in a failure
@@ -25,6 +26,7 @@ Feature: The HTTP request POST /quotes is used by payer DFSP to request the crea
       |     5         |      406             |   3001            |  The Client requested an unsupported version, see extension list for supported version(s)  |
 
   # Testing Error Code 3100, Generic Validation error
+  # Need to check with Dev team in which situations this error can happen
 
   # Testing Error Code 3101, Malformed Syntax
   Scenario Outline: Sending a quote request with invalid syntax in the fields number should result in a failure
@@ -65,8 +67,10 @@ Feature: The HTTP request POST /quotes is used by payer DFSP to request the crea
 
 
   # Testing Error Code 3104, Too large payload
+  # Need to check with Dev team what is the acceptable payload size
 
   # Testing Error Code 3105, Invalid Signature
+  # Need to check with Dev team what fields are part of Signature
 
   # Testing Error Code 3106, Modified Request
   Scenario Outline: Sending a quote request with modified request to the switch from payerfsp, should result in failure.
@@ -79,6 +83,7 @@ Feature: The HTTP request POST /quotes is used by payer DFSP to request the crea
 
 
   # Testing Error Code 3107, Missing Mandatory extension parameter
+  # Need to follow-up on what the extension parameters are
 
   # Testing Error Code 3200, Generic ID error provided by the client
 
@@ -125,4 +130,54 @@ Feature: The HTTP request POST /quotes is used by payer DFSP to request the crea
   # Testing Error Code 4300, Payer Permission Error
   # Need to get Authentication Details from Development Team
 
+  # Testing Error Code 5000, Generic Payee Error
+  # Need to check with Dev team in which situations this error can happen
+
+  # Testing Error Code 5100, Generic Payee Rejection
+  # Need to check with Dev team in which situations this error can happen
+
+  # Testing Error Code 5101, Payee Rejected quote
+  Scenario Outline: Quote sent from payer fsp that is rejected by the payee fsp should result in a failure on the payer fsp side
+    When I send quote request to the switch with the following valid values for which the payee fsp rejects: quoteId "<quoteId>", transactionId"<transactionId>",payeePartyIdType"<payeePartyIdType>", payeePartyIdentifier "<payeePartyIdentifier>", payeeFspid "<payeeFspId>", payerPartyIdType "<payerPartyIdType>", payerPartyIdentifier "<payerPartyIdentifier>", payerFspId "<payerFspId>", amountType "<amountType>" amount "<amount>", scenario "<scenario>", initiator"<initiator>", initiatorType "<initiatorType>"
+    Then I should be getting a failure response for payee fsp rejection with the following values: responsecode"<responseCode>" errorcode "<errorCode>" and errordescription "<errorDescription>"
+    Examples:
+    Examples:
+      | quoteId | transactionId | payeePartyIdType | payeePartyIdentifier | payeeFspId   |  payerPartyIdType | payerPartyIdentifier | payerFspId   |   amountType | amount | scenario | initiator | initiatorType |  responseCode | errorCode | errorDescription |
+      |   12345 |    12345      |  MSISDN          |   1234               |   payeefsp   |    MSISDN         |    5679              |   payerfsp   |     SEND     | 100    |   DEPOSIT|  payer    | CONSUMER      |  202          |      5101 |                  |
+
+
+  # Testing Error Code 5102, Payee FSP unsupportted transaction type
+  Scenario Outline: Payee FSP does not support the transaction type provided in the request, should result in a failure on the payer fsp side
+    When I send quote request to the switch with a transaction type that is not supported by payeefsp and the following values: quoteId "<quoteId>", transactionId"<transactionId>",payeePartyIdType"<payeePartyIdType>", payeePartyIdentifier "<payeePartyIdentifier>", payeeFspid "<payeeFspId>", payerPartyIdType "<payerPartyIdType>", payerPartyIdentifier "<payerPartyIdentifier>", payerFspId "<payerFspId>", amountType "<amountType>" amount "<amount>", scenario "<scenario>", initiator"<initiator>", initiatorType "<initiatorType>", transactionType "<transactionType>"
+    Then I should be getting a failure response for invalid rejection type on the payee fsp with the following values: responsecode"<responseCode>" errorcode "<errorCode>" and errordescription "<errorDescription>"
+    Examples:
+    Examples:
+      | quoteId | transactionId | payeePartyIdType | payeePartyIdentifier | payeeFspId   |  payerPartyIdType | payerPartyIdentifier | payerFspId   |   amountType | amount | scenario | initiator | initiatorType |  transactionType  |  responseCode | errorCode | errorDescription |
+      |   12345 |    12345      |  MSISDN          |   1234               |   payeefsp   |    MSISDN         |    5679              |   payerfsp   |     SEND     | 100    |   DEPOSIT|  payer    | CONSUMER      |     INVALID       |    202        |      5101 |                  |
+
+
+  # Testing Error Code 5103, Payee FSP Rejected quote
+  Scenario Outline: Payee FSP rejecting the quote, should result in a failure on the payer fsp side
+    When I send a valid quote request to the switch with the following values, but is rejected by Payee FSP: quoteId "<quoteId>", transactionId"<transactionId>",payeePartyIdType"<payeePartyIdType>", payeePartyIdentifier "<payeePartyIdentifier>", payeeFspid "<payeeFspId>", payerPartyIdType "<payerPartyIdType>", payerPartyIdentifier "<payerPartyIdentifier>", payerFspId "<payerFspId>", amountType "<amountType>" amount "<amount>", scenario "<scenario>", initiator"<initiator>", initiatorType "<initiatorType>", transactionType "<transactionType>"
+    Then I should be getting a failure response for payee fsp rejection with the following values: responsecode"<responseCode>" errorcode "<errorCode>" and errordescription "<errorDescription>"
+    Examples:
+    Examples:
+      | quoteId | transactionId | payeePartyIdType | payeePartyIdentifier | payeeFspId   |  payerPartyIdType | payerPartyIdentifier | payerFspId   |   amountType | amount | scenario | initiator | initiatorType |  transactionType  |  responseCode | errorCode | errorDescription |
+      |   12345 |    12345      |  MSISDN          |   1234               |   payeefsp   |    MSISDN         |    5679              |   payerfsp   |     SEND     | 100    |   DEPOSIT|  payer    | CONSUMER      |     INVALID       |    202        |      5103 |                  |
+
+  # Testing Error Code 5106, Payee unsupported currency
+  Scenario Outline: Payee FSP rejecting the quote because it does not support the currency, should result in a failure on the payer fsp side
+    When I send a quote request to the switch with the following values, but is rejected by Payee FSP because of unsupported currency: quoteId "<quoteId>", transactionId"<transactionId>",payeePartyIdType"<payeePartyIdType>", payeePartyIdentifier "<payeePartyIdentifier>", payeeFspid "<payeeFspId>", payerPartyIdType "<payerPartyIdType>", payerPartyIdentifier "<payerPartyIdentifier>", payerFspId "<payerFspId>", amountType "<amountType>" amount "<amount>", scenario "<scenario>", initiator"<initiator>", initiatorType "<initiatorType>", transactionType "<transactionType>"
+    Then I should be getting a failure response for psyee fsp unsupported currency rejection with the following values: responsecode"<responseCode>" errorcode "<errorCode>" and errordescription "<errorDescription>"
+    Examples:
+    Examples:
+      | quoteId | transactionId | payeePartyIdType | payeePartyIdentifier | payeeFspId   |  payerPartyIdType | payerPartyIdentifier | payerFspId   |   amountType | amount | scenario | initiator | initiatorType |  transactionType  |  responseCode | errorCode | errorDescription |
+      |   12345 |    12345      |  MSISDN          |   1234               |   payeefsp   |    MSISDN         |    5679              |   payerfsp   |     SEND     | 100    |   DEPOSIT|  payer    | CONSUMER      |     INVALID       |    202        |      5106 |                  |
+
+
+  # Testing Error Code 5200, Payee limit error
+  # Need to understand from Dev team on how to set limits for a DFSP
+
+  # Testing Error Code 5300, Payee permission error
+  # Need to understand from Dev team on how to set permissions for a DFSP
 
