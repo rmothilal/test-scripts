@@ -1,4 +1,4 @@
-## Scheme Rules
+## JMeter scripts for end-to-end testing
 This document provides instructions on how the JMeter scripts under test-scripts and the mock-service can be used to perform performance testing
 
 ### Prerequisites
