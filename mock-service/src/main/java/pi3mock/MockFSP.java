@@ -1,9 +1,16 @@
 package pi3mock;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.time.Instant;
+
+import com.ilp.conditions.impl.IlpConditionHandlerImpl;
+import java.util.Base64;
 
 import org.apache.http.protocol.HTTP;
 import org.apache.http.client.HttpClient;
@@ -19,8 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.net.URL;
 
 import org.json.JSONObject;
 
@@ -72,35 +77,50 @@ public class MockFSP {
 
         JSONObject incomingMessageBody=new JSONObject(postTransferRequest);
         String transferId = incomingMessageBody.get("transferId").toString();
+        String ilpPacket = incomingMessageBody.get("ilpPacket").toString();
+        //Call interop-ilp-conditions jar getIlpPacket()
+        IlpConditionHandlerImpl ilpConditionHandlerImpl = new IlpConditionHandlerImpl();
+        //TODO: Obtain secret and replace hardcoded value
+        byte[] secret = new byte[32];
+        secret = Base64.getEncoder().encode("secret".getBytes());
+        //Call interop-ilp-conditions jar generateFulfillment()
+        String fulfillment = ilpConditionHandlerImpl.generateFulfillment(ilpPacket, secret);
 
-        logger.info("In POST /transfers, transferId: " + transferId);
+        //Headers
+        String dateHeader = java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now( ZoneId.of("GMT") ) );
+        String acceptHeader = "1.0";
+        String contentTypeHeader = "application/json";
+        String sourceHeader = "dfsp2";
+        String destinationHeader = "dfsp1";
+        Instant timestamp = Instant.now();
 
         String Switch_URL = PUT_URL + transferId;
 
+        // Fulfilment Message
         JSONObject putMessageBody=new JSONObject();
-        putMessageBody.put("fulfilment", "f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA");
+        putMessageBody.put("fulfilment", fulfillment);
         putMessageBody.put("transferState", "COMMITTED");
-        putMessageBody.put("completedTimestamp", "2018-09-13T08:38:08.699-04:00");
+        putMessageBody.put("completedTimestamp", timestamp.toString() );
+        logger.info("In POST /transfers"+ "\ntransferId: " + transferId + "\nilpPacket: " + ilpPacket + "\ngenerated fulfillment: " + fulfillment + "\ncompletedTimestamp: " + timestamp.toString() );
 
         try {
-            Thread.sleep(5);
-            URL obj = new URL( Switch_URL );
+            Thread.sleep(1);
 
             HttpClient httpClient = HttpClientBuilder.create().build();
             logger.info("URL: " + Switch_URL);
+
             HttpPut putter=new HttpPut( Switch_URL );
-            putter.setHeader("FSPIOP-Source","dfsp2");
-            putter.setHeader("FSPIOP-Destination","dfsp1");
-            putter.setHeader("Date","2018-08-17");
-            putter.setHeader("Accept","1.0");
-            putter.setHeader("Content-type", "application/json");
+            putter.setHeader("FSPIOP-Source",sourceHeader);
+            putter.setHeader("FSPIOP-Destination",destinationHeader);
+            putter.setHeader("Date", dateHeader);
+            putter.setHeader("Accept",acceptHeader);
+            putter.setHeader("Content-type", contentTypeHeader);
 
             StringEntity se = new StringEntity( putMessageBody.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, contentTypeHeader));
             putter.setEntity(se);
 
             HttpResponse response=httpClient.execute(putter);
-
             logger.info("Sent PUT /transfers, for transferId: " + transferId + " with response code: " + response.getStatusLine().getStatusCode());
         }
         catch (Exception e)

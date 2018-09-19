@@ -35,20 +35,22 @@ public class AnalyticsGenerator {
         //System.out.println(jmeterTimes);
 
         System.out.println("\n********* METRICS in ms*************\n");
-        System.out.println("UUID || JMeterTime || CallbackReceivedTime || ResponseTime");
+        System.out.println("\t\tUUID\t\t||\tJMeterTime\t|| CallbackReceivedTime || ResponseTime");
 
         int totalResponseTimeSoFar = 0;
         int minTime=9999, maxTime=0;
 
         for (Map.Entry<String, Long> entry:jmeterTimes.entrySet()
              ) {
-            int responseTime = (int) abs( entry.getValue() - callbackTimes.get( entry.getKey() ) );
-            totalResponseTimeSoFar = totalResponseTimeSoFar + responseTime;
-            if (minTime > responseTime)
-                minTime = responseTime;
-            if (maxTime < responseTime)
-                maxTime = responseTime;
-            System.out.println( entry.getKey() + entry.getValue() + ",\t" + callbackTimes.get( entry.getKey() ) + " \t::\t" + responseTime);
+            if ( callbackTimes.get( entry.getKey() ) != null ) {
+                int responseTime = (int) abs(entry.getValue() - callbackTimes.get(entry.getKey()));
+                totalResponseTimeSoFar = totalResponseTimeSoFar + responseTime;
+                if (minTime > responseTime)
+                    minTime = responseTime;
+                if (maxTime < responseTime)
+                    maxTime = responseTime;
+                System.out.println( entry.getKey() + ":\t" + entry.getValue() + ",\t" + callbackTimes.get(entry.getKey()) + "\t\t::\t" + responseTime);
+            }
         }
 
         System.out.println("\nAverage Response Time: " + ( totalResponseTimeSoFar/jmeterTimes.size() ) );
