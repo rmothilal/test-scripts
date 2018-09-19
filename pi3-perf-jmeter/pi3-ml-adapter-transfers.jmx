@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">100</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
@@ -39,10 +39,10 @@
             <stringProp name="-2129294769">startTime</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="179848809">
+            <collectionProp name="-1849945966">
               <stringProp name="1475837">0.43</stringProp>
               <stringProp name="-1204607085">localhost</stringProp>
-              <stringProp name="1238737880">${__time(yyyy-MM-dd)}</stringProp>
+              <stringProp name="102358520">${__time( EEE, d MMM yyyy HH:mm:ss z) }</stringProp>
               <stringProp name="1596796">4000</stringProp>
               <stringProp name="95504818">dfsp1</stringProp>
               <stringProp name="95504819">dfsp2</stringProp>
@@ -68,9 +68,9 @@
 		&quot;currency&quot;: &quot;USD&quot;,&#xd;
 		&quot;amount&quot;: &quot;${amount}&quot;&#xd;
 	},&#xd;
-	&quot;ilpPacket&quot;: &quot;AYIBgQAAAAAAAASwNGxldmVsb25lLmRmc3AxLm1lci45T2RTOF81MDdqUUZERmZlakgyOVc4bXFmNEpLMHlGTFGCAUBQU0svMS4wCk5vbmNlOiB1SXlweUYzY3pYSXBFdzVVc05TYWh3CkVuY3J5cHRpb246IG5vbmUKUGF5bWVudC1JZDogMTMyMzZhM2ItOGZhOC00MTYzLTg0NDctNGMzZWQzZGE5OGE3CgpDb250ZW50LUxlbmd0aDogMTM1CkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbgpTZW5kZXItSWRlbnRpZmllcjogOTI4MDYzOTEKCiJ7XCJmZWVcIjowLFwidHJhbnNmZXJDb2RlXCI6XCJpbnZvaWNlXCIsXCJkZWJpdE5hbWVcIjpcImFsaWNlIGNvb3BlclwiLFwiY3JlZGl0TmFtZVwiOlwibWVyIGNoYW50XCIsXCJkZWJpdElkZW50aWZpZXJcIjpcIjkyODA2MzkxXCJ9IgA&quot;,&#xd;
-	&quot;condition&quot;: &quot;f5sqb7tBTWPd5Y8BDFdMm9BJR_MNI4isf8p8n4D5pHA&quot;,&#xd;
-	&quot;expiration&quot;: &quot;2018-09-12T08:38:08.699-04:00&quot;,&#xd;
+	&quot;ilpPacket&quot;: &quot;AQAAAAAAAADIEHByaXZhdGUucGF5ZWVmc3CCAiB7InRyYW5zYWN0aW9uSWQiOiIyZGY3NzRlMi1mMWRiLTRmZjctYTQ5NS0yZGRkMzdhZjdjMmMiLCJxdW90ZUlkIjoiMDNhNjA1NTAtNmYyZi00NTU2LThlMDQtMDcwM2UzOWI4N2ZmIiwicGF5ZWUiOnsicGFydHlJZEluZm8iOnsicGFydHlJZFR5cGUiOiJNU0lTRE4iLCJwYXJ0eUlkZW50aWZpZXIiOiIyNzcxMzgwMzkxMyIsImZzcElkIjoicGF5ZWVmc3AifSwicGVyc29uYWxJbmZvIjp7ImNvbXBsZXhOYW1lIjp7fX19LCJwYXllciI6eyJwYXJ0eUlkSW5mbyI6eyJwYXJ0eUlkVHlwZSI6Ik1TSVNETiIsInBhcnR5SWRlbnRpZmllciI6IjI3NzEzODAzOTExIiwiZnNwSWQiOiJwYXllcmZzcCJ9LCJwZXJzb25hbEluZm8iOnsiY29tcGxleE5hbWUiOnt9fX0sImFtb3VudCI6eyJjdXJyZW5jeSI6IlVTRCIsImFtb3VudCI6IjIwMCJ9LCJ0cmFuc2FjdGlvblR5cGUiOnsic2NlbmFyaW8iOiJERVBPU0lUIiwic3ViU2NlbmFyaW8iOiJERVBPU0lUIiwiaW5pdGlhdG9yIjoiUEFZRVIiLCJpbml0aWF0b3JUeXBlIjoiQ09OU1VNRVIiLCJyZWZ1bmRJbmZvIjp7fX19&quot;,&#xd;
+	&quot;condition&quot;: &quot;HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks&quot;,&#xd;
+	&quot;expiration&quot;: &quot;2018-09-19T08:38:08.699-04:00&quot;,&#xd;
 	&quot;extensionList&quot;: {&#xd;
 		&quot;extension&quot;: [{&#xd;
 			&quot;key&quot;: &quot;firstRequest&quot;,&#xd;
@@ -107,7 +107,7 @@
               </elementProp>
               <elementProp name="Date" elementType="Header">
                 <stringProp name="Header.name">Date</stringProp>
-                <stringProp name="Header.value">${DateHeader}</stringProp>
+                <stringProp name="Header.value">Tue, 18 Sep 2018 15:28:00 GMT</stringProp>
               </elementProp>
               <elementProp name="FSPIOP-Source" elementType="Header">
                 <stringProp name="Header.name">FSPIOP-Source</stringProp>
@@ -301,7 +301,7 @@ public class WireMockTest {
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="debug sampler" enabled="false">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="debug sampler" enabled="true">
           <stringProp name="TestPlan.comments">Check uniqueId, date</stringProp>
           <boolProp name="displayJMeterProperties">true</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
@@ -344,7 +344,7 @@ public class WireMockTest {
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -413,7 +413,7 @@ public class WireMockTest {
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ConfigTestElement guiclass="PropertyControlGui" testclass="ConfigTestElement" testname="Property Display" enabled="false"/>
+      <ConfigTestElement guiclass="PropertyControlGui" testclass="ConfigTestElement" testname="Property Display" enabled="true"/>
       <hashTree/>
     </hashTree>
   </hashTree>
