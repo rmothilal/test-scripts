@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">10</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
@@ -35,23 +35,25 @@
             <stringProp name="1375643054">payerFsp</stringProp>
             <stringProp name="1375255771">payeeFsp</stringProp>
             <stringProp name="-1727368602">transferId</stringProp>
-            <stringProp name="-642944725">mockPort</stringProp>
             <stringProp name="-2129294769">startTime</stringProp>
             <stringProp name="-837465425">expiration</stringProp>
+            <stringProp name="-643183022">mockHost</stringProp>
+            <stringProp name="-642944725">mockPort</stringProp>
             <stringProp name="0"></stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-368910746">
+            <collectionProp name="-2109809872">
               <stringProp name="1475837">0.43</stringProp>
-              <stringProp name="-1204607085">localhost</stringProp>
+              <stringProp name="-289681790">perf1-ml-api-adapter.mojaloop.live</stringProp>
               <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
-              <stringProp name="1716208">8080</stringProp>
+              <stringProp name="1784">80</stringProp>
               <stringProp name="95504818">dfsp1</stringProp>
               <stringProp name="95504819">dfsp2</stringProp>
               <stringProp name="187832203">${__UUID}</stringProp>
-              <stringProp name="1537462">2080</stringProp>
               <stringProp name="-811840068">${__time(,)}</stringProp>
               <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
+              <stringProp name="-1204607085">localhost</stringProp>
+              <stringProp name="1716208">8080</stringProp>
               <stringProp name="0"></stringProp>
             </collectionProp>
           </collectionProp>
@@ -74,13 +76,7 @@
 	},&#xd;
 	&quot;ilpPacket&quot;: &quot;AQAAAAAAAADIEHByaXZhdGUucGF5ZWVmc3CCAiB7InRyYW5zYWN0aW9uSWQiOiIyZGY3NzRlMi1mMWRiLTRmZjctYTQ5NS0yZGRkMzdhZjdjMmMiLCJxdW90ZUlkIjoiMDNhNjA1NTAtNmYyZi00NTU2LThlMDQtMDcwM2UzOWI4N2ZmIiwicGF5ZWUiOnsicGFydHlJZEluZm8iOnsicGFydHlJZFR5cGUiOiJNU0lTRE4iLCJwYXJ0eUlkZW50aWZpZXIiOiIyNzcxMzgwMzkxMyIsImZzcElkIjoicGF5ZWVmc3AifSwicGVyc29uYWxJbmZvIjp7ImNvbXBsZXhOYW1lIjp7fX19LCJwYXllciI6eyJwYXJ0eUlkSW5mbyI6eyJwYXJ0eUlkVHlwZSI6Ik1TSVNETiIsInBhcnR5SWRlbnRpZmllciI6IjI3NzEzODAzOTExIiwiZnNwSWQiOiJwYXllcmZzcCJ9LCJwZXJzb25hbEluZm8iOnsiY29tcGxleE5hbWUiOnt9fX0sImFtb3VudCI6eyJjdXJyZW5jeSI6IlVTRCIsImFtb3VudCI6IjIwMCJ9LCJ0cmFuc2FjdGlvblR5cGUiOnsic2NlbmFyaW8iOiJERVBPU0lUIiwic3ViU2NlbmFyaW8iOiJERVBPU0lUIiwiaW5pdGlhdG9yIjoiUEFZRVIiLCJpbml0aWF0b3JUeXBlIjoiQ09OU1VNRVIiLCJyZWZ1bmRJbmZvIjp7fX19&quot;,&#xd;
 	&quot;condition&quot;: &quot;HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks&quot;,&#xd;
-	&quot;expiration&quot;: &quot;${expiration}&quot;,&#xd;
-	&quot;extensionList&quot;: {&#xd;
-		&quot;extension&quot;: [{&#xd;
-			&quot;key&quot;: &quot;firstRequest&quot;,&#xd;
-			&quot;value&quot;: &quot;This is a request from JMeter&quot;&#xd;
-		}]&#xd;
-	}&#xd;
+	&quot;expiration&quot;: &quot;${expiration}&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -94,7 +90,7 @@
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
