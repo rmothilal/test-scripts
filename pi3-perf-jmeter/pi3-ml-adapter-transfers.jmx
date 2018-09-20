@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">10</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
@@ -30,25 +30,29 @@
           <collectionProp name="UserParameters.names">
             <stringProp name="-1413853096">amount</stringProp>
             <stringProp name="3208616">host</stringProp>
-            <stringProp name="-2098749445">DateHeader</stringProp>
+            <stringProp name="202752987">dateHeader</stringProp>
             <stringProp name="-347403819">switchPort</stringProp>
             <stringProp name="1375643054">payerFsp</stringProp>
             <stringProp name="1375255771">payeeFsp</stringProp>
             <stringProp name="-1727368602">transferId</stringProp>
             <stringProp name="-642944725">mockPort</stringProp>
             <stringProp name="-2129294769">startTime</stringProp>
+            <stringProp name="-837465425">expiration</stringProp>
+            <stringProp name="0"></stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-1849945966">
+            <collectionProp name="-368910746">
               <stringProp name="1475837">0.43</stringProp>
               <stringProp name="-1204607085">localhost</stringProp>
-              <stringProp name="102358520">${__time( EEE, d MMM yyyy HH:mm:ss z) }</stringProp>
-              <stringProp name="1596796">4000</stringProp>
+              <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
+              <stringProp name="1716208">8080</stringProp>
               <stringProp name="95504818">dfsp1</stringProp>
               <stringProp name="95504819">dfsp2</stringProp>
               <stringProp name="187832203">${__UUID}</stringProp>
               <stringProp name="1537462">2080</stringProp>
               <stringProp name="-811840068">${__time(,)}</stringProp>
+              <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
+              <stringProp name="0"></stringProp>
             </collectionProp>
           </collectionProp>
           <boolProp name="UserParameters.per_iteration">true</boolProp>
@@ -70,7 +74,7 @@
 	},&#xd;
 	&quot;ilpPacket&quot;: &quot;AQAAAAAAAADIEHByaXZhdGUucGF5ZWVmc3CCAiB7InRyYW5zYWN0aW9uSWQiOiIyZGY3NzRlMi1mMWRiLTRmZjctYTQ5NS0yZGRkMzdhZjdjMmMiLCJxdW90ZUlkIjoiMDNhNjA1NTAtNmYyZi00NTU2LThlMDQtMDcwM2UzOWI4N2ZmIiwicGF5ZWUiOnsicGFydHlJZEluZm8iOnsicGFydHlJZFR5cGUiOiJNU0lTRE4iLCJwYXJ0eUlkZW50aWZpZXIiOiIyNzcxMzgwMzkxMyIsImZzcElkIjoicGF5ZWVmc3AifSwicGVyc29uYWxJbmZvIjp7ImNvbXBsZXhOYW1lIjp7fX19LCJwYXllciI6eyJwYXJ0eUlkSW5mbyI6eyJwYXJ0eUlkVHlwZSI6Ik1TSVNETiIsInBhcnR5SWRlbnRpZmllciI6IjI3NzEzODAzOTExIiwiZnNwSWQiOiJwYXllcmZzcCJ9LCJwZXJzb25hbEluZm8iOnsiY29tcGxleE5hbWUiOnt9fX0sImFtb3VudCI6eyJjdXJyZW5jeSI6IlVTRCIsImFtb3VudCI6IjIwMCJ9LCJ0cmFuc2FjdGlvblR5cGUiOnsic2NlbmFyaW8iOiJERVBPU0lUIiwic3ViU2NlbmFyaW8iOiJERVBPU0lUIiwiaW5pdGlhdG9yIjoiUEFZRVIiLCJpbml0aWF0b3JUeXBlIjoiQ09OU1VNRVIiLCJyZWZ1bmRJbmZvIjp7fX19&quot;,&#xd;
 	&quot;condition&quot;: &quot;HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks&quot;,&#xd;
-	&quot;expiration&quot;: &quot;2018-09-19T08:38:08.699-04:00&quot;,&#xd;
+	&quot;expiration&quot;: &quot;${expiration}&quot;,&#xd;
 	&quot;extensionList&quot;: {&#xd;
 		&quot;extension&quot;: [{&#xd;
 			&quot;key&quot;: &quot;firstRequest&quot;,&#xd;
@@ -107,7 +111,7 @@
               </elementProp>
               <elementProp name="Date" elementType="Header">
                 <stringProp name="Header.name">Date</stringProp>
-                <stringProp name="Header.value">Tue, 18 Sep 2018 15:28:00 GMT</stringProp>
+                <stringProp name="Header.value">${dateHeader}</stringProp>
               </elementProp>
               <elementProp name="FSPIOP-Source" elementType="Header">
                 <stringProp name="Header.name">FSPIOP-Source</stringProp>
@@ -119,7 +123,7 @@
               </elementProp>
               <elementProp name="Accept" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">1.0</stringProp>
+                <stringProp name="Header.value">application/vnd.interoperability.quotes+json;version=1.0</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
