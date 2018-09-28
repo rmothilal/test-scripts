@@ -42,8 +42,8 @@
             <stringProp name="0"></stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-1020926409">
-              <stringProp name="1475837">0.43</stringProp>
+            <collectionProp name="1360617235">
+              <stringProp name="1475743">0.12</stringProp>
               <stringProp name="-289681790">perf1-ml-api-adapter.mojaloop.live</stringProp>
               <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
               <stringProp name="1784">80</stringProp>
@@ -123,29 +123,6 @@
               </elementProp>
             </collectionProp>
           </HeaderManager>
-          <hashTree/>
-          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
-            <stringProp name="cacheKey">true</stringProp>
-            <stringProp name="filename"></stringProp>
-            <stringProp name="parameters"></stringProp>
-            <stringProp name="script">import org.apache.jmeter.services.FileServer;
-
-// Static elements or calculations
-String transferId = vars.get(&quot;transferId&quot;);
-String startTime = ${__time(,)};
-
-// Open File(s)
-f = new FileOutputStream( FileServer.getFileServer().getBaseDir()+&quot;/TransferIDList-JMeter.csv&quot;, true ); 
-p = new PrintStream(f); 
-
-// Write data to file 
-p.println( transferId + &quot;,&quot; + startTime );
-
-// Close File(s)
-p.close();f.close();
-</stringProp>
-            <stringProp name="scriptLanguage">groovy</stringProp>
-          </JSR223PreProcessor>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Code Assertion" enabled="false">
             <collectionProp name="Asserion.test_strings">
@@ -301,7 +278,34 @@ public class WireMockTest {
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="debug sampler" enabled="true">
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">50</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import org.apache.jmeter.services.FileServer;
+import java.util.System;
+
+// Static elements or calculations
+String transferId = vars.get(&quot;transferId&quot;);
+
+// Open File(s)
+f = new FileOutputStream( FileServer.getFileServer().getBaseDir()+&quot;/TransferIDList-JMeter.csv&quot;, true ); 
+p = new PrintStream(f); 
+
+// Write data to file 
+p.println( transferId + &quot;,&quot; + System.currentTimeMillis() );
+
+// Close File(s)
+p.close();f.close();
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="debug sampler" enabled="false">
           <stringProp name="TestPlan.comments">Check uniqueId, date</stringProp>
           <boolProp name="displayJMeterProperties">true</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
@@ -344,7 +348,7 @@ public class WireMockTest {
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
