@@ -117,6 +117,6 @@ The below diagram represents the different components that are part of this test
   - From Command Line: 
     - Apache maven should be successfully installed to run this command
     - From the command line go to the directory of these tests, type `mvn clean verify` to trigger the tests.
-
+    - To run specific tags, use this command `mvn clean verify -Dcucumber.options=""--tags @<tag-name>"`
 
 
