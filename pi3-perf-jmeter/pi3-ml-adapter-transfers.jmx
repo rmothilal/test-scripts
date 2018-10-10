@@ -287,7 +287,7 @@ public class WireMockTest {
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import org.apache.jmeter.services.FileServer;
-import java.util.System;
+import java.lang.System;
 
 // Static elements or calculations
 String transferId = vars.get(&quot;transferId&quot;);
