@@ -103,7 +103,7 @@
             <collectionProp name="HeaderManager.headers">
               <elementProp name="Content-Type" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
+                <stringProp name="Header.value">application/vnd.interoperability.transfers+json;version=1.0</stringProp>
               </elementProp>
               <elementProp name="Date" elementType="Header">
                 <stringProp name="Header.name">Date</stringProp>
@@ -119,7 +119,7 @@
               </elementProp>
               <elementProp name="Accept" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">application/vnd.interoperability.quotes+json;version=1.0</stringProp>
+                <stringProp name="Header.value">application/vnd.interoperability.transfers+json;version=1</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
