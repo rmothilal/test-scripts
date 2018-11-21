@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="4.0" jmeter="4.0 r1823414">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">20</stringProp>
+          <stringProp name="LoopController.loops">10</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
@@ -41,18 +41,18 @@
             <stringProp name="-1804064543">randomizeFsps</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="1299845051">
+            <collectionProp name="-1438700402">
               <stringProp name="1475742">0.11</stringProp>
               <stringProp name="-1204607085">localhost</stringProp>
               <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
-              <stringProp name="1567005">3000</stringProp>
-              <stringProp name="95504818">dfsp1</stringProp>
-              <stringProp name="95504819">dfsp2</stringProp>
+              <stringProp name="1596797">4001</stringProp>
+              <stringProp name="95504820">dfsp3</stringProp>
+              <stringProp name="95504821">dfsp4</stringProp>
               <stringProp name="187832203">${__UUID}</stringProp>
               <stringProp name="-811840068">${__time(,)}</stringProp>
               <stringProp name="-1004798821">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)},PT6M,,)}</stringProp>
               <stringProp name="-1650735238">[&quot;dfsp1&quot;,&quot;dfsp2&quot;,&quot;dfsp3&quot;,&quot;dfsp4&quot;]</stringProp>
-              <stringProp name="97196323">false</stringProp>
+              <stringProp name="3569038">true</stringProp>
             </collectionProp>
             <collectionProp name="1679991704">
               <stringProp name="0"></stringProp>
@@ -216,6 +216,243 @@ f = new FileOutputStream( FileServer.getFileServer().getBaseDir()+&quot;/Transfe
 p = new PrintStream(f); 
 
 // Write data to file 
+p.println( transferId );
+
+// Close File(s)
+p.close();f.close();</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="false">
+          <stringProp name="ConstantTimer.delay">40</stringProp>
+        </ConstantTimer>
+        <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="debug sampler" enabled="false">
+          <stringProp name="TestPlan.comments">Check uniqueId, date</stringProp>
+          <boolProp name="displayJMeterProperties">true</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+          <stringProp name="CounterConfig.start">0</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">counter_value</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">0</stringProp>
+          <stringProp name="RandomTimer.range">8</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group for PI-3 Fulfil Transfers testing" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">10</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time"></stringProp>
+        <longProp name="ThreadGroup.start_time">1474143365000</longProp>
+        <longProp name="ThreadGroup.end_time">1474143365000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+          <collectionProp name="UserParameters.names">
+            <stringProp name="-1413853096">amount</stringProp>
+            <stringProp name="3208616">host</stringProp>
+            <stringProp name="202752987">dateHeader</stringProp>
+            <stringProp name="-347403819">switchPort</stringProp>
+            <stringProp name="1375643054">payerFsp</stringProp>
+            <stringProp name="1375255771">payeeFsp</stringProp>
+            <stringProp name="1346662855">transferIdOrig</stringProp>
+            <stringProp name="-2129294769">startTime</stringProp>
+            <stringProp name="-837465425">expiration</stringProp>
+            <stringProp name="-565749631">fspList</stringProp>
+            <stringProp name="-1804064543">randomizeFsps</stringProp>
+            <stringProp name="-1198116662">fulfilment</stringProp>
+            <stringProp name="1193976733">currentTimestamp</stringProp>
+          </collectionProp>
+          <collectionProp name="UserParameters.thread_values">
+            <collectionProp name="381737875">
+              <stringProp name="1475742">0.11</stringProp>
+              <stringProp name="-1204607085">localhost</stringProp>
+              <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
+              <stringProp name="1596797">4001</stringProp>
+              <stringProp name="95504820">dfsp3</stringProp>
+              <stringProp name="95504821">dfsp4</stringProp>
+              <stringProp name="187832203">${__UUID}</stringProp>
+              <stringProp name="-811840068">${__time(,)}</stringProp>
+              <stringProp name="-1004798821">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)},PT6M,,)}</stringProp>
+              <stringProp name="-1650735238">[&quot;dfsp1&quot;,&quot;dfsp2&quot;,&quot;dfsp3&quot;,&quot;dfsp4&quot;]</stringProp>
+              <stringProp name="3569038">true</stringProp>
+              <stringProp name="-1268278499">XoSz1cL0tljJSCp_VtIYmPNw-zFUgGfbUqf69AagUzY</stringProp>
+              <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
+            </collectionProp>
+            <collectionProp name="-434874184">
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+            </collectionProp>
+          </collectionProp>
+          <boolProp name="UserParameters.per_iteration">true</boolProp>
+        </UserParameters>
+        <hashTree/>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">&apos;use strict&apos;;
+
+var randomizeFsps = vars.get(&apos;randomizeFsps&apos;);
+var payerfsp, payeefsp;
+var fspList = JSON.parse(vars.get(&apos;fspList&apos;));
+
+if (randomizeFsps === true){
+	var payerPosition = Math.floor((Math.random() * fspList.length));
+	var valid = false;
+	var payeePosition;
+	while (!valid){
+		payeePosition = Math.floor((Math.random() * fspList.length));
+		if (payerPosition !== payeePosition){
+	 		valid = true;
+	 	} 
+	}
+	vars.put(&apos;payerFsp&apos;, fspList[payerPosition]);
+	vars.put(&apos;payeeFsp&apos;, fspList[payeePosition]);
+} else {
+	var currentPayerFsp = vars.get(&apos;payerFsp&apos;)
+	var currentPayeeFsp = vars.get(&apos;payeeFsp&apos;)
+	var counter = JSON.parse(vars.get(&apos;counter_value&apos;))
+	var fspNumber = counter % fspList.length
+	var currentPayerPosition  = fspList.indexOf(currentPayerFsp)
+	var currentPayeePosition  = fspList.indexOf(currentPayeeFsp)
+	if (counter !== 0) {
+		if (fspNumber !== 0){
+			vars.put(&apos;payerFsp&apos;, currentPayerFsp);
+			var currentPayeePosition  = fspList.indexOf(currentPayeeFsp)
+			if (currentPayeePosition === currentPayerPosition - 1) {
+				if (currentPayeePosition + 2 === fspList.length - 1) {
+					vars.put(&apos;payeeFsp&apos;, fspList[0]);
+				} else {
+					vars.put(&apos;payeeFsp&apos;, fspList[currentPayeePosition + 2]);
+				}
+			} else if (currentPayeePosition === fspList.length - 1) {
+				vars.put(&apos;payeeFsp&apos;, fspList[0]);
+			} else {
+				vars.put(&apos;payeeFsp&apos;, fspList[currentPayeePosition + 1]);
+			}
+		} else {
+			if (fspNumber === fspList.length - 1) {
+				vars.put(&apos;payerFsp&apos;, fspList[0]);
+			} else {
+				vars.put(&apos;payerFsp&apos;, fspList[fspNumber + 1]);
+			}
+			if (fspNumber === fspList.length - 2) {
+				vars.put(&apos;payeeFsp&apos;, fspList[0]);
+			} else {
+				vars.put(&apos;payeeFsp&apos;, fspList[fspNumber + 2]);
+			}
+		}
+	} else {
+		vars.put(&apos;payerFsp&apos;, fspList[0]);
+		vars.put(&apos;payeeFsp&apos;, fspList[1]);
+	}
+}
+</stringProp>
+          <stringProp name="scriptLanguage">javascript</stringProp>
+        </JSR223PreProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fulfil-payment-1" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;fulfilment&quot;: &quot;${fulfilment}&quot;,&#xd;
+	&quot;completedTimestamp&quot;: &quot;${currentTimestamp}&quot;,&#xd;
+	&quot;transferState&quot;: &quot;COMMITTED&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
+          <stringProp name="HTTPSampler.port">${switchPort}</stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/transfers/${transferId}</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="TestPlan.comments">get transfer</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="Content-Type" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/vnd.interoperability.transfers+json;</stringProp>
+              </elementProp>
+              <elementProp name="Date" elementType="Header">
+                <stringProp name="Header.name">Date</stringProp>
+                <stringProp name="Header.value">${dateHeader}</stringProp>
+              </elementProp>
+              <elementProp name="FSPIOP-Source" elementType="Header">
+                <stringProp name="Header.name">FSPIOP-Source</stringProp>
+                <stringProp name="Header.value">${payerFsp}</stringProp>
+              </elementProp>
+              <elementProp name="FSPIOP-Destination" elementType="Header">
+                <stringProp name="Header.name">FSPIOP-Destination</stringProp>
+                <stringProp name="Header.value">${payeeFsp}</stringProp>
+              </elementProp>
+              <elementProp name="Accept" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/vnd.interoperability.transfers+json;version=1.0</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="false">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import org.apache.jmeter.services.FileServer;
+import java.lang.System;
+
+// Static elements or calculations
+String transferId = vars.get(&quot;transferId&quot;);
+
+// Open File(s)
+f = new FileOutputStream( FileServer.getFileServer().getBaseDir()+&quot;/TransferIDList-JMeter.csv&quot;, true ); 
+p = new PrintStream(f); 
+
+// Write data to file 
 p.println( transferId + &quot;,&quot; + System.currentTimeMillis() );
 
 // Close File(s)
@@ -227,11 +464,6 @@ p.close();f.close();</stringProp>
           <stringProp name="ConstantTimer.delay">40</stringProp>
         </ConstantTimer>
         <hashTree/>
-        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">0</stringProp>
-          <stringProp name="RandomTimer.range">25</stringProp>
-        </UniformRandomTimer>
-        <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="debug sampler" enabled="false">
           <stringProp name="TestPlan.comments">Check uniqueId, date</stringProp>
           <boolProp name="displayJMeterProperties">true</boolProp>
@@ -239,7 +471,7 @@ p.close();f.close();</stringProp>
           <boolProp name="displaySystemProperties">false</boolProp>
         </DebugSampler>
         <hashTree/>
-        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="false">
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
           <stringProp name="CounterConfig.start">0</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">1</stringProp>
@@ -247,6 +479,23 @@ p.close();f.close();</stringProp>
           <stringProp name="CounterConfig.format"></stringProp>
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
+        <hashTree/>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">0</stringProp>
+          <stringProp name="RandomTimer.range">8</stringProp>
+        </UniformRandomTimer>
+        <hashTree/>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">/Users/rajivmothilal/Projects/Mojaloop/rajiv/test-scripts/pi3-perf-jmeter/TransferIDList-JMeter.csv</stringProp>
+          <boolProp name="ignoreFirstLine">false</boolProp>
+          <boolProp name="quotedData">true</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">transferId</stringProp>
+        </CSVDataSet>
         <hashTree/>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
