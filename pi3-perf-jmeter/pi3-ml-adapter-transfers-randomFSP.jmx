@@ -4,7 +4,7 @@
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
@@ -12,7 +12,7 @@
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group for PI-3 Transfers testing" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">10</stringProp>
@@ -32,8 +32,6 @@
             <stringProp name="3208616">host</stringProp>
             <stringProp name="202752987">dateHeader</stringProp>
             <stringProp name="-347403819">switchPort</stringProp>
-            <stringProp name="1375643054">payerFsp</stringProp>
-            <stringProp name="1375255771">payeeFsp</stringProp>
             <stringProp name="-1727368602">transferId</stringProp>
             <stringProp name="-2129294769">startTime</stringProp>
             <stringProp name="-837465425">expiration</stringProp>
@@ -41,22 +39,18 @@
             <stringProp name="-1804064543">randomizeFsps</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="-1438700402">
+            <collectionProp name="-386080332">
               <stringProp name="1475742">0.11</stringProp>
               <stringProp name="-1204607085">localhost</stringProp>
               <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
               <stringProp name="1596797">4001</stringProp>
-              <stringProp name="95504820">dfsp3</stringProp>
-              <stringProp name="95504821">dfsp4</stringProp>
               <stringProp name="187832203">${__UUID}</stringProp>
               <stringProp name="-811840068">${__time(,)}</stringProp>
               <stringProp name="-1004798821">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)},PT6M,,)}</stringProp>
               <stringProp name="-1650735238">[&quot;dfsp1&quot;,&quot;dfsp2&quot;,&quot;dfsp3&quot;,&quot;dfsp4&quot;]</stringProp>
               <stringProp name="3569038">true</stringProp>
             </collectionProp>
-            <collectionProp name="1679991704">
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
+            <collectionProp name="-1928976776">
               <stringProp name="0"></stringProp>
               <stringProp name="0"></stringProp>
               <stringProp name="0"></stringProp>
@@ -77,11 +71,12 @@
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">&apos;use strict&apos;;
 
-var randomizeFsps = vars.get(&apos;randomizeFsps&apos;);
+var randomizeFsps = vars.get(&apos;randomizeFsps&apos;) === &apos;true&apos;;
 var payerfsp, payeefsp;
 var fspList = JSON.parse(vars.get(&apos;fspList&apos;));
-
+// log.info(&apos;randomiser value: &apos; + randomizeFsps);
 if (randomizeFsps === true){
+	// log.info(&apos;in rndomizer&apos;);
 	var payerPosition = Math.floor((Math.random() * fspList.length));
 	var valid = false;
 	var payeePosition;
@@ -94,6 +89,7 @@ if (randomizeFsps === true){
 	vars.put(&apos;payerFsp&apos;, fspList[payerPosition]);
 	vars.put(&apos;payeeFsp&apos;, fspList[payeePosition]);
 } else {
+	// log.info(&apos;not supposed to be here&apos;);
 	var currentPayerFsp = vars.get(&apos;payerFsp&apos;)
 	var currentPayeeFsp = vars.get(&apos;payeeFsp&apos;)
 	var counter = JSON.parse(vars.get(&apos;counter_value&apos;))
@@ -210,13 +206,15 @@ import java.lang.System;
 
 // Static elements or calculations
 String transferId = vars.get(&quot;transferId&quot;);
+String payerFsp = vars.get(&quot;payerFsp&quot;);
+String payeeFsp = vars.get(&quot;payeeFsp&quot;);
 
 // Open File(s)
 f = new FileOutputStream( FileServer.getFileServer().getBaseDir()+&quot;/TransferIDList-JMeter.csv&quot;, true ); 
 p = new PrintStream(f); 
 
 // Write data to file 
-p.println( transferId );
+p.println( transferId + &quot;,&quot; + payerFsp + &quot;,&quot; + payeeFsp );
 
 // Close File(s)
 p.close();f.close();</stringProp>
@@ -253,7 +251,7 @@ p.close();f.close();</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">10</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time"></stringProp>
@@ -270,40 +268,19 @@ p.close();f.close();</stringProp>
             <stringProp name="3208616">host</stringProp>
             <stringProp name="202752987">dateHeader</stringProp>
             <stringProp name="-347403819">switchPort</stringProp>
-            <stringProp name="1375643054">payerFsp</stringProp>
-            <stringProp name="1375255771">payeeFsp</stringProp>
-            <stringProp name="1346662855">transferIdOrig</stringProp>
-            <stringProp name="-2129294769">startTime</stringProp>
-            <stringProp name="-837465425">expiration</stringProp>
-            <stringProp name="-565749631">fspList</stringProp>
-            <stringProp name="-1804064543">randomizeFsps</stringProp>
             <stringProp name="-1198116662">fulfilment</stringProp>
             <stringProp name="1193976733">currentTimestamp</stringProp>
           </collectionProp>
           <collectionProp name="UserParameters.thread_values">
-            <collectionProp name="381737875">
+            <collectionProp name="1075167647">
               <stringProp name="1475742">0.11</stringProp>
               <stringProp name="-1204607085">localhost</stringProp>
               <stringProp name="1255381334">${__time(EEE\, d MMM yyyy HH:mm:ss &apos;GMT&apos;)}</stringProp>
               <stringProp name="1596797">4001</stringProp>
-              <stringProp name="95504820">dfsp3</stringProp>
-              <stringProp name="95504821">dfsp4</stringProp>
-              <stringProp name="187832203">${__UUID}</stringProp>
-              <stringProp name="-811840068">${__time(,)}</stringProp>
-              <stringProp name="-1004798821">${__timeShift(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;,${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)},PT6M,,)}</stringProp>
-              <stringProp name="-1650735238">[&quot;dfsp1&quot;,&quot;dfsp2&quot;,&quot;dfsp3&quot;,&quot;dfsp4&quot;]</stringProp>
-              <stringProp name="3569038">true</stringProp>
               <stringProp name="-1268278499">XoSz1cL0tljJSCp_VtIYmPNw-zFUgGfbUqf69AagUzY</stringProp>
               <stringProp name="836410989">${__time(yyyy-MM-dd&apos;T&apos;HH:mm:ss.SSS&apos;Z&apos;)}</stringProp>
             </collectionProp>
-            <collectionProp name="-434874184">
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
-              <stringProp name="0"></stringProp>
+            <collectionProp name="-1105849183">
               <stringProp name="0"></stringProp>
               <stringProp name="0"></stringProp>
               <stringProp name="0"></stringProp>
@@ -314,71 +291,6 @@ p.close();f.close();</stringProp>
           </collectionProp>
           <boolProp name="UserParameters.per_iteration">true</boolProp>
         </UserParameters>
-        <hashTree/>
-        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
-          <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script">&apos;use strict&apos;;
-
-var randomizeFsps = vars.get(&apos;randomizeFsps&apos;);
-var payerfsp, payeefsp;
-var fspList = JSON.parse(vars.get(&apos;fspList&apos;));
-
-if (randomizeFsps === true){
-	var payerPosition = Math.floor((Math.random() * fspList.length));
-	var valid = false;
-	var payeePosition;
-	while (!valid){
-		payeePosition = Math.floor((Math.random() * fspList.length));
-		if (payerPosition !== payeePosition){
-	 		valid = true;
-	 	} 
-	}
-	vars.put(&apos;payerFsp&apos;, fspList[payerPosition]);
-	vars.put(&apos;payeeFsp&apos;, fspList[payeePosition]);
-} else {
-	var currentPayerFsp = vars.get(&apos;payerFsp&apos;)
-	var currentPayeeFsp = vars.get(&apos;payeeFsp&apos;)
-	var counter = JSON.parse(vars.get(&apos;counter_value&apos;))
-	var fspNumber = counter % fspList.length
-	var currentPayerPosition  = fspList.indexOf(currentPayerFsp)
-	var currentPayeePosition  = fspList.indexOf(currentPayeeFsp)
-	if (counter !== 0) {
-		if (fspNumber !== 0){
-			vars.put(&apos;payerFsp&apos;, currentPayerFsp);
-			var currentPayeePosition  = fspList.indexOf(currentPayeeFsp)
-			if (currentPayeePosition === currentPayerPosition - 1) {
-				if (currentPayeePosition + 2 === fspList.length - 1) {
-					vars.put(&apos;payeeFsp&apos;, fspList[0]);
-				} else {
-					vars.put(&apos;payeeFsp&apos;, fspList[currentPayeePosition + 2]);
-				}
-			} else if (currentPayeePosition === fspList.length - 1) {
-				vars.put(&apos;payeeFsp&apos;, fspList[0]);
-			} else {
-				vars.put(&apos;payeeFsp&apos;, fspList[currentPayeePosition + 1]);
-			}
-		} else {
-			if (fspNumber === fspList.length - 1) {
-				vars.put(&apos;payerFsp&apos;, fspList[0]);
-			} else {
-				vars.put(&apos;payerFsp&apos;, fspList[fspNumber + 1]);
-			}
-			if (fspNumber === fspList.length - 2) {
-				vars.put(&apos;payeeFsp&apos;, fspList[0]);
-			} else {
-				vars.put(&apos;payeeFsp&apos;, fspList[fspNumber + 2]);
-			}
-		}
-	} else {
-		vars.put(&apos;payerFsp&apos;, fspList[0]);
-		vars.put(&apos;payeeFsp&apos;, fspList[1]);
-	}
-}
-</stringProp>
-          <stringProp name="scriptLanguage">javascript</stringProp>
-        </JSR223PreProcessor>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Fulfil-payment-1" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -438,28 +350,6 @@ if (randomizeFsps === true){
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="false">
-          <stringProp name="cacheKey">true</stringProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="parameters"></stringProp>
-          <stringProp name="script">import org.apache.jmeter.services.FileServer;
-import java.lang.System;
-
-// Static elements or calculations
-String transferId = vars.get(&quot;transferId&quot;);
-
-// Open File(s)
-f = new FileOutputStream( FileServer.getFileServer().getBaseDir()+&quot;/TransferIDList-JMeter.csv&quot;, true ); 
-p = new PrintStream(f); 
-
-// Write data to file 
-p.println( transferId + &quot;,&quot; + System.currentTimeMillis() );
-
-// Close File(s)
-p.close();f.close();</stringProp>
-          <stringProp name="scriptLanguage">groovy</stringProp>
-        </JSR223PreProcessor>
-        <hashTree/>
         <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="false">
           <stringProp name="ConstantTimer.delay">40</stringProp>
         </ConstantTimer>
@@ -491,14 +381,14 @@ p.close();f.close();</stringProp>
           <stringProp name="filename">/Users/rajivmothilal/Projects/Mojaloop/rajiv/test-scripts/pi3-perf-jmeter/TransferIDList-JMeter.csv</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <boolProp name="quotedData">true</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="variableNames">transferId</stringProp>
+          <boolProp name="recycle">false</boolProp>
+          <stringProp name="shareMode">shareMode.group</stringProp>
+          <boolProp name="stopThread">true</boolProp>
+          <stringProp name="variableNames">transferId,payerFsp,payeeFsp</stringProp>
         </CSVDataSet>
         <hashTree/>
       </hashTree>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
